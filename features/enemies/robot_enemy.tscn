@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://dlr7dytib1fkp"]
 
-[ext_resource type="Texture2D" uid="uid://cksyi3eyx3wtq" path="res://assets/art/proto_assets/robots/scout_front/scout_body_front.svg" id="1_hoebx"]
-[ext_resource type="Texture2D" uid="uid://bishagjqiu7w1" path="res://assets/art/proto_assets/robots/scout_front/scout_head_front.svg" id="2_wpkvm"]
-[ext_resource type="Texture2D" uid="uid://c7wrak31am0fv" path="res://assets/art/proto_assets/robots/scout_front/scout_arm_left_front.svg" id="3_1l310"]
-[ext_resource type="Texture2D" uid="uid://bdx424ytukhc3" path="res://assets/art/proto_assets/robots/scout_front/scout_arm_right_front.svg" id="4_neqqd"]
-[ext_resource type="Texture2D" uid="uid://dd0s0f3fp82bw" path="res://assets/art/proto_assets/robots/scout_front/scout_leg_left_front.svg" id="5_1td7j"]
-[ext_resource type="Texture2D" uid="uid://coyqgvd545r87" path="res://assets/art/proto_assets/robots/scout_front/scout_leg_right_front.svg" id="6_whsju"]
+[ext_resource type="Texture2D" uid="uid://cksyi3eyx3wtq" path="res://proto/assets/robots/scout_front/scout_body_front.svg" id="1_hoebx"]
+[ext_resource type="Texture2D" uid="uid://bishagjqiu7w1" path="res://proto/assets/robots/scout_front/scout_head_front.svg" id="2_wpkvm"]
+[ext_resource type="Texture2D" uid="uid://c7wrak31am0fv" path="res://proto/assets/robots/scout_front/scout_arm_left_front.svg" id="3_1l310"]
+[ext_resource type="Texture2D" uid="uid://bdx424ytukhc3" path="res://proto/assets/robots/scout_front/scout_arm_right_front.svg" id="4_neqqd"]
+[ext_resource type="Texture2D" uid="uid://dd0s0f3fp82bw" path="res://proto/assets/robots/scout_front/scout_leg_left_front.svg" id="5_1td7j"]
+[ext_resource type="Texture2D" uid="uid://coyqgvd545r87" path="res://proto/assets/robots/scout_front/scout_leg_right_front.svg" id="6_whsju"]
 
 [sub_resource type="Animation" id="Animation_rbp8u"]
 resource_name = "idle"
