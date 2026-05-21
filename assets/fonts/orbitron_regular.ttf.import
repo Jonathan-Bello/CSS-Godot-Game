@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://datg4jcoiiy65"
-path="res://.godot/imported/Quantico-Regular.ttf-540008328ddbf856c723a206253122dc.fontdata"
+uid="uid://rnnga167v0sa"
+path="res://.godot/imported/orbitron_regular.ttf-e66442aa2366e47f2464c3e7c1744bc6.fontdata"
 
 [deps]
 
-source_file="res://proto/assets/fonts/Quantico-Regular.ttf"
-dest_files=["res://.godot/imported/Quantico-Regular.ttf-540008328ddbf856c723a206253122dc.fontdata"]
+source_file="res://assets/fonts/orbitron_regular.ttf"
+dest_files=["res://.godot/imported/orbitron_regular.ttf-e66442aa2366e47f2464c3e7c1744bc6.fontdata"]
 
 [params]
 

@@ -189,7 +189,7 @@ func _read_editor_html_template() -> String:
 	return html
 
 func _read_overlay_font_data_uri() -> String:
-	var font_path := "res://proto/assets/fonts/Quantico-Regular.ttf"
+	var font_path := "res://assets/fonts/quantico_regular.ttf"
 	if not FileAccess.file_exists(font_path):
 		push_warning("[WebOverlay] No se encontró fuente OverlayDisplay: %s" % font_path)
 		return ""
