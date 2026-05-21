@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://proto/player/player.tscn" id="2_74bkv"]
 [ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://proto/assets/master_tileset_128x128.svg" id="2_odpp0"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://proto/scenes/control.gd" id="3_ydl1v"]
-[ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://proto/scenes/arena2D.gd" id="4_ydl1v"]
+[ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://proto/scenes/pilar_solar.gd" id="4_ydl1v"]
 [ext_resource type="PackedScene" path="res://proto/scenes/css_robot_enemy.tscn" id="5_enemy"]
 [ext_resource type="Texture2D" uid="uid://su71a5vycwmc" path="res://proto/background/Fondo.svg" id="7_073u2"]
 [ext_resource type="Texture2D" uid="uid://dtt3i7xixaiv7" path="res://proto/background/Intermedio.svg" id="8_odpp0"]
@@ -193,14 +193,14 @@ transparent = true
 focused_when_created = false
 layout_mode = 2
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(3803, 131)
+[node name="pilar_solar" type="Area2D" parent="."]
+position = Vector2(-1090, 1132)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("4_ydl1v")
 overlay_path = NodePath("../Player/Camera2D/Control/PanelContainer/WebView")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pilar_solar"]
 position = Vector2(33, 58.25)
 shape = SubResource("RectangleShape2D_ja6st")
 

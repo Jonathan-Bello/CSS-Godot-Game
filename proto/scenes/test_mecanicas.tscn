@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d3an4jopmv6jn" path="res://proto/background/Principal.svg" id="4_xj6eg"]
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://proto/player/player.tscn" id="5_g5tcw"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://proto/scenes/control.gd" id="7_j5shn"]
-[ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://proto/scenes/arena2D.gd" id="8_kb5v0"]
+[ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://proto/scenes/pilar_solar.gd" id="8_kb5v0"]
 [ext_resource type="PackedScene" path="res://proto/scenes/css_robot_enemy.tscn" id="9_5cevp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fon6p"]
