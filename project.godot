@@ -26,10 +26,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-CssAffinity="*res://proto/scenes/css_affinity.gd"
-CssUnlocks="*res://proto/scenes/css_unlocks.gd"
-FontBootstrap="*res://proto/scenes/font_bootstrap.gd"
-MovementUnlocks="*res://proto/scenes/movement_unlocks.gd"
+CssAffinity="*res://core/css_affinity.gd"
+CssUnlocks="*res://core/css_unlocks.gd"
+FontBootstrap="*res://core/font_bootstrap.gd"
+MovementUnlocks="*res://core/movement_unlocks.gd"
 
 [display]
 
