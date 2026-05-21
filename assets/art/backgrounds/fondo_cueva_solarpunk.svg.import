@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://proto/assets/backgrounds/fondo_cueva_solarpunk.svg"
+source_file="res://assets/art/backgrounds/fondo_cueva_solarpunk.svg"
 dest_files=["res://.godot/imported/fondo_cueva_solarpunk.svg-d5840e93761ae0e63986826ef2fa0a8f.ctex"]
 
 [params]

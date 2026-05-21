@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daelmy43x10pw"
-path="res://.godot/imported/bg_layer2_mountains.svg-80193328db7177a3a35b7dc7ab5d6e07.ctex"
+uid="uid://cw1hdwuoaoofy"
+path="res://.godot/imported/bg_layer3_trees.svg-be59d6058f93869dfb8f8e312fc6b614.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://proto/assets/backgrounds/bg_layer2_mountains.svg"
-dest_files=["res://.godot/imported/bg_layer2_mountains.svg-80193328db7177a3a35b7dc7ab5d6e07.ctex"]
+source_file="res://assets/art/backgrounds/bg_layer3_trees.svg"
+dest_files=["res://.godot/imported/bg_layer3_trees.svg-be59d6058f93869dfb8f8e312fc6b614.ctex"]
 
 [params]
 

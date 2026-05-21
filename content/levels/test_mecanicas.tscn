@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=4 uid="uid://6x2wq1l26whv"]
 
 [ext_resource type="Texture2D" uid="uid://ccp0ebwa3iv17" path="res://proto/assets/solarpunk_tileset.svg" id="1_ebgmp"]
-[ext_resource type="Texture2D" uid="uid://su71a5vycwmc" path="res://proto/assets/backgrounds/fondo_cueva_solarpunk.svg" id="2_scynr"]
-[ext_resource type="Texture2D" uid="uid://dtt3i7xixaiv7" path="res://proto/assets/backgrounds/bg_layer2_mountains.svg" id="3_tnhw0"]
-[ext_resource type="Texture2D" uid="uid://d3an4jopmv6jn" path="res://proto/assets/backgrounds/bg_layer1_sky.svg" id="4_xj6eg"]
+[ext_resource type="Texture2D" uid="uid://su71a5vycwmc" path="res://assets/art/backgrounds/fondo_cueva_solarpunk.svg" id="2_scynr"]
+[ext_resource type="Texture2D" uid="uid://dtt3i7xixaiv7" path="res://assets/art/backgrounds/bg_layer2_mountains.svg" id="3_tnhw0"]
+[ext_resource type="Texture2D" uid="uid://d3an4jopmv6jn" path="res://assets/art/backgrounds/bg_layer1_sky.svg" id="4_xj6eg"]
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://features/player/player.tscn" id="5_g5tcw"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://features/ui/hud/control.gd" id="7_j5shn"]
 [ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="8_kb5v0"]
