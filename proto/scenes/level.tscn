@@ -6,9 +6,6 @@
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://proto/scenes/control.gd" id="3_ydl1v"]
 [ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://proto/scenes/pilar_solar.gd" id="4_ydl1v"]
 [ext_resource type="PackedScene" path="res://proto/scenes/css_robot_enemy.tscn" id="5_enemy"]
-[ext_resource type="Texture2D" uid="uid://su71a5vycwmc" path="res://proto/background/Fondo.svg" id="7_073u2"]
-[ext_resource type="Texture2D" uid="uid://dtt3i7xixaiv7" path="res://proto/background/Intermedio.svg" id="8_odpp0"]
-[ext_resource type="Texture2D" uid="uid://d3an4jopmv6jn" path="res://proto/background/Principal.svg" id="9_86b2p"]
 [ext_resource type="Texture2D" uid="uid://dcbeggxo0ojg8" path="res://proto/assets/backgrounds/fondo_cueva_solarpunk.svg" id="15_57uqs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h60w4"]
@@ -150,6 +147,15 @@ sources/1 = SubResource("TileSetAtlasSource_86b2p")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ja6st"]
 size = Vector2(162, 130.5)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_clmlu"]
+load_path = "res://.godot/imported/Fondo.svg-736c17634a6edeed6519caa7b3b75ef4.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1cfuv"]
+load_path = "res://.godot/imported/Intermedio.svg-f01de8bbd7e3534304aeb43812f5355a.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_073u2"]
+load_path = "res://.godot/imported/Principal.svg-7220b846c9d8db2014e8977e0e700555.ctex"
+
 [node name="level" type="Node2D"]
 metadata/_edit_vertical_guides_ = [-692.0]
 
@@ -215,7 +221,7 @@ motion_mirroring = Vector2(7680, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(0, -2831)
-texture = ExtResource("7_073u2")
+texture = SubResource("CompressedTexture2D_clmlu")
 centered = false
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -224,7 +230,7 @@ motion_mirroring = Vector2(5760, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(0, -2667)
-texture = ExtResource("8_odpp0")
+texture = SubResource("CompressedTexture2D_1cfuv")
 centered = false
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -233,7 +239,7 @@ motion_mirroring = Vector2(4800, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
 position = Vector2(0, -2156)
-texture = ExtResource("9_86b2p")
+texture = SubResource("CompressedTexture2D_073u2")
 centered = false
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
