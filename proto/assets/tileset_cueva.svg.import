@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c21fm0pute65h"
-path="res://.godot/imported/base 1.svg-bd907e3a3c23f50e306a0d3ff8279b36.ctex"
+uid="uid://fulhv0a3r0x5"
+path="res://.godot/imported/tileset_cueva.svg-71e2f0697ffbd274094214ae431e07c4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://proto/assets/backgrounds/base 1.svg"
-dest_files=["res://.godot/imported/base 1.svg-bd907e3a3c23f50e306a0d3ff8279b36.ctex"]
+source_file="res://proto/assets/tileset_cueva.svg"
+dest_files=["res://.godot/imported/tileset_cueva.svg-71e2f0697ffbd274094214ae431e07c4.ctex"]
 
 [params]
 

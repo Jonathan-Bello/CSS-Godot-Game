@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgrqcvcvvybr6"
-path="res://.godot/imported/silla.svg-d51e498afdbc0db3dca3f787935ccbb3.ctex"
+uid="uid://h0ud0mdextd1"
+path="res://.godot/imported/master_tileset_128x128.svg-b492a9d7467d90d6746c31fae0da465d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://proto/assets/backgrounds/silla.svg"
-dest_files=["res://.godot/imported/silla.svg-d51e498afdbc0db3dca3f787935ccbb3.ctex"]
+source_file="res://proto/assets/master_tileset_128x128.svg"
+dest_files=["res://.godot/imported/master_tileset_128x128.svg-b492a9d7467d90d6746c31fae0da465d.ctex"]
 
 [params]
 
