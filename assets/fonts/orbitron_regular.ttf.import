@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://rnnga167v0sa"
-path="res://.godot/imported/orbitron_regular.ttf-e66442aa2366e47f2464c3e7c1744bc6.fontdata"
+path="res://.godot/imported/orbitron_regular.ttf-c952f517d46d285c9d484cd92dfe807d.fontdata"
 
 [deps]
 
 source_file="res://assets/fonts/orbitron_regular.ttf"
-dest_files=["res://.godot/imported/orbitron_regular.ttf-e66442aa2366e47f2464c3e7c1744bc6.fontdata"]
+dest_files=["res://.godot/imported/orbitron_regular.ttf-c952f517d46d285c9d484cd92dfe807d.fontdata"]
 
 [params]
 

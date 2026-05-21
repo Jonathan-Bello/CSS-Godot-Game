@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daelmy43x10pw"
-path="res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"
+uid="uid://ba8sa6eaun1xi"
+path="res://.godot/imported/Cintura.svg-8d3d6c3c95b172622389968a545b0e58.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/backgrounds/bg_layer2_mountains.svg"
-dest_files=["res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"]
+source_file="res://assets/art/player/candidates/Cintura.svg"
+dest_files=["res://.godot/imported/Cintura.svg-8d3d6c3c95b172622389968a545b0e58.ctex"]
 
 [params]
 

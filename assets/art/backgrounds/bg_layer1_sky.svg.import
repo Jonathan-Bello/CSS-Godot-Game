@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5a61o8awtcda"
-path="res://.godot/imported/bg_layer1_sky.svg-12dd2f5679b07bf3fe3024984e1e4bbe.ctex"
+path="res://.godot/imported/bg_layer1_sky.svg-744933e435103eb667939d0ed3ca45f3.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/art/backgrounds/bg_layer1_sky.svg"
-dest_files=["res://.godot/imported/bg_layer1_sky.svg-12dd2f5679b07bf3fe3024984e1e4bbe.ctex"]
+dest_files=["res://.godot/imported/bg_layer1_sky.svg-744933e435103eb667939d0ed3ca45f3.ctex"]
 
 [params]
 

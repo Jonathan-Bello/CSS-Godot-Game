@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daelmy43x10pw"
-path="res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"
+uid="uid://djvi82co46yv0"
+path="res://.godot/imported/scout_leg_right.svg-8b6b7a70863884ee4d1f804898c206bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/backgrounds/bg_layer2_mountains.svg"
-dest_files=["res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"]
+source_file="res://assets/art/robots/scout_side/scout_leg_right.svg"
+dest_files=["res://.godot/imported/scout_leg_right.svg-8b6b7a70863884ee4d1f804898c206bb.ctex"]
 
 [params]
 

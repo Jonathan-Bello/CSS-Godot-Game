@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://datg4jcoiiy65"
-path="res://.godot/imported/quantico_regular.ttf-540008328ddbf856c723a206253122dc.fontdata"
+path="res://.godot/imported/quantico_regular.ttf-c3abbe626e1cb0a2da7a48bed9879cdd.fontdata"
 
 [deps]
 
 source_file="res://assets/fonts/quantico_regular.ttf"
-dest_files=["res://.godot/imported/quantico_regular.ttf-540008328ddbf856c723a206253122dc.fontdata"]
+dest_files=["res://.godot/imported/quantico_regular.ttf-c3abbe626e1cb0a2da7a48bed9879cdd.fontdata"]
 
 [params]
 

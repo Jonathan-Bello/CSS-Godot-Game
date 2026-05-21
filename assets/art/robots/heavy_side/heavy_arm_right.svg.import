@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daelmy43x10pw"
-path="res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"
+uid="uid://dq76onc2wvy8c"
+path="res://.godot/imported/heavy_arm_right.svg-4a9889a5a448cad6ba66664200bc032b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/backgrounds/bg_layer2_mountains.svg"
-dest_files=["res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"]
+source_file="res://assets/art/robots/heavy_side/heavy_arm_right.svg"
+dest_files=["res://.godot/imported/heavy_arm_right.svg-4a9889a5a448cad6ba66664200bc032b.ctex"]
 
 [params]
 

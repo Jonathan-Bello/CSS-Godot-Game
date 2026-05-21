@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=4 uid="uid://bqqdr6qwiergq"]
 
-[ext_resource type="Texture2D" uid="uid://fulhv0a3r0x5" path="res://proto/assets/tileset_cueva.svg" id="1_86b2p"]
+[ext_resource type="Texture2D" uid="uid://fulhv0a3r0x5" path="res://assets/art/tilesets/tileset_cueva.svg" id="1_86b2p"]
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://features/player/player.tscn" id="2_74bkv"]
-[ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://proto/assets/master_tileset_128x128.svg" id="2_odpp0"]
+[ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://assets/art/tilesets/master_tileset_128x128.svg" id="2_odpp0"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://features/ui/hud/control.gd" id="3_ydl1v"]
 [ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="4_ydl1v"]
 [ext_resource type="PackedScene" path="res://features/enemies/css_robot_enemy.tscn" id="5_enemy"]

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cw1hdwuoaoofy"
-path="res://.godot/imported/bg_layer3_trees.svg-be59d6058f93869dfb8f8e312fc6b614.ctex"
+path="res://.godot/imported/bg_layer3_trees.svg-54c466036c68c3361fadf796347112b3.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/art/backgrounds/bg_layer3_trees.svg"
-dest_files=["res://.godot/imported/bg_layer3_trees.svg-be59d6058f93869dfb8f8e312fc6b614.ctex"]
+dest_files=["res://.godot/imported/bg_layer3_trees.svg-54c466036c68c3361fadf796347112b3.ctex"]
 
 [params]
 

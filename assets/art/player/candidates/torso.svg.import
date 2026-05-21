@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://daelmy43x10pw"
-path="res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"
+uid="uid://c5100spbecmcb"
+path="res://.godot/imported/torso.svg-01b6babf8331958535700daf00eb8658.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/backgrounds/bg_layer2_mountains.svg"
-dest_files=["res://.godot/imported/bg_layer2_mountains.svg-e91eece33593676f3c61bf21ffd9f3fd.ctex"]
+source_file="res://assets/art/player/candidates/torso.svg"
+dest_files=["res://.godot/imported/torso.svg-01b6babf8331958535700daf00eb8658.ctex"]
 
 [params]
 
