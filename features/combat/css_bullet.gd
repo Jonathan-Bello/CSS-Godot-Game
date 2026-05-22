@@ -18,6 +18,7 @@ var texture_size: Vector2 = Vector2(28, 16)
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 var _impacted: bool = false
+var shooter: Node = null
 
 func _ready() -> void:
 	# Conectar colisión para aplicar daño al tocar cuerpos.
@@ -40,6 +41,10 @@ func _physics_process(delta: float) -> void:
 	if _impacted:
 		return
 	global_position += direction.normalized() * speed * delta
+
+
+func set_shooter(owner_node: Node) -> void:
+	shooter = owner_node
 
 func setup_from_css(new_css_text: String, facing: int, new_speed: float, new_damage: int, aim_direction: Vector2 = Vector2.ZERO) -> void:
 	css_text = new_css_text
@@ -225,6 +230,8 @@ func _inside_rounded_rect(x: int, y: int, w: int, h: int, radius: int) -> bool:
 # Al impactar, envía perfil completo (daño base + propiedades CSS) al objetivo.
 func _on_body_entered(body: Node) -> void:
 	if body == null or _impacted:
+		return
+	if shooter != null and body == shooter:
 		return
 	if body.has_method("apply_css_bullet_hit"):
 		var bullet_profile := {

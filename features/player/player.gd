@@ -582,8 +582,8 @@ func _spawn_css_bullet(precomputed_stats: Dictionary = {}) -> void:
 		bullet.direction = aim_direction
 
 	get_tree().current_scene.add_child(bullet)
-	if bullet is CollisionObject2D:
-		(bullet as CollisionObject2D).add_collision_exception_with(self)
+	if bullet.has_method("set_shooter"):
+		bullet.call("set_shooter", self)
 
 func _update_shoot_arm_aim(_delta: float) -> void:
 	if shoot_arm_sprite:
