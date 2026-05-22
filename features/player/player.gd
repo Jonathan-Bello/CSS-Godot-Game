@@ -188,6 +188,7 @@ var attack_timer := 0.0
 # Cooldown entre disparos/cadencia real (calculada por tamaño de bala).
 var attack_cooldown_timer := 0.0
 var lock_controls := false # micro “hit-stop” al atacar
+var overlay_blocks_movement := false
 
 
 # ─────────────────────────────────────────────────────────
@@ -204,6 +205,7 @@ var lock_controls := false # micro “hit-stop” al atacar
 @onready var lbl_state: Label = get_node_or_null(lbl_state_path)
 @onready var lbl_vel: Label = get_node_or_null(lbl_vel_path)
 @onready var lbl_flags: Label = get_node_or_null(lbl_flags_path)
+@onready var web_overlay: Node = get_tree().get_first_node_in_group("web_overlay")
 
 
 # ============================================================================
@@ -223,6 +225,11 @@ func _ready() -> void:
 	if attack_area:
 		attack_area.monitoring = false
 		attack_area.visible = false
+	if web_overlay:
+		if web_overlay.has_signal("overlay_opened") and not web_overlay.is_connected("overlay_opened", Callable(self, "_on_overlay_opened")):
+			web_overlay.connect("overlay_opened", Callable(self, "_on_overlay_opened"))
+		if web_overlay.has_signal("overlay_closed") and not web_overlay.is_connected("overlay_closed", Callable(self, "_on_overlay_closed")):
+			web_overlay.connect("overlay_closed", Callable(self, "_on_overlay_closed"))
 	# Arrancamos en idle
 	_play_if_changed(&"idle", true)
 
@@ -264,13 +271,13 @@ func _physics_process(delta: float) -> void:
 	var want_down := Input.is_action_pressed("move_down")
 
 	# 3) Saltos (coyote+buffer+doble) y dash / ataque
-	if not lock_controls:
+	if not lock_controls and not overlay_blocks_movement:
 		_handle_jump_buffer()
 		_handle_dash(dir)
 		_handle_attack_input()
 
 	# 4) Movimiento horizontal (no durante dash/attack, ni en push lock)
-	if state != State.DASH and state != State.ATTACK and wall_jump_lock_timer <= 0.0 and not lock_controls:
+	if state != State.DASH and wall_jump_lock_timer <= 0.0 and not lock_controls and not overlay_blocks_movement:
 		_hmove(dir, delta)
 
 	# 5) Gravedad HK-like
@@ -501,7 +508,6 @@ func _handle_attack_input() -> void:
 func _attack(dir: Direction) -> void:
 	state = State.ATTACK
 	attack_timer = ATTACK_TIME
-	velocity.x = 0.0
 
 	if attack_area:
 		match dir:
@@ -758,6 +764,18 @@ func _draw() -> void:
 	draw_line(bone_pos, tip_pos, Color(1.0, 0.2, 0.2, 0.95), 3.0)
 	draw_circle(bone_pos, 4.0, Color(0.2, 1.0, 0.2, 0.9))
 	draw_circle(tip_pos, 3.0, Color(1.0, 1.0, 0.2, 0.9))
+
+
+func _on_overlay_opened() -> void:
+	overlay_blocks_movement = true
+	velocity = Vector2.ZERO
+	state = State.IDLE
+	_play_if_changed(&"idle", true)
+	print("[Player] Overlay abierto -> forzando Idle y bloqueando movimiento")
+
+func _on_overlay_closed() -> void:
+	overlay_blocks_movement = false
+	print("[Player] Overlay cerrado -> restaurando control de movimiento")
 
 # ============================================================================
 # DEBUG — Labels
