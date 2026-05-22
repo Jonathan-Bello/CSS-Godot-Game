@@ -24,6 +24,7 @@ extends CanvasLayer
 @onready var boss_name_label: Label = %BossNameLabel
 @onready var solar_container: HBoxContainer = %SolarChargesContainer
 @onready var emis_badge: Label = %EmisBadge
+@onready var shoot_delay_bar: ProgressBar = %ShootDelayBar
 
 func _ready() -> void:
 	add_to_group("main_hud")
@@ -73,3 +74,8 @@ func _update_solar_charges() -> void:
 			continue
 		icon.visible = i < unlocked_solar_charges
 		icon.modulate = Color(1, 1, 1, 1.0) if i < solar_charges else Color(0.22, 0.22, 0.22, 0.2)
+
+func set_shoot_delay_progress(progress_ratio: float) -> void:
+	if shoot_delay_bar == null:
+		return
+	shoot_delay_bar.value = clampf(progress_ratio, 0.0, 1.0) * 100.0
