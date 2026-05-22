@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1d3uxm4mejb3"
-path="res://.godot/imported/cabeza.svg-085a33f292f24389d578305d56cd46dd.ctex"
+uid="uid://nlbupenhrcoc"
+path="res://.godot/imported/hemis.svg-eff0319d10cdd0471be5d5009c0585f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/player/candidates/cabeza.svg"
-dest_files=["res://.godot/imported/cabeza.svg-085a33f292f24389d578305d56cd46dd.ctex"]
+source_file="res://assets/art/player/hemis.svg"
+dest_files=["res://.godot/imported/hemis.svg-eff0319d10cdd0471be5d5009c0585f4.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctsix0e0hddcp"
-path="res://.godot/imported/piernaI.svg-56dd496e3d477a64e43456d2af9d0864.ctex"
+uid="uid://ba8sa6eaun1xi"
+path="res://.godot/imported/Cintura.svg-fb20eecc067c69c19aa0fced3b966a72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/player/candidates/piernaI.svg"
-dest_files=["res://.godot/imported/piernaI.svg-56dd496e3d477a64e43456d2af9d0864.ctex"]
+source_file="res://assets/art/player/body/Cintura.svg"
+dest_files=["res://.godot/imported/Cintura.svg-fb20eecc067c69c19aa0fced3b966a72.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpg338b4sut41"
-path="res://.godot/imported/frame_39.png-ea478a56f98436037f93f4112e7b8be7.ctex"
+uid="uid://dvjqdd0lhaorh"
+path="res://.godot/imported/brazoD.svg-c55737530f92c7c0aa8f3aafeb34d70e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/player/candidates/frame_39.png"
-dest_files=["res://.godot/imported/frame_39.png-ea478a56f98436037f93f4112e7b8be7.ctex"]
+source_file="res://assets/art/player/body/brazoD.svg"
+dest_files=["res://.godot/imported/brazoD.svg-c55737530f92c7c0aa8f3aafeb34d70e.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

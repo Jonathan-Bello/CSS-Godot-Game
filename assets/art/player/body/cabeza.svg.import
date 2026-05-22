@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d6d8lp4kqlb3"
-path="res://.godot/imported/brazoI.svg-4db6a2ddc2bf62da5b163d0d6097e011.ctex"
+uid="uid://1d3uxm4mejb3"
+path="res://.godot/imported/cabeza.svg-296d7fd044ef4f0f35d2b13f1a7b1489.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/player/candidates/brazoI.svg"
-dest_files=["res://.godot/imported/brazoI.svg-4db6a2ddc2bf62da5b163d0d6097e011.ctex"]
+source_file="res://assets/art/player/body/cabeza.svg"
+dest_files=["res://.godot/imported/cabeza.svg-296d7fd044ef4f0f35d2b13f1a7b1489.ctex"]
 
 [params]
 

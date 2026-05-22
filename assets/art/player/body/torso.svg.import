@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba8sa6eaun1xi"
-path="res://.godot/imported/Cintura.svg-8d3d6c3c95b172622389968a545b0e58.ctex"
+uid="uid://c5100spbecmcb"
+path="res://.godot/imported/torso.svg-796db58108f1bc25974e76c7090bc455.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/player/candidates/Cintura.svg"
-dest_files=["res://.godot/imported/Cintura.svg-8d3d6c3c95b172622389968a545b0e58.ctex"]
+source_file="res://assets/art/player/body/torso.svg"
+dest_files=["res://.godot/imported/torso.svg-796db58108f1bc25974e76c7090bc455.ctex"]
 
 [params]
 
