@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://6x2wq1l26whv"]
+[gd_scene load_steps=14 format=4 uid="uid://6x2wq1l26whv"]
 
 [ext_resource type="Texture2D" uid="uid://ccp0ebwa3iv17" path="res://proto/assets/solarpunk_tileset.svg" id="1_ebgmp"]
 [ext_resource type="Texture2D" uid="uid://su71a5vycwmc" path="res://assets/art/backgrounds/fondo_cueva_solarpunk.svg" id="2_scynr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="8_kb5v0"]
 [ext_resource type="PackedScene" path="res://features/enemies/css_robot_enemy.tscn" id="9_5cevp"]
 [ext_resource type="PackedScene" path="res://features/obstacles/css_destructible_block.tscn" id="10_3yw8v"]
+[ext_resource type="PackedScene" path="res://features/obstacles/css_toggle_platform.tscn" id="11_qk3mn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fon6p"]
 texture = ExtResource("1_ebgmp")
@@ -139,6 +140,15 @@ position = Vector2(1670, -80)
 [node name="CssDestructibleBlock" parent="." instance=ExtResource("10_3yw8v")]
 position = Vector2(1305, 42)
 max_health = 3
+css_metadata = {
+"properties": {
+"background-color": "red"
+}
+}
+
+[node name="CssTogglePlatform" parent="." instance=ExtResource("11_qk3mn")]
+position = Vector2(1468, 42)
+starts_active = false
 css_metadata = {
 "properties": {
 "background-color": "red"
