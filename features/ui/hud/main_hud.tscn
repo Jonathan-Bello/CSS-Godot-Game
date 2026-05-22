@@ -15,6 +15,13 @@ bg_color = Color(0.0470588, 0.054902, 0.0941176, 0.85)
 [sub_resource type="StyleBoxFlat" id="2"]
 bg_color = Color(0.964706, 0.552941, 0.176471, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shoot_bg"]
+bg_color = Color(0.42, 0.42, 0.42, 0.9)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shoot_fill"]
+bg_color = Color(0.17, 0.88, 0.45, 1)
+
+
 [node name="MainHUD" type="CanvasLayer"]
 layer = 5
 script = ExtResource("1")
@@ -58,9 +65,11 @@ stretch_mode = 5
 
 [node name="ShootDelayBar" type="ProgressBar" parent="TopLeft/Content/TopRow/PortraitBlock"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(12, 3)
+custom_minimum_size = Vector2(12, 6)
 value = 40.0
 show_percentage = false
+theme_override_styles/background = SubResource("StyleBoxFlat_shoot_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_shoot_fill")
 
 [node name="HealthSlotsContainer" type="HBoxContainer" parent="TopLeft/Content/TopRow"]
 unique_name_in_owner = true
@@ -158,27 +167,27 @@ alignment = 1
 theme_override_constants/separation = 20
 
 [node name="Charge1" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(62, 62)
+custom_minimum_size = Vector2(66, 66)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge2" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(62, 62)
+custom_minimum_size = Vector2(66, 66)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge3" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(62, 62)
+custom_minimum_size = Vector2(66, 66)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge4" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(62, 62)
+custom_minimum_size = Vector2(66, 66)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge5" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(62, 62)
+custom_minimum_size = Vector2(66, 66)
 texture = ExtResource("2")
 stretch_mode = 5
 

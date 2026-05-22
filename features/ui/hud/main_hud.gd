@@ -73,7 +73,7 @@ func _update_solar_charges() -> void:
 		if icon == null:
 			continue
 		icon.visible = i < unlocked_solar_charges
-		icon.modulate = Color(1, 1, 1, 1.0) if i < solar_charges else Color(0.22, 0.22, 0.22, 0.2)
+		icon.modulate = Color(1, 1, 1, 1.0) if i < solar_charges else Color(0.45, 0.45, 0.45, 0.5)
 
 func set_shoot_delay_progress(progress_ratio: float) -> void:
 	if shoot_delay_bar == null:
