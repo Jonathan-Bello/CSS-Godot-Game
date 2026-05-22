@@ -201,6 +201,8 @@ transparent = true
 focused_when_created = false
 layout_mode = 2
 
+[node name="MainHUD" parent="Player/Camera2D" instance=ExtResource("6_hud")]
+
 [node name="pilar_solar" type="Area2D" parent="."]
 position = Vector2(-1090, 1132)
 collision_layer = 2

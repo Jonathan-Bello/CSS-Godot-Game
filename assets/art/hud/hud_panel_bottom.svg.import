@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6r3pmeaffncq"
-path="res://.godot/imported/emis.svg-6623a6e4d405f487276606a063e99e5c.ctex"
+uid="uid://ddl4i7reph2q5"
+path="res://.godot/imported/hud_panel_bottom.svg-64f67a374e40ae0e1617994d35b242db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/hud/emis.svg"
-dest_files=["res://.godot/imported/emis.svg-6623a6e4d405f487276606a063e99e5c.ctex"]
+source_file="res://assets/art/hud/hud_panel_bottom.svg"
+dest_files=["res://.godot/imported/hud_panel_bottom.svg-64f67a374e40ae0e1617994d35b242db.ctex"]
 
 [params]
 

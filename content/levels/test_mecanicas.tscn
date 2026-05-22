@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://features/player/player.tscn" id="5_g5tcw"]
 [ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://assets/art/tilesets/master_tileset_128x128.svg" id="7_a3prg"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://features/ui/hud/control.gd" id="7_j5shn"]
+[ext_resource type="PackedScene" path="res://features/ui/hud/main_hud.tscn" id="10_hud"]
 [ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="8_kb5v0"]
 [ext_resource type="PackedScene" path="res://features/enemies/css_robot_enemy.tscn" id="9_5cevp"]
 [ext_resource type="PackedScene" uid="uid://d1r7i8x8fvl3j" path="res://features/obstacles/css_destructible_block.tscn" id="10_3yw8v"]
@@ -1604,6 +1605,8 @@ offset_bottom = 40.0
 transparent = true
 focused_when_created = false
 layout_mode = 2
+
+[node name="MainHUD" parent="Player/Camera2D" instance=ExtResource("10_hud")]
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(844, 63)
