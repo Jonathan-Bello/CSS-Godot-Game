@@ -46,10 +46,20 @@ offset_bottom = -12.0
 
 [node name="TopRow" type="HBoxContainer" parent="TopLeft/Content"]
 
-[node name="Portrait" type="TextureRect" parent="TopLeft/Content/TopRow"]
-custom_minimum_size = Vector2(20, 20)
+[node name="PortraitBlock" type="VBoxContainer" parent="TopLeft/Content/TopRow"]
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Portrait" type="TextureRect" parent="TopLeft/Content/TopRow/PortraitBlock"]
+custom_minimum_size = Vector2(16, 16)
 texture = ExtResource("4")
 stretch_mode = 5
+
+[node name="ShootDelayBar" type="ProgressBar" parent="TopLeft/Content/TopRow/PortraitBlock"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 4)
+value = 40.0
+show_percentage = false
 
 [node name="HealthSlotsContainer" type="HBoxContainer" parent="TopLeft/Content/TopRow"]
 unique_name_in_owner = true
@@ -83,12 +93,6 @@ texture = ExtResource("5")
 stretch_mode = 5
 
 
-[node name="ShootDelayBar" type="ProgressBar" parent="TopLeft/Content"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 8)
-value = 40.0
-show_percentage = false
-
 [node name="BossBarContainer" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 anchors_preset = 10
@@ -116,8 +120,8 @@ anchors_preset = 3
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = -100.0
-offset_right = 330.0
+offset_top = -130.0
+offset_right = 430.0
 offset_bottom = -16.0
 
 [node name="Panel" type="Panel" parent="BottomLeft"]
@@ -136,30 +140,30 @@ offset_bottom = -8.0
 unique_name_in_owner = true
 size_flags_horizontal = 3
 alignment = 1
-theme_override_constants/separation = 18
+theme_override_constants/separation = 20
 
 [node name="Charge1" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(48, 48)
+custom_minimum_size = Vector2(62, 62)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge2" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(48, 48)
+custom_minimum_size = Vector2(62, 62)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge3" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(48, 48)
+custom_minimum_size = Vector2(62, 62)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge4" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(48, 48)
+custom_minimum_size = Vector2(62, 62)
 texture = ExtResource("2")
 stretch_mode = 5
 
 [node name="Charge5" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
-custom_minimum_size = Vector2(48, 48)
+custom_minimum_size = Vector2(62, 62)
 texture = ExtResource("2")
 stretch_mode = 5
 
