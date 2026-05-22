@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c0hudmainscene"]
+[gd_scene load_steps=15 format=3 uid="uid://c0hudmainscene"]
 
 [ext_resource type="Script" path="res://features/ui/hud/main_hud.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/art/hud/solar_charge.svg" id="2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" path="res://assets/art/hud/health_slot_trapezoid.svg" id="5"]
 [ext_resource type="FontFile" path="res://assets/fonts/quantico_regular.ttf" id="6"]
 [ext_resource type="Texture2D" path="res://assets/art/hud/hud_panel_life.svg" id="7"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/hud_panel_bottom.svg" id="8"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0.0470588, 0.054902, 0.0941176, 0.85)
@@ -119,22 +120,34 @@ theme_override_styles/fill = SubResource("2")
 anchors_preset = 3
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -130.0
-offset_right = 430.0
-offset_bottom = -16.0
+offset_left = 0.0
+offset_top = -122.0
+offset_right = 419.0
+offset_bottom = 0.0
+
+[node name="BottomBg" type="TextureRect" parent="BottomLeft"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("8")
+stretch_mode = 6
 
 [node name="Panel" type="Panel" parent="BottomLeft"]
-theme_override_styles/panel = SubResource("1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+modulate = Color(1, 1, 1, 0)
 
 [node name="VBox" type="VBoxContainer" parent="BottomLeft/Panel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -8.0
+offset_left = 18.0
+offset_top = 26.0
+offset_right = -18.0
+offset_bottom = -10.0
 
 [node name="SolarChargesContainer" type="HBoxContainer" parent="BottomLeft/Panel/VBox"]
 unique_name_in_owner = true
@@ -173,13 +186,26 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -132.0
-offset_top = -132.0
-offset_right = -16.0
-offset_bottom = -16.0
+offset_left = -419.0
+offset_top = -122.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="BottomBg" type="TextureRect" parent="BottomRight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("8")
+stretch_mode = 6
+flip_h = true
 
 [node name="Panel" type="Panel" parent="BottomRight"]
-theme_override_styles/panel = SubResource("1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+modulate = Color(1, 1, 1, 0)
 
 [node name="EmisButton" type="TextureButton" parent="BottomRight/Panel"]
 anchors_preset = 8
@@ -187,10 +213,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -32.0
-offset_right = 32.0
-offset_bottom = 32.0
+offset_left = -28.0
+offset_top = -6.0
+offset_right = 36.0
+offset_bottom = 58.0
 texture_normal = ExtResource("3")
 ignore_texture_size = true
 stretch_mode = 5
