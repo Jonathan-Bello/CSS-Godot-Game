@@ -17,10 +17,13 @@ var texture_size: Vector2 = Vector2(28, 16)
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
+var _impacted: bool = false
+var shooter: Node = null
 
 func _ready() -> void:
 	# Conectar colisión para aplicar daño al tocar cuerpos.
 	body_entered.connect(_on_body_entered)
+	area_entered.connect(_on_area_entered)
 	# Si faltan datos preprocesados, se derivan desde css_text.
 	if css_rules.is_empty() and css_text != "":
 		css_rules = _extract_rules(css_text)
@@ -36,7 +39,13 @@ func _ready() -> void:
 	timer.timeout.connect(queue_free)
 
 func _physics_process(delta: float) -> void:
+	if _impacted:
+		return
 	global_position += direction.normalized() * speed * delta
+
+
+func set_shooter(owner_node: Node) -> void:
+	shooter = owner_node
 
 func setup_from_css(new_css_text: String, facing: int, new_speed: float, new_damage: int, aim_direction: Vector2 = Vector2.ZERO) -> void:
 	css_text = new_css_text
@@ -219,11 +228,25 @@ func _inside_rounded_rect(x: int, y: int, w: int, h: int, radius: int) -> bool:
 			return true
 	return false
 
-# Al impactar, envía perfil completo (daño base + propiedades CSS) al objetivo.
-func _on_body_entered(body: Node) -> void:
-	if body == null:
+
+func _process_hit_target(target: Node) -> void:
+	if target == null or _impacted:
 		return
-	if body.has_method("apply_css_bullet_hit"):
+	if shooter != null:
+		if target == shooter:
+			return
+		# Ignora cualquier colisión contra nodos del propio jugador (hijos/padres).
+		if shooter.is_ancestor_of(target):
+			return
+		if target is Node and target.is_ancestor_of(shooter):
+			return
+	var receiver: Node = target
+	if not receiver.has_method("apply_css_bullet_hit") and receiver.get_parent() != null:
+		var maybe_parent := receiver.get_parent()
+		if shooter == null or (maybe_parent != shooter and not shooter.is_ancestor_of(maybe_parent)):
+			if maybe_parent.has_method("apply_css_bullet_hit"):
+				receiver = maybe_parent
+	if receiver.has_method("apply_css_bullet_hit"):
 		var bullet_profile := {
 			"base_damage": damage,
 			"damage": damage,
@@ -231,5 +254,27 @@ func _on_body_entered(body: Node) -> void:
 			"properties": css_properties,
 			"css_text": css_text
 		}
-		body.call("apply_css_bullet_hit", bullet_profile)
-	queue_free()
+		receiver.call("apply_css_bullet_hit", bullet_profile)
+	_destroy_on_impact()
+
+func _on_area_entered(area: Area2D) -> void:
+	_process_hit_target(area)
+
+# Al impactar, envía perfil completo (daño base + propiedades CSS) al objetivo.
+func _on_body_entered(body: Node) -> void:
+	_process_hit_target(body)
+
+func _destroy_on_impact() -> void:
+	if _impacted:
+		return
+	_impacted = true
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
+	if collision:
+		collision.set_deferred("disabled", true)
+	if sprite:
+		var tw := create_tween()
+		tw.tween_property(sprite, "modulate:a", 0.0, 0.08)
+		tw.tween_callback(queue_free)
+	else:
+		queue_free()

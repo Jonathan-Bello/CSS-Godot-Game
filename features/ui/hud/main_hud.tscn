@@ -1,15 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://p2hgwgl8heg1"]
+[gd_scene load_steps=24 format=3 uid="uid://01hx4wpcphus"]
 
-[ext_resource type="Script" uid="uid://1bsajhtwutlj" path="res://features/ui/hud/main_hud.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://cacinkgpsh44f" path="res://assets/art/hud/solar_charge.svg" id="2"]
-[ext_resource type="Texture2D" uid="uid://6r3pmeaffncq" path="res://assets/art/hud/emis.svg" id="3"]
+[ext_resource type="Script" path="res://features/ui/hud/main_hud.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://x3w00la3r7np" path="res://assets/art/hud/solar_charge.svg" id="2"]
+[ext_resource type="Texture2D" uid="uid://bt6u7nwdwuv6t" path="res://assets/art/hud/emis.svg" id="3"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="3_8elgk"]
 [ext_resource type="Texture2D" uid="uid://1d3uxm4mejb3" path="res://assets/art/player/body/cabeza.svg" id="4"]
 [ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="4_s52bx"]
-[ext_resource type="Texture2D" uid="uid://d4hltfrbn35mc" path="res://assets/art/hud/health_slot_trapezoid.svg" id="5"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/health_slot_trapezoid.svg" id="5"]
 [ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="5_w3ahd"]
-[ext_resource type="Texture2D" uid="uid://dkhmymh2qg1cu" path="res://assets/art/hud/hud_panel_life.svg" id="7"]
-[ext_resource type="Texture2D" uid="uid://ddl4i7reph2q5" path="res://assets/art/hud/hud_panel_bottom.svg" id="8"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/hud_panel_life.svg" id="7"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/hud_panel_bottom.svg" id="8"]
 
 [sub_resource type="Curve2D" id="Curve2D_p6oxp"]
 resource_local_to_scene = true

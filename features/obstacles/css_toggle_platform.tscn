@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4e1e1ik2l6gt"]
+
+[ext_resource type="Script" path="res://features/obstacles/css_toggle_platform.gd" id="1_ya0wd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6w8r"]
+size = Vector2(128, 128)
+
+[node name="CssTogglePlatform" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ya0wd")
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+color = Color(0.75, 0.85, 1, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+centered = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+disabled = true
+shape = SubResource("RectangleShape2D_s6w8r")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("RectangleShape2D_s6w8r")
