@@ -65,6 +65,7 @@ extends CharacterBody2D
 @export var LOW_JUMP_MULTIPLIER: float = 2.4
 ## Fast-fall al mantener abajo durante la caída.
 @export var FAST_FALL_MULTIPLIER: float = 2.6
+@export var ENABLE_FAST_FALL: bool = false
 ## Umbral de ápice (zona donde “flota” un poquito).
 @export var APEX_THRESHOLD: float = 120.0
 ## Escala de gravedad en el ápice.
@@ -126,10 +127,12 @@ extends CharacterBody2D
 
 @export_group("Disparo CSS")
 @export var bullet_scene: PackedScene = preload("res://features/combat/css_bullet.tscn")
-@export var bullet_speed: float = 1300.0
+@export var bullet_speed: float = 1800.0
 @export var bullet_damage: int = 1
 @export var bullet_balance_reference_size: Vector2 = Vector2(28, 16)
-@export var bullet_speed_min_factor: float = 0.55
+# Velocidad final = bullet_speed * speed_factor.
+# Las balas grandes tienden al mínimo (bullet_speed_min_factor).
+@export var bullet_speed_min_factor: float = 0.9
 @export var bullet_speed_max_factor: float = 1.85
 @export var bullet_damage_min_factor: float = 0.6
 @export var bullet_damage_max_factor: float = 2.8
@@ -188,6 +191,7 @@ var attack_timer := 0.0
 # Cooldown entre disparos/cadencia real (calculada por tamaño de bala).
 var attack_cooldown_timer := 0.0
 var lock_controls := false # micro “hit-stop” al atacar
+var overlay_blocks_movement := false
 
 
 # ─────────────────────────────────────────────────────────
@@ -204,6 +208,7 @@ var lock_controls := false # micro “hit-stop” al atacar
 @onready var lbl_state: Label = get_node_or_null(lbl_state_path)
 @onready var lbl_vel: Label = get_node_or_null(lbl_vel_path)
 @onready var lbl_flags: Label = get_node_or_null(lbl_flags_path)
+@onready var web_overlay: Node = get_tree().get_first_node_in_group("web_overlay")
 
 
 # ============================================================================
@@ -223,6 +228,11 @@ func _ready() -> void:
 	if attack_area:
 		attack_area.monitoring = false
 		attack_area.visible = false
+	if web_overlay:
+		if web_overlay.has_signal("overlay_opened") and not web_overlay.is_connected("overlay_opened", Callable(self, "_on_overlay_opened")):
+			web_overlay.connect("overlay_opened", Callable(self, "_on_overlay_opened"))
+		if web_overlay.has_signal("overlay_closed") and not web_overlay.is_connected("overlay_closed", Callable(self, "_on_overlay_closed")):
+			web_overlay.connect("overlay_closed", Callable(self, "_on_overlay_closed"))
 	# Arrancamos en idle
 	_play_if_changed(&"idle", true)
 
@@ -264,13 +274,13 @@ func _physics_process(delta: float) -> void:
 	var want_down := Input.is_action_pressed("move_down")
 
 	# 3) Saltos (coyote+buffer+doble) y dash / ataque
-	if not lock_controls:
+	if not lock_controls and not overlay_blocks_movement:
 		_handle_jump_buffer()
 		_handle_dash(dir)
 		_handle_attack_input()
 
 	# 4) Movimiento horizontal (no durante dash/attack, ni en push lock)
-	if state != State.DASH and state != State.ATTACK and wall_jump_lock_timer <= 0.0 and not lock_controls:
+	if state != State.DASH and wall_jump_lock_timer <= 0.0 and not lock_controls and not overlay_blocks_movement:
 		_hmove(dir, delta)
 
 	# 5) Gravedad HK-like
@@ -383,7 +393,7 @@ func _apply_gravity(delta: float, want_down: bool) -> void:
 
 	var g := GRAVITY
 	if velocity.y > 0.0: g *= FALL_MULTIPLIER # caer más pesado
-	if want_down and velocity.y > 0.0: g *= FAST_FALL_MULTIPLIER # fast-fall
+	if ENABLE_FAST_FALL and want_down and velocity.y > 0.0: g *= FAST_FALL_MULTIPLIER # fast-fall
 	if abs(velocity.y) <= APEX_THRESHOLD: g *= APEX_GRAVITY_SCALE # “flotita”
 
 	velocity.y = min(velocity.y + g * delta, MAX_FALL_SPEED)
@@ -501,7 +511,6 @@ func _handle_attack_input() -> void:
 func _attack(dir: Direction) -> void:
 	state = State.ATTACK
 	attack_timer = ATTACK_TIME
-	velocity.x = 0.0
 
 	if attack_area:
 		match dir:
@@ -518,10 +527,12 @@ func _attack(dir: Direction) -> void:
 		attack_area.monitoring = true
 		attack_area.visible = true
 
-	var clip := &"attack"
-	if dir == Direction.UP: clip = &"attack_up"
-	if dir == Direction.DOWN: clip = &"attack_down"
-	_play_if_changed(clip, false)
+	var moving_on_floor :Variant = is_on_floor() and abs(velocity.x) > RUN_THRESHOLD
+	if not moving_on_floor:
+		var clip := &"attack"
+		if dir == Direction.UP: clip = &"attack_up"
+		if dir == Direction.DOWN: clip = &"attack_down"
+		_play_if_changed(clip, false)
 	# Se calculan stats una sola vez por disparo para consistencia de velocidad,
 	# daño y cadencia de esa bala.
 	var tuned_stats := _compute_bullet_stats_from_profile()
@@ -758,6 +769,18 @@ func _draw() -> void:
 	draw_line(bone_pos, tip_pos, Color(1.0, 0.2, 0.2, 0.95), 3.0)
 	draw_circle(bone_pos, 4.0, Color(0.2, 1.0, 0.2, 0.9))
 	draw_circle(tip_pos, 3.0, Color(1.0, 1.0, 0.2, 0.9))
+
+
+func _on_overlay_opened() -> void:
+	overlay_blocks_movement = true
+	velocity = Vector2.ZERO
+	state = State.IDLE
+	_play_if_changed(&"idle", true)
+	print("[Player] Overlay abierto -> forzando Idle y bloqueando movimiento")
+
+func _on_overlay_closed() -> void:
+	overlay_blocks_movement = false
+	print("[Player] Overlay cerrado -> restaurando control de movimiento")
 
 # ============================================================================
 # DEBUG — Labels
