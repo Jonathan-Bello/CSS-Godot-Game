@@ -1,32 +1,36 @@
 extends Area2D
 
+@export_group("Interacción")
 @export var overlay_path: NodePath = ^"../Player/Camera2D/Control"
 @export var player_group: StringName = &"player"
 @export var interact_action: StringName = &"interact"
 
+@export_group("Visual")
+@export_node_path("Sprite2D") var pillar_sprite_path: NodePath = ^"Sprite2D"
+@export var unlit_region: Rect2 = Rect2(384.0, 256.0, 128.0, 128.0)
+@export var lit_region: Rect2 = Rect2(512.0, 256.0, 128.0, 128.0)
+@export var light_up_duration: float = 0.35
+
 var overlay: Node = null
 var player_in_range := false
 var current_player: Node = null
+var is_lit := false
+
+@onready var pillar_sprite: Sprite2D = get_node_or_null(pillar_sprite_path)
+@onready var main_hud: Node = get_tree().get_first_node_in_group("main_hud")
 
 func _ready() -> void:
-	print("[CssTerminal] READY overlay_path=", overlay_path)
 	var n := get_node_or_null(overlay_path)
 	if n == null:
 		n = get_tree().get_first_node_in_group("web_overlay")
 	overlay = _find_overlay_node(n)
-	if overlay:
-		var scr: Script = overlay.get_script() as Script
-		var scr_path: String = scr.resource_path if scr != null else "<sin script>"
-		print("[CssTerminal] overlay FINAL -> ", overlay.get_path(),
-			" class=", overlay.get_class(), " has_open?=", overlay.has_method("open"),
-			" script.path=", scr_path)
-	else:
-		push_warning("[CssTerminal] No pude resolver overlay. Revisa overlay_path o el grupo 'web_overlay'.")
 
 	if not is_connected("body_entered", Callable(self, "_on_body_entered")):
 		connect("body_entered", Callable(self, "_on_body_entered"))
 	if not is_connected("body_exited", Callable(self, "_on_body_exited")):
 		connect("body_exited", Callable(self, "_on_body_exited"))
+
+	_apply_pillar_state(false)
 
 func _find_overlay_node(start: Node) -> Node:
 	var p := start
@@ -40,21 +44,40 @@ func _input(event: InputEvent) -> void:
 	if not player_in_range:
 		return
 	if event.is_action_pressed(interact_action):
-		print("[CssTerminal] input detectado -> acción '", interact_action, "' | in_range=", player_in_range, " | overlay_ok=", overlay != null)
-		if overlay:
-			print("[CssTerminal] → overlay.open() por tecla en ", overlay.get_path())
-			overlay.call("open")
+		_rest_at_pillar()
+
+func _rest_at_pillar() -> void:
+	if overlay:
+		overlay.call("open")
+	if main_hud and main_hud.has_method("restore_all"):
+		main_hud.call("restore_all")
+	if not is_lit:
+		await _animate_light_up()
+		is_lit = true
+
+func _animate_light_up() -> void:
+	if pillar_sprite == null:
+		return
+	var tween := create_tween()
+	tween.tween_property(pillar_sprite, "modulate", Color(1.2, 1.2, 1.2, 1.0), light_up_duration * 0.5)
+	tween.tween_callback(func() -> void:
+		_apply_pillar_state(true)
+	)
+	tween.tween_property(pillar_sprite, "modulate", Color(1.0, 1.0, 1.0, 1.0), light_up_duration * 0.5)
+	await tween.finished
+
+func _apply_pillar_state(lit: bool) -> void:
+	if pillar_sprite == null:
+		return
+	pillar_sprite.region_enabled = true
+	pillar_sprite.region_rect = lit_region if lit else unlit_region
 
 func _on_body_entered(body: Node) -> void:
-	print("[CssTerminal] body_entered: ", body.name, " groups=", body.get_groups())
 	if body.is_in_group(player_group):
 		player_in_range = true
 		current_player = body
-		print("[CssTerminal] Jugador en rango del pilar. Pulsa '", interact_action, "' para abrir panel.")
 
 func _on_body_exited(body: Node) -> void:
-	print("[CssTerminal] body_exited: ", body.name)
 	if body == current_player:
 		player_in_range = false
 		current_player = null
-		print("[CssTerminal] Jugador salió del rango del pilar.")

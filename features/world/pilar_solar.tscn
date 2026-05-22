@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2wvgqwo2u3un"]
+
+[ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="1_jn6lr"]
+[ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://assets/art/tilesets/master_tileset_128x128.svg" id="2_81kwl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ja6st"]
+size = Vector2(162, 130.5)
+
+[node name="PilarSolar" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_jn6lr")
+overlay_path = NodePath("../Player/Camera2D/Control/PanelContainer/WebView")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_81kwl")
+region_enabled = true
+region_rect = Rect2(384, 256, 128, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(33, 58.25)
+shape = SubResource("RectangleShape2D_ja6st")
