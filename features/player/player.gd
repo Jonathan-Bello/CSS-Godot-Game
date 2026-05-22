@@ -126,10 +126,12 @@ extends CharacterBody2D
 
 @export_group("Disparo CSS")
 @export var bullet_scene: PackedScene = preload("res://features/combat/css_bullet.tscn")
-@export var bullet_speed: float = 1300.0
+@export var bullet_speed: float = 1800.0
 @export var bullet_damage: int = 1
 @export var bullet_balance_reference_size: Vector2 = Vector2(28, 16)
-@export var bullet_speed_min_factor: float = 0.55
+# Velocidad final = bullet_speed * speed_factor.
+# Las balas grandes tienden al mínimo (bullet_speed_min_factor).
+@export var bullet_speed_min_factor: float = 0.9
 @export var bullet_speed_max_factor: float = 1.85
 @export var bullet_damage_min_factor: float = 0.6
 @export var bullet_damage_max_factor: float = 2.8
