@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bqqdr6qwiergq"]
+[gd_scene load_steps=18 format=4 uid="uid://bqqdr6qwiergq"]
 
 [ext_resource type="Texture2D" uid="uid://fulhv0a3r0x5" path="res://assets/art/tilesets/tileset_cueva.svg" id="1_86b2p"]
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://features/player/player.tscn" id="2_74bkv"]
@@ -6,8 +6,9 @@
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://features/ui/hud/control.gd" id="3_ydl1v"]
 [ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="4_ydl1v"]
 [ext_resource type="PackedScene" path="res://features/enemies/css_robot_enemy.tscn" id="5_enemy"]
+[ext_resource type="PackedScene" uid="uid://01hx4wpcphus" path="res://features/ui/hud/main_hud.tscn" id="6_hud"]
 [ext_resource type="PackedScene" uid="uid://d1r7i8x8fvl3j" path="res://features/obstacles/css_destructible_block.tscn" id="7_sedgv"]
-[ext_resource type="PackedScene" path="res://features/obstacles/css_toggle_platform.tscn" id="8_l6f8y"]
+[ext_resource type="PackedScene" uid="uid://c4e1e1ik2l6gt" path="res://features/obstacles/css_toggle_platform.tscn" id="8_l6f8y"]
 [ext_resource type="Texture2D" uid="uid://dcbeggxo0ojg8" path="res://assets/art/backgrounds/fondo_cueva_solarpunk.svg" id="15_57uqs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b73tu"]
