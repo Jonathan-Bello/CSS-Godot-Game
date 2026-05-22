@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://features/player/player.tscn" id="2_74bkv"]
 [ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://assets/art/tilesets/master_tileset_128x128.svg" id="2_odpp0"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://features/ui/hud/control.gd" id="3_ydl1v"]
-[ext_resource type="PackedScene" path="res://features/ui/hud/main_hud.tscn" id="6_hud"]
 [ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="4_ydl1v"]
 [ext_resource type="PackedScene" path="res://features/enemies/css_robot_enemy.tscn" id="5_enemy"]
+[ext_resource type="PackedScene" uid="uid://p2hgwgl8heg1" path="res://features/ui/hud/main_hud.tscn" id="6_hud"]
 [ext_resource type="Texture2D" uid="uid://dcbeggxo0ojg8" path="res://assets/art/backgrounds/fondo_cueva_solarpunk.svg" id="15_57uqs"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h60w4"]
