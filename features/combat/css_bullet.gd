@@ -232,13 +232,20 @@ func _inside_rounded_rect(x: int, y: int, w: int, h: int, radius: int) -> bool:
 func _process_hit_target(target: Node) -> void:
 	if target == null or _impacted:
 		return
-	if shooter != null and target == shooter:
-		return
+	if shooter != null:
+		if target == shooter:
+			return
+		# Ignora cualquier colisión contra nodos del propio jugador (hijos/padres).
+		if shooter.is_ancestor_of(target):
+			return
+		if target is Node and target.is_ancestor_of(shooter):
+			return
 	var receiver: Node = target
 	if not receiver.has_method("apply_css_bullet_hit") and receiver.get_parent() != null:
 		var maybe_parent := receiver.get_parent()
-		if maybe_parent != shooter and maybe_parent.has_method("apply_css_bullet_hit"):
-			receiver = maybe_parent
+		if shooter == null or (maybe_parent != shooter and not shooter.is_ancestor_of(maybe_parent)):
+			if maybe_parent.has_method("apply_css_bullet_hit"):
+				receiver = maybe_parent
 	if receiver.has_method("apply_css_bullet_hit"):
 		var bullet_profile := {
 			"base_damage": damage,
