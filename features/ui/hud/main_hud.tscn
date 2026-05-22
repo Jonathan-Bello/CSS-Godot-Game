@@ -1,0 +1,178 @@
+[gd_scene load_steps=11 format=3 uid="uid://c0hudmainscene"]
+
+[ext_resource type="Script" path="res://features/ui/hud/main_hud.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/solar_charge.svg" id="2"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/emis.svg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/art/player/hemis.svg" id="4"]
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.0470588, 0.054902, 0.0941176, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="2"]
+bg_color = Color(0.964706, 0.552941, 0.176471, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="MainHUD" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1")
+
+[node name="TopLeft" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 336.0
+offset_bottom = 116.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="TopLeft"]
+theme_override_styles/panel = SubResource("1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TopLeft/Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+
+[node name="TopRow" type="HBoxContainer" parent="TopLeft/Panel/VBoxContainer"]
+
+[node name="Portrait" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/TopRow"]
+custom_minimum_size = Vector2(54, 54)
+texture = ExtResource("4")
+stretch_mode = 5
+
+[node name="HealthLabel" type="Label" parent="TopLeft/Panel/VBoxContainer/TopRow"]
+text = "VIDA"
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="TopLeft/Panel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+value = 72.0
+show_percentage = false
+theme_override_styles/fill = SubResource("2")
+
+[node name="BossBarContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -280.0
+offset_top = 20.0
+offset_right = 280.0
+offset_bottom = 84.0
+
+[node name="BossNameLabel" type="Label" parent="BossBarContainer"]
+unique_name_in_owner = true
+horizontal_alignment = 1
+text = "< GUARDIAN UNIT >"
+
+[node name="BossHealthBar" type="ProgressBar" parent="BossBarContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 22)
+value = 65.0
+show_percentage = false
+theme_override_styles/fill = SubResource("2")
+
+[node name="BottomLeft" type="MarginContainer" parent="."]
+anchors_preset = 3
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -108.0
+offset_right = 336.0
+offset_bottom = -16.0
+
+[node name="Panel" type="Panel" parent="BottomLeft"]
+theme_override_styles/panel = SubResource("1")
+
+[node name="VBox" type="VBoxContainer" parent="BottomLeft/Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+
+[node name="SolarLabel" type="Label" parent="BottomLeft/Panel/VBox"]
+text = "SOLAR CHARGE"
+
+[node name="SolarChargesContainer" type="HBoxContainer" parent="BottomLeft/Panel/VBox"]
+unique_name_in_owner = true
+
+[node name="Charge1" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
+custom_minimum_size = Vector2(36, 36)
+texture = ExtResource("2")
+stretch_mode = 5
+
+[node name="Charge2" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
+custom_minimum_size = Vector2(36, 36)
+texture = ExtResource("2")
+stretch_mode = 5
+
+[node name="Charge3" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
+custom_minimum_size = Vector2(36, 36)
+texture = ExtResource("2")
+stretch_mode = 5
+
+[node name="Charge4" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
+custom_minimum_size = Vector2(36, 36)
+texture = ExtResource("2")
+stretch_mode = 5
+
+[node name="BottomRight" type="MarginContainer" parent="."]
+anchors_preset = 9
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -132.0
+offset_right = -16.0
+offset_bottom = -16.0
+
+[node name="Panel" type="Panel" parent="BottomRight"]
+theme_override_styles/panel = SubResource("1")
+
+[node name="EmisButton" type="TextureButton" parent="BottomRight/Panel"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = ExtResource("3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="EmisBadge" type="Label" parent="BottomRight/Panel"]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -28.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = 28.0
+text = "!"
+horizontal_alignment = 1
+vertical_alignment = 1
