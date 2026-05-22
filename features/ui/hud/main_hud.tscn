@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0hudmainscene"]
+[gd_scene load_steps=13 format=3 uid="uid://c0hudmainscene"]
 
 [ext_resource type="Script" path="res://features/ui/hud/main_hud.gd" id="1"]
 [ext_resource type="Texture2D" path="res://assets/art/hud/solar_charge.svg" id="2"]
 [ext_resource type="Texture2D" path="res://assets/art/hud/emis.svg" id="3"]
-[ext_resource type="Texture2D" path="res://assets/art/player/hemis.svg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/art/player/body/cabeza.svg" id="4"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/health_slot_trapezoid.svg" id="5"]
+[ext_resource type="FontFile" path="res://assets/fonts/quantico_regular.ttf" id="6"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0.0470588, 0.054902, 0.0941176, 0.85)
@@ -22,19 +24,14 @@ corner_radius_bottom_left = 8
 [node name="MainHUD" type="CanvasLayer"]
 layer = 5
 script = ExtResource("1")
+theme_override_fonts/font = ExtResource("6")
 
 [node name="TopLeft" type="MarginContainer" parent="."]
 anchors_preset = 1
-anchor_right = 0.0
-anchor_bottom = 0.0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 336.0
-offset_bottom = 116.0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+offset_right = 360.0
+offset_bottom = 142.0
 
 [node name="Panel" type="Panel" parent="TopLeft"]
 theme_override_styles/panel = SubResource("1")
@@ -56,14 +53,36 @@ texture = ExtResource("4")
 stretch_mode = 5
 
 [node name="HealthLabel" type="Label" parent="TopLeft/Panel/VBoxContainer/TopRow"]
-text = "VIDA"
+text = "ENERGIA SOLAR"
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="TopLeft/Panel/VBoxContainer"]
+[node name="HealthSlotsContainer" type="HBoxContainer" parent="TopLeft/Panel/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 18)
-value = 72.0
-show_percentage = false
-theme_override_styles/fill = SubResource("2")
+alignment = 1
+
+[node name="Life1" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+custom_minimum_size = Vector2(40, 24)
+texture = ExtResource("5")
+stretch_mode = 5
+
+[node name="Life2" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+custom_minimum_size = Vector2(40, 24)
+texture = ExtResource("5")
+stretch_mode = 5
+
+[node name="Life3" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+custom_minimum_size = Vector2(40, 24)
+texture = ExtResource("5")
+stretch_mode = 5
+
+[node name="Life4" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+custom_minimum_size = Vector2(40, 24)
+texture = ExtResource("5")
+stretch_mode = 5
+
+[node name="Life5" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+custom_minimum_size = Vector2(40, 24)
+texture = ExtResource("5")
+stretch_mode = 5
 
 [node name="BossBarContainer" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
@@ -90,7 +109,6 @@ theme_override_styles/fill = SubResource("2")
 [node name="BottomLeft" type="MarginContainer" parent="."]
 anchors_preset = 3
 anchor_top = 1.0
-anchor_right = 0.0
 anchor_bottom = 1.0
 offset_left = 16.0
 offset_top = -108.0
@@ -111,9 +129,11 @@ offset_bottom = -8.0
 
 [node name="SolarLabel" type="Label" parent="BottomLeft/Panel/VBox"]
 text = "SOLAR CHARGE"
+horizontal_alignment = 1
 
 [node name="SolarChargesContainer" type="HBoxContainer" parent="BottomLeft/Panel/VBox"]
 unique_name_in_owner = true
+alignment = 1
 
 [node name="Charge1" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
 custom_minimum_size = Vector2(36, 36)
@@ -135,6 +155,11 @@ custom_minimum_size = Vector2(36, 36)
 texture = ExtResource("2")
 stretch_mode = 5
 
+[node name="Charge5" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
+custom_minimum_size = Vector2(36, 36)
+texture = ExtResource("2")
+stretch_mode = 5
+
 [node name="BottomRight" type="MarginContainer" parent="."]
 anchors_preset = 9
 anchor_left = 1.0
@@ -150,7 +175,6 @@ offset_bottom = -16.0
 theme_override_styles/panel = SubResource("1")
 
 [node name="EmisButton" type="TextureButton" parent="BottomRight/Panel"]
-unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

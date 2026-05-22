@@ -34,6 +34,14 @@ func _find_overlay_node(start: Node) -> Node:
 
 func _on_body_entered(body: Node) -> void:
 	print("[CssTerminal] body_entered: ", body.name, " groups=", body.get_groups())
-	if body.is_in_group(player_group) and overlay:
-		print("[CssTerminal] → overlay.open() en ", overlay.get_path())
-		overlay.call("open")
+	if body.is_in_group(player_group):
+		_restore_player_resources()
+		if overlay:
+			print("[CssTerminal] → overlay.open() en ", overlay.get_path())
+			overlay.call("open")
+
+
+func _restore_player_resources() -> void:
+	var hud := get_tree().get_first_node_in_group("main_hud")
+	if hud != null and hud.has_method("restore_all"):
+		hud.call("restore_all")
