@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-@export_range(1, 10, 1) var max_health_slots: int = 5
-@export_range(0, 10, 1) var current_health_slots: int = 3:
+@export_range(1, 10, 1) var max_health_slots: int = 4
+@export_range(0, 10, 1) var current_health_slots: int = 2:
 	set(value):
 		current_health_slots = clampi(value, 0, max_health_slots)
 		_update_health_slots()
@@ -62,7 +62,7 @@ func _update_health_slots() -> void:
 		if slot == null:
 			continue
 		slot.visible = i < max_health_slots
-		slot.modulate = Color(1, 0.67, 0.27, 1.0) if i < current_health_slots else Color(0.25, 0.25, 0.3, 0.8)
+		slot.modulate = Color(1, 1, 1, 1.0) if i < current_health_slots else Color(0.28, 0.28, 0.32, 0.45)
 
 func _update_solar_charges() -> void:
 	if solar_container == null:
@@ -72,4 +72,4 @@ func _update_solar_charges() -> void:
 		if icon == null:
 			continue
 		icon.visible = i < unlocked_solar_charges
-		icon.modulate = Color(1, 1, 1, 1.0) if i < solar_charges else Color(1, 1, 1, 0.25)
+		icon.modulate = Color(1, 1, 1, 1.0) if i < solar_charges else Color(0.22, 0.22, 0.22, 0.2)
