@@ -65,6 +65,7 @@ extends CharacterBody2D
 @export var LOW_JUMP_MULTIPLIER: float = 2.4
 ## Fast-fall al mantener abajo durante la caída.
 @export var FAST_FALL_MULTIPLIER: float = 2.6
+@export var ENABLE_FAST_FALL: bool = false
 ## Umbral de ápice (zona donde “flota” un poquito).
 @export var APEX_THRESHOLD: float = 120.0
 ## Escala de gravedad en el ápice.
@@ -392,7 +393,7 @@ func _apply_gravity(delta: float, want_down: bool) -> void:
 
 	var g := GRAVITY
 	if velocity.y > 0.0: g *= FALL_MULTIPLIER # caer más pesado
-	if want_down and velocity.y > 0.0: g *= FAST_FALL_MULTIPLIER # fast-fall
+	if ENABLE_FAST_FALL and want_down and velocity.y > 0.0: g *= FAST_FALL_MULTIPLIER # fast-fall
 	if abs(velocity.y) <= APEX_THRESHOLD: g *= APEX_GRAVITY_SCALE # “flotita”
 
 	velocity.y = min(velocity.y + g * delta, MAX_FALL_SPEED)
@@ -526,10 +527,12 @@ func _attack(dir: Direction) -> void:
 		attack_area.monitoring = true
 		attack_area.visible = true
 
-	var clip := &"attack"
-	if dir == Direction.UP: clip = &"attack_up"
-	if dir == Direction.DOWN: clip = &"attack_down"
-	_play_if_changed(clip, false)
+	var moving_on_floor := is_on_floor() and abs(velocity.x) > RUN_THRESHOLD
+	if not moving_on_floor:
+		var clip := &"attack"
+		if dir == Direction.UP: clip = &"attack_up"
+		if dir == Direction.DOWN: clip = &"attack_down"
+		_play_if_changed(clip, false)
 	# Se calculan stats una sola vez por disparo para consistencia de velocidad,
 	# daño y cadencia de esa bala.
 	var tuned_stats := _compute_bullet_stats_from_profile()
