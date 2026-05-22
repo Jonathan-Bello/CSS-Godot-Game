@@ -261,8 +261,8 @@ func _destroy_on_impact() -> void:
 	if _impacted:
 		return
 	_impacted = true
-	monitoring = false
-	monitorable = false
+	set_deferred("monitoring", false)
+	set_deferred("monitorable", false)
 	if collision:
 		collision.set_deferred("disabled", true)
 	if sprite:
