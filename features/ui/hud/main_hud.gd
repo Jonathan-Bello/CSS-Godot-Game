@@ -72,4 +72,4 @@ func _update_solar_charges() -> void:
 		if icon == null:
 			continue
 		icon.visible = i < unlocked_solar_charges
-		icon.modulate = Color(0.29, 0.97, 0.72, 1.0) if i < solar_charges else Color(0.29, 0.97, 0.72, 0.2)
+		icon.modulate = Color(1, 1, 1, 1.0) if i < solar_charges else Color(1, 1, 1, 0.25)

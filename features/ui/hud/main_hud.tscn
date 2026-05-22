@@ -9,17 +9,9 @@
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0.0470588, 0.054902, 0.0941176, 0.85)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="2"]
 bg_color = Color(0.964706, 0.552941, 0.176471, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [node name="MainHUD" type="CanvasLayer"]
 layer = 5
@@ -30,8 +22,8 @@ theme_override_fonts/font = ExtResource("6")
 anchors_preset = 1
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 360.0
-offset_bottom = 142.0
+offset_right = 300.0
+offset_bottom = 96.0
 
 [node name="Panel" type="Panel" parent="TopLeft"]
 theme_override_styles/panel = SubResource("1")
@@ -41,45 +33,41 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = 8.0
+offset_top = 10.0
 offset_right = -8.0
 offset_bottom = -8.0
 
 [node name="TopRow" type="HBoxContainer" parent="TopLeft/Panel/VBoxContainer"]
 
 [node name="Portrait" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/TopRow"]
-custom_minimum_size = Vector2(54, 54)
+custom_minimum_size = Vector2(36, 36)
 texture = ExtResource("4")
 stretch_mode = 5
 
-[node name="HealthLabel" type="Label" parent="TopLeft/Panel/VBoxContainer/TopRow"]
-text = "ENERGIA SOLAR"
-
-[node name="HealthSlotsContainer" type="HBoxContainer" parent="TopLeft/Panel/VBoxContainer"]
+[node name="HealthSlotsContainer" type="HBoxContainer" parent="TopLeft/Panel/VBoxContainer/TopRow"]
 unique_name_in_owner = true
-alignment = 1
 
-[node name="Life1" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+[node name="Life1" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/TopRow/HealthSlotsContainer"]
 custom_minimum_size = Vector2(40, 24)
 texture = ExtResource("5")
 stretch_mode = 5
 
-[node name="Life2" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+[node name="Life2" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/TopRow/HealthSlotsContainer"]
 custom_minimum_size = Vector2(40, 24)
 texture = ExtResource("5")
 stretch_mode = 5
 
-[node name="Life3" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+[node name="Life3" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/TopRow/HealthSlotsContainer"]
 custom_minimum_size = Vector2(40, 24)
 texture = ExtResource("5")
 stretch_mode = 5
 
-[node name="Life4" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+[node name="Life4" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/TopRow/HealthSlotsContainer"]
 custom_minimum_size = Vector2(40, 24)
 texture = ExtResource("5")
 stretch_mode = 5
 
-[node name="Life5" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/HealthSlotsContainer"]
+[node name="Life5" type="TextureRect" parent="TopLeft/Panel/VBoxContainer/TopRow/HealthSlotsContainer"]
 custom_minimum_size = Vector2(40, 24)
 texture = ExtResource("5")
 stretch_mode = 5
@@ -96,8 +84,7 @@ offset_bottom = 84.0
 
 [node name="BossNameLabel" type="Label" parent="BossBarContainer"]
 unique_name_in_owner = true
-horizontal_alignment = 1
-text = "< GUARDIAN UNIT >"
+horizontal_text = "< GUARDIAN UNIT >"
 
 [node name="BossHealthBar" type="ProgressBar" parent="BossBarContainer"]
 unique_name_in_owner = true
@@ -111,8 +98,8 @@ anchors_preset = 3
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 16.0
-offset_top = -108.0
-offset_right = 336.0
+offset_top = -82.0
+offset_right = 250.0
 offset_bottom = -16.0
 
 [node name="Panel" type="Panel" parent="BottomLeft"]
@@ -127,13 +114,8 @@ offset_top = 8.0
 offset_right = -8.0
 offset_bottom = -8.0
 
-[node name="SolarLabel" type="Label" parent="BottomLeft/Panel/VBox"]
-text = "SOLAR CHARGE"
-horizontal_alignment = 1
-
 [node name="SolarChargesContainer" type="HBoxContainer" parent="BottomLeft/Panel/VBox"]
 unique_name_in_owner = true
-alignment = 1
 
 [node name="Charge1" type="TextureRect" parent="BottomLeft/Panel/VBox/SolarChargesContainer"]
 custom_minimum_size = Vector2(36, 36)
@@ -198,5 +180,4 @@ offset_top = 6.0
 offset_right = -6.0
 offset_bottom = 28.0
 text = "!"
-horizontal_alignment = 1
-vertical_alignment = 1
+horizontal_vertical_
