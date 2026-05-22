@@ -527,7 +527,7 @@ func _attack(dir: Direction) -> void:
 		attack_area.monitoring = true
 		attack_area.visible = true
 
-	var moving_on_floor := is_on_floor() and abs(velocity.x) > RUN_THRESHOLD
+	var moving_on_floor :Variant = is_on_floor() and abs(velocity.x) > RUN_THRESHOLD
 	if not moving_on_floor:
 		var clip := &"attack"
 		if dir == Direction.UP: clip = &"attack_up"
