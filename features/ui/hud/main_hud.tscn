@@ -132,8 +132,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource("8")
 stretch_mode = 6
-z_index = 2
-modulate = Color(1, 1, 1, 0.88)
+z_index = 0
+modulate = Color(1, 1, 1, 0.95)
 
 [node name="Panel" type="Panel" parent="BottomLeft"]
 layout_mode = 1
@@ -141,7 +141,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 modulate = Color(1, 1, 1, 0)
-z_index = 1
+z_index = 2
 
 [node name="VBox" type="VBoxContainer" parent="BottomLeft/Panel"]
 anchors_preset = 15
@@ -202,8 +202,8 @@ anchor_bottom = 1.0
 texture = ExtResource("8")
 stretch_mode = 6
 flip_h = true
-z_index = 2
-modulate = Color(1, 1, 1, 0.88)
+z_index = 0
+modulate = Color(1, 1, 1, 0.95)
 
 [node name="Panel" type="Panel" parent="BottomRight"]
 layout_mode = 1
@@ -211,7 +211,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 modulate = Color(1, 1, 1, 0)
-z_index = 1
+z_index = 2
 
 [node name="EmisButton" type="TextureButton" parent="BottomRight/Panel"]
 anchors_preset = 8
