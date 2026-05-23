@@ -27,6 +27,7 @@ extends CanvasLayer
 @onready var emis_button: TextureButton = %EmisButton
 @onready var emis_dialog: PanelContainer = %EmisDialog
 @onready var emis_dialog_label: Label = %EmisDialogLabel
+@onready var emis_dialog_hint_label: Label = %EmisDialogHintLabel
 @onready var shoot_delay_bar: ProgressBar = %ShootDelayBar
 
 @export var emis_alert_message: String = "¡Ey! Tengo una pista para ti."
@@ -56,7 +57,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _dialog_active:
 		return
-	if event.is_action_pressed("ui_accept") or event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if event.is_action_pressed("interact"):
 		advance_emis_dialog()
 		get_viewport().set_input_as_handled()
 
