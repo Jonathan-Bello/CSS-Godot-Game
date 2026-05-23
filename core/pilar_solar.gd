@@ -5,8 +5,14 @@ extends Area2D
 @export var interact_action: StringName = &"interact"
 @export var pillar_sprite_path: NodePath = ^"PillarSprite"
 @export var tileset_texture: Texture2D = preload("res://assets/art/tilesets/master_tileset_128x128.svg")
-@export var off_region: Rect2 = Rect2(384, 256, 128, 128)
-@export var on_region: Rect2 = Rect2(512, 256, 128, 128)
+@export var sprite_size: Vector2 = Vector2(128, 128)
+@export var sprite_separation: Vector2 = Vector2(16, 16)
+@export var off_region: Rect2 = Rect2(287, 287, 128, 128)
+
+var on_region: Rect2:
+	get:
+		var step := sprite_size + sprite_separation
+		return Rect2(off_region.position + Vector2(step.x, 0.0), sprite_size)
 
 var overlay: Node = null
 var player_in_range := false
@@ -70,6 +76,8 @@ func _on_body_entered(body: Node) -> void:
 	if body.is_in_group(player_group):
 		player_in_range = true
 		current_player = body
+		if not _is_activated:
+			_activate_checkpoint()
 
 func _on_body_exited(body: Node) -> void:
 	if body == current_player:
