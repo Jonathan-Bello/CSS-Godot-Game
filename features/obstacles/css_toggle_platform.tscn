@@ -6,8 +6,8 @@
 size = Vector2(128, 128)
 
 [node name="CssTogglePlatform" type="StaticBody2D"]
-collision_layer = 0
-collision_mask = 0
+collision_layer = 1
+collision_mask = 1
 script = ExtResource("1_ya0wd")
 
 [node name="Visual" type="ColorRect" parent="."]

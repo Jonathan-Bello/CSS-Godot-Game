@@ -59,6 +59,7 @@ func _apply_state_visual(animate: bool) -> void:
 	else:
 		visual.color = target_color
 	if collision:
-		collision.disabled = not is_active
-	set_collision_layer_value(1, is_active)
-	set_collision_mask_value(1, is_active)
+		collision.set_deferred("disabled", not is_active)
+	# Asegura que la plataforma entre/salga limpiamente de colisiones de físicas.
+	collision_layer = 1 if is_active else 0
+	collision_mask = 1 if is_active else 0
