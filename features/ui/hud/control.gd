@@ -67,8 +67,14 @@ func _emit_overlay_closed() -> void:
 	emit_signal("overlay_closed")
 
 func open() -> void:
-	_overlay_template_path = "res://features/ui/hud/web_overlay_editor.html"
-	print("[WebOverlay] open()")
+	_open_with_template("res://features/ui/hud/web_overlay_editor.html")
+
+func open_chat_overlay() -> void:
+	_open_with_template("res://features/ui/hud/web_overlay_emis_chat.html")
+
+func _open_with_template(template_path: String) -> void:
+	_overlay_template_path = template_path
+	print("[WebOverlay] open() template=", _overlay_template_path)
 	visible = true
 	panel.visible = true
 	web.visible = true
@@ -82,11 +88,6 @@ func open() -> void:
 	web.call_deferred("focus")
 	_emit_overlay_opened()
 	print("[WebOverlay] open -> HTML cargado, focus defer")
-
-
-func open_chat_overlay() -> void:
-	_overlay_template_path = "res://features/ui/hud/web_overlay_emis_chat.html"
-	open()
 
 func close() -> void:
 	print("[WebOverlay] close()")
