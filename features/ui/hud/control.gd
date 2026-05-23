@@ -16,6 +16,12 @@ var _emis_conversation_id: String = ""
 var _last_loaded_html: String = ""
 var _overlay_template_path: String = "res://features/ui/hud/web_overlay_editor.html"
 
+var _loading_fx_rect: ColorRect = null
+var _loading_fx_label: Label = null
+var _loading_sfx_player: AudioStreamPlayer = null
+@export var overlay_open_prelude_seconds: float = 0.32
+
+
 signal overlay_opened
 signal overlay_closed
 
@@ -34,6 +40,7 @@ func _ready() -> void:
 		web.connect("ipc_message", Callable(self , "_on_web_ipc_message"))
 
 	_ensure_emis_client()
+	_ensure_loading_fx_nodes()
 	_layout_and_sync()
 	print("[WebOverlay] READY")
 
@@ -84,6 +91,7 @@ func _open_with_template(template_path: String) -> void:
 
 	await get_tree().process_frame
 	_layout_and_sync()
+	await _play_overlay_open_prelude()
 	_load_editor_html()
 	web.call_deferred("focus")
 	_emit_overlay_opened()
@@ -111,6 +119,76 @@ func close() -> void:
 
 	_emit_overlay_closed()
 
+
+
+func _ensure_loading_fx_nodes() -> void:
+	if _loading_fx_rect == null:
+		_loading_fx_rect = ColorRect.new()
+		_loading_fx_rect.name = "OverlayLoadingFx"
+		_loading_fx_rect.mouse_filter = Control.MOUSE_FILTER_STOP
+		_loading_fx_rect.color = Color(0.04, 0.06, 0.12, 0.0)
+		_loading_fx_rect.visible = false
+		add_child(_loading_fx_rect)
+	if _loading_fx_label == null:
+		_loading_fx_label = Label.new()
+		_loading_fx_label.name = "OverlayLoadingLabel"
+		_loading_fx_label.text = "Sincronizando enlace..."
+		_loading_fx_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_loading_fx_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_loading_fx_label.modulate = Color(1, 1, 1, 0.0)
+		_loading_fx_rect.add_child(_loading_fx_label)
+	if _loading_sfx_player == null:
+		_loading_sfx_player = AudioStreamPlayer.new()
+		_loading_sfx_player.name = "OverlayOpenSfx"
+		add_child(_loading_sfx_player)
+		_loading_sfx_player.stream = _build_overlay_open_sfx()
+
+func _build_overlay_open_sfx() -> AudioStreamWAV:
+	var sample_rate := 22050
+	var duration := max(0.08, overlay_open_prelude_seconds)
+	var frame_count := int(sample_rate * duration)
+	var bytes := PackedByteArray()
+	bytes.resize(frame_count * 2)
+	for i in range(frame_count):
+		var t := float(i) / float(sample_rate)
+		var env := min(t / duration, 1.0) * (1.0 - min(t / duration, 1.0)) * 4.0
+		var freq := lerpf(520.0, 880.0, min(t / duration, 1.0))
+		var amp := sin(TAU * freq * t) * env * 0.32
+		var sample := int(clamp(amp, -1.0, 1.0) * 32767.0)
+		bytes[i * 2] = sample & 0xFF
+		bytes[i * 2 + 1] = (sample >> 8) & 0xFF
+	var wav := AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = sample_rate
+	wav.stereo = false
+	wav.data = bytes
+	return wav
+
+func _play_overlay_open_prelude() -> void:
+	_ensure_loading_fx_nodes()
+	if _loading_fx_rect == null:
+		return
+	_loading_fx_rect.visible = true
+	_loading_fx_rect.position = panel.position
+	_loading_fx_rect.size = panel.size
+	_loading_fx_rect.color = Color(0.04, 0.06, 0.12, 0.0)
+	if _loading_fx_label:
+		_loading_fx_label.position = Vector2.ZERO
+		_loading_fx_label.size = _loading_fx_rect.size
+		_loading_fx_label.modulate = Color(1, 1, 1, 0.0)
+	var tween := create_tween()
+	tween.tween_property(_loading_fx_rect, "color", Color(0.04, 0.06, 0.12, 0.88), 0.12)
+	if _loading_fx_label:
+		tween.parallel().tween_property(_loading_fx_label, "modulate", Color(1, 1, 1, 1.0), 0.12)
+	if _loading_sfx_player and _loading_sfx_player.stream:
+		_loading_sfx_player.play()
+	await get_tree().create_timer(overlay_open_prelude_seconds).timeout
+	var tween_out := create_tween()
+	tween_out.tween_property(_loading_fx_rect, "color", Color(0.04, 0.06, 0.12, 0.0), 0.10)
+	if _loading_fx_label:
+		tween_out.parallel().tween_property(_loading_fx_label, "modulate", Color(1, 1, 1, 0.0), 0.10)
+	await tween_out.finished
+	_loading_fx_rect.visible = false
 
 func _input(ev: InputEvent) -> void:
 	if visible and ev.is_action_pressed("ui_cancel"):
