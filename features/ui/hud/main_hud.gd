@@ -41,6 +41,7 @@ func _ready() -> void:
 	set_boss_visible(false)
 	if emis_button:
 		_emis_base_scale = emis_button.scale
+		emis_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		if not emis_button.is_connected("pressed", Callable(self, "_on_emis_button_pressed")):
 			emis_button.connect("pressed", Callable(self, "_on_emis_button_pressed"))
 	if emis_dialog:
