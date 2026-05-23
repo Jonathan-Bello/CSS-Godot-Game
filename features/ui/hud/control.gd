@@ -144,17 +144,18 @@ func _ensure_loading_fx_nodes() -> void:
 		_loading_sfx_player.stream = _build_overlay_open_sfx()
 
 func _build_overlay_open_sfx() -> AudioStreamWAV:
-	var sample_rate := 22050
-	var duration := max(0.08, overlay_open_prelude_seconds)
-	var frame_count := int(sample_rate * duration)
+	var sample_rate: int = 22050
+	var duration: float = maxf(0.08, overlay_open_prelude_seconds)
+	var frame_count: int = int(float(sample_rate) * duration)
 	var bytes := PackedByteArray()
 	bytes.resize(frame_count * 2)
 	for i in range(frame_count):
-		var t := float(i) / float(sample_rate)
-		var env := min(t / duration, 1.0) * (1.0 - min(t / duration, 1.0)) * 4.0
-		var freq := lerpf(520.0, 880.0, min(t / duration, 1.0))
-		var amp := sin(TAU * freq * t) * env * 0.32
-		var sample := int(clamp(amp, -1.0, 1.0) * 32767.0)
+		var t: float = float(i) / float(sample_rate)
+		var progress: float = minf(t / duration, 1.0)
+		var env: float = progress * (1.0 - progress) * 4.0
+		var freq: float = lerpf(520.0, 880.0, progress)
+		var amp: float = sin(TAU * freq * t) * env * 0.32
+		var sample: int = int(clampf(amp, -1.0, 1.0) * 32767.0)
 		bytes[i * 2] = sample & 0xFF
 		bytes[i * 2 + 1] = (sample >> 8) & 0xFF
 	var wav := AudioStreamWAV.new()
