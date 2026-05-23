@@ -20,6 +20,7 @@ var _loading_fx_rect: ColorRect = null
 var _loading_fx_label: Label = null
 var _loading_sfx_player: AudioStreamPlayer = null
 @export var overlay_open_prelude_seconds: float = 0.32
+var _awaiting_html_ready: bool = false
 
 
 signal overlay_opened
@@ -84,7 +85,7 @@ func _open_with_template(template_path: String) -> void:
 	print("[WebOverlay] open() template=", _overlay_template_path)
 	visible = true
 	panel.visible = true
-	web.visible = true
+	web.visible = false
 
 	# Mientras esté abierto, el panel debe “parar” el input de la escena
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -92,10 +93,11 @@ func _open_with_template(template_path: String) -> void:
 	await get_tree().process_frame
 	_layout_and_sync()
 	await _play_overlay_open_prelude()
+	_awaiting_html_ready = true
+	web.set("html", "")
+	web.set("url", "about:blank")
 	_load_editor_html()
-	web.call_deferred("focus")
-	_emit_overlay_opened()
-	print("[WebOverlay] open -> HTML cargado, focus defer")
+	print("[WebOverlay] open -> esperando html_loaded")
 
 func close() -> void:
 	print("[WebOverlay] close()")
@@ -189,7 +191,19 @@ func _play_overlay_open_prelude() -> void:
 	if _loading_fx_label:
 		tween_out.parallel().tween_property(_loading_fx_label, "modulate", Color(1, 1, 1, 0.0), 0.10)
 	await tween_out.finished
-	_loading_fx_rect.visible = false
+	# Se mantiene visible hasta que llegue html_loaded.
+
+func _finish_overlay_open_after_html_ready() -> void:
+	if web:
+		web.visible = true
+		web.call_deferred("focus")
+	if _loading_fx_rect:
+		var tween_out := create_tween()
+		tween_out.tween_property(_loading_fx_rect, "color", Color(0.04, 0.06, 0.12, 0.0), 0.10)
+		if _loading_fx_label:
+			tween_out.parallel().tween_property(_loading_fx_label, "modulate", Color(1, 1, 1, 0.0), 0.10)
+		await tween_out.finished
+		_loading_fx_rect.visible = false
 
 func _input(ev: InputEvent) -> void:
 	if visible and ev.is_action_pressed("ui_cancel"):
@@ -346,6 +360,11 @@ func _on_web_ipc_message(msg: String) -> void:
 		if not _web_hydration_payload.is_empty():
 			_hydrate_web_editor(_web_hydration_payload)
 			_web_hydration_payload = {}
+		if _awaiting_html_ready:
+			_awaiting_html_ready = false
+			await _finish_overlay_open_after_html_ready()
+			_emit_overlay_opened()
+			print("[WebOverlay] open -> HTML visible y focus listo")
 		return
 
 	if msg == "img_error":
