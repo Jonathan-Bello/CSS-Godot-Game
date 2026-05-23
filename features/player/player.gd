@@ -193,6 +193,7 @@ var attack_cooldown_timer := 0.0
 var attack_cooldown_duration := 0.01
 var lock_controls := false # micro “hit-stop” al atacar
 var overlay_blocks_movement := false
+var external_control_lock := false
 
 
 # ─────────────────────────────────────────────────────────
@@ -216,6 +217,7 @@ var overlay_blocks_movement := false
 # CICLO DE VIDA
 # ============================================================================
 func _ready() -> void:
+	add_to_group("player")
 	# Consejos de wiring si algo falta:
 	if anim == null: push_warning("AnimationPlayer no encontrado en '%s'." % anim_path)
 	if gfx_root == null: push_warning("gfx_root no encontrado en '%s'." % gfx_root_path)
@@ -282,13 +284,13 @@ func _physics_process(delta: float) -> void:
 	var want_down := Input.is_action_pressed("move_down")
 
 	# 3) Saltos (coyote+buffer+doble) y dash / ataque
-	if not lock_controls and not overlay_blocks_movement:
+	if not lock_controls and not overlay_blocks_movement and not external_control_lock:
 		_handle_jump_buffer()
 		_handle_dash(dir)
 		_handle_attack_input()
 
 	# 4) Movimiento horizontal (no durante dash/attack, ni en push lock)
-	if state != State.DASH and wall_jump_lock_timer <= 0.0 and not lock_controls and not overlay_blocks_movement:
+	if state != State.DASH and wall_jump_lock_timer <= 0.0 and not lock_controls and not overlay_blocks_movement and not external_control_lock:
 		_hmove(dir, delta)
 
 	# 5) Gravedad HK-like
@@ -789,6 +791,14 @@ func _draw() -> void:
 	draw_circle(bone_pos, 4.0, Color(0.2, 1.0, 0.2, 0.9))
 	draw_circle(tip_pos, 3.0, Color(1.0, 1.0, 0.2, 0.9))
 
+
+
+func set_external_control_lock(locked: bool) -> void:
+	external_control_lock = locked
+	if locked:
+		velocity = Vector2.ZERO
+		state = State.IDLE
+		_play_if_changed(&"idle", true)
 
 func _on_overlay_opened() -> void:
 	overlay_blocks_movement = true
