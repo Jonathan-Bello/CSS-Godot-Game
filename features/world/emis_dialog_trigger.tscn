@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://b8y4a82c2x8a5"]
 
-[ext_resource type="Script" path="res://features/world/emis_dialog_trigger.gd" id="1"]
+[ext_resource type="Script" uid="uid://bhf1pfpgm1n7r" path="res://features/world/emis_dialog_trigger.gd" id="1"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(220, 120)
