@@ -34,6 +34,12 @@ var emis_alert_active: bool = false
 var _emis_bounce_t: float = 0.0
 var _emis_base_scale: Vector2 = Vector2.ONE
 
+var _dialog_queue: Array[String] = []
+var _dialog_index: int = -1
+var _dialog_lock_player: bool = false
+var _dialog_active: bool = false
+
+
 func _ready() -> void:
 	add_to_group("main_hud")
 	_update_health_slots()
@@ -46,6 +52,13 @@ func _ready() -> void:
 			emis_button.connect("pressed", Callable(self, "_on_emis_button_pressed"))
 	if emis_dialog:
 		emis_dialog.visible = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not _dialog_active:
+		return
+	if event.is_action_pressed("ui_accept") or event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		advance_emis_dialog()
+		get_viewport().set_input_as_handled()
 
 func set_player_health(current: float, maximum: float) -> void:
 	max_health_slots = maxi(1, int(round(maximum)))
@@ -85,12 +98,12 @@ func set_emis_alert(active: bool, message: String = "") -> void:
 		emis_dialog.visible = false
 
 func _on_emis_button_pressed() -> void:
+	if _dialog_active:
+		advance_emis_dialog()
+		return
 	var overlay := get_tree().get_first_node_in_group("web_overlay")
 	if emis_alert_active:
-		if emis_dialog_label:
-			emis_dialog_label.text = emis_alert_message
-		if emis_dialog:
-			emis_dialog.visible = true
+		start_emis_tutorial_dialog(PackedStringArray([emis_alert_message]), false)
 		set_emis_alert(false)
 		return
 	if overlay and overlay.has_method("open_chat_overlay"):
@@ -128,3 +141,48 @@ func set_shoot_delay_progress(progress_ratio: float) -> void:
 	if shoot_delay_bar == null:
 		return
 	shoot_delay_bar.value = clampf(progress_ratio, 0.0, 1.0) * 100.0
+
+func start_emis_tutorial_dialog(lines: PackedStringArray, stop_player: bool = true) -> void:
+	if lines.is_empty():
+		return
+	_dialog_queue.clear()
+	for line in lines:
+		var clean := String(line).strip_edges()
+		if clean != "":
+			_dialog_queue.append(clean)
+	if _dialog_queue.is_empty():
+		return
+	_dialog_index = -1
+	_dialog_lock_player = stop_player
+	_dialog_active = true
+	set_emis_alert(true, _dialog_queue[0])
+	_apply_dialog_player_lock(true)
+	advance_emis_dialog()
+
+func advance_emis_dialog() -> void:
+	if not _dialog_active:
+		return
+	_dialog_index += 1
+	if _dialog_index >= _dialog_queue.size():
+		_finish_emis_dialog()
+		return
+	if emis_dialog_label:
+		emis_dialog_label.text = _dialog_queue[_dialog_index]
+	if emis_dialog:
+		emis_dialog.visible = true
+
+func _finish_emis_dialog() -> void:
+	_dialog_active = false
+	_dialog_queue.clear()
+	_dialog_index = -1
+	if emis_dialog:
+		emis_dialog.visible = false
+	set_emis_alert(false)
+	_apply_dialog_player_lock(false)
+
+func _apply_dialog_player_lock(locked: bool) -> void:
+	if not _dialog_lock_player:
+		return
+	var player := get_tree().get_first_node_in_group("player")
+	if player and player.has_method("set_external_control_lock"):
+		player.call("set_external_control_lock", locked)
