@@ -14,6 +14,7 @@ var _web_hydration_payload: Dictionary = {}
 var _emis_client: Node = null
 var _emis_conversation_id: String = ""
 var _last_loaded_html: String = ""
+var _overlay_template_path: String = "res://features/ui/hud/web_overlay_editor.html"
 
 signal overlay_opened
 signal overlay_closed
@@ -66,6 +67,7 @@ func _emit_overlay_closed() -> void:
 	emit_signal("overlay_closed")
 
 func open() -> void:
+	_overlay_template_path = "res://features/ui/hud/web_overlay_editor.html"
 	print("[WebOverlay] open()")
 	visible = true
 	panel.visible = true
@@ -83,6 +85,7 @@ func open() -> void:
 
 
 func open_chat_overlay() -> void:
+	_overlay_template_path = "res://features/ui/hud/web_overlay_emis_chat.html"
 	open()
 
 func close() -> void:
@@ -177,7 +180,9 @@ func _inject_window_var(var_name: String, value: String) -> void:
 # HTML LOADER
 # -----------------------------
 func _read_editor_html_template() -> String:
-	var template_path := "res://features/ui/hud/web_overlay_editor.html"
+	var template_path := _overlay_template_path
+	if template_path == "":
+		template_path = "res://features/ui/hud/web_overlay_editor.html"
 	if not FileAccess.file_exists(template_path):
 		push_warning("[WebOverlay] No se encontró template HTML: %s" % template_path)
 		return ""
