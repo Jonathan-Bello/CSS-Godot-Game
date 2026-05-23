@@ -12,7 +12,7 @@ extends Area2D
 var on_region: Rect2:
 	get:
 		var step := sprite_size + sprite_separation
-		return Rect2(off_region.position + Vector2(step.x, 0.0), sprite_size)
+		return Rect2(off_region.position - Vector2(step.x, 0.0), sprite_size)
 
 var overlay: Node = null
 var player_in_range := false
@@ -76,8 +76,6 @@ func _on_body_entered(body: Node) -> void:
 	if body.is_in_group(player_group):
 		player_in_range = true
 		current_player = body
-		if not _is_activated:
-			_activate_checkpoint()
 
 func _on_body_exited(body: Node) -> void:
 	if body == current_player:
