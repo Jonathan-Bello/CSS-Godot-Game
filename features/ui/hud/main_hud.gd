@@ -24,13 +24,27 @@ extends CanvasLayer
 @onready var boss_name_label: Label = %BossNameLabel
 @onready var solar_container: HBoxContainer = %SolarChargesContainer
 @onready var emis_badge: Label = %EmisBadge
+@onready var emis_button: TextureButton = %EmisButton
+@onready var emis_dialog: PanelContainer = %EmisDialog
+@onready var emis_dialog_label: Label = %EmisDialogLabel
 @onready var shoot_delay_bar: ProgressBar = %ShootDelayBar
+
+@export var emis_alert_message: String = "¡Ey! Tengo una pista para ti."
+var emis_alert_active: bool = false
+var _emis_bounce_t: float = 0.0
+var _emis_base_scale: Vector2 = Vector2.ONE
 
 func _ready() -> void:
 	add_to_group("main_hud")
 	_update_health_slots()
 	_update_solar_charges()
 	set_boss_visible(false)
+	if emis_button:
+		_emis_base_scale = emis_button.scale
+		if not emis_button.is_connected("pressed", Callable(self, "_on_emis_button_pressed")):
+			emis_button.connect("pressed", Callable(self, "_on_emis_button_pressed"))
+	if emis_dialog:
+		emis_dialog.visible = false
 
 func set_player_health(current: float, maximum: float) -> void:
 	max_health_slots = maxi(1, int(round(maximum)))
@@ -48,6 +62,40 @@ func set_boss_data(name_text: String, current: float, maximum: float) -> void:
 
 func set_emis_notification(visible_notification: bool) -> void:
 	emis_badge.visible = visible_notification
+
+
+func _process(delta: float) -> void:
+	if emis_button == null:
+		return
+	if emis_alert_active:
+		_emis_bounce_t += delta * 9.0
+		var pulse := 1.0 + sin(_emis_bounce_t) * 0.13
+		emis_button.scale = _emis_base_scale * pulse
+	else:
+		_emis_bounce_t = 0.0
+		emis_button.scale = _emis_base_scale
+
+func set_emis_alert(active: bool, message: String = "") -> void:
+	emis_alert_active = active
+	set_emis_notification(active)
+	if message.strip_edges() != "":
+		emis_alert_message = message
+	if not active and emis_dialog:
+		emis_dialog.visible = false
+
+func _on_emis_button_pressed() -> void:
+	var overlay := get_tree().get_first_node_in_group("web_overlay")
+	if emis_alert_active:
+		if emis_dialog_label:
+			emis_dialog_label.text = emis_alert_message
+		if emis_dialog:
+			emis_dialog.visible = true
+		set_emis_alert(false)
+		return
+	if overlay and overlay.has_method("open_chat_overlay"):
+		overlay.call("open_chat_overlay")
+	elif overlay and overlay.has_method("open"):
+		overlay.call("open")
 
 func restore_all() -> void:
 	current_health_slots = max_health_slots

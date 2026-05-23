@@ -14,6 +14,7 @@ var _web_hydration_payload: Dictionary = {}
 var _emis_client: Node = null
 var _emis_conversation_id: String = ""
 var _last_loaded_html: String = ""
+var _chat_only_mode: bool = false
 
 signal overlay_opened
 signal overlay_closed
@@ -77,9 +78,16 @@ func open() -> void:
 	await get_tree().process_frame
 	_layout_and_sync()
 	_load_editor_html()
+	if _chat_only_mode:
+		_apply_chat_only_mode()
 	web.call_deferred("focus")
 	_emit_overlay_opened()
 	print("[WebOverlay] open -> HTML cargado, focus defer")
+
+
+func open_chat_overlay() -> void:
+	_chat_only_mode = true
+	open()
 
 func close() -> void:
 	print("[WebOverlay] close()")
@@ -102,6 +110,16 @@ func close() -> void:
 	web.set("url", "about:blank")
 
 	_emit_overlay_closed()
+
+
+func _apply_chat_only_mode() -> void:
+	if not web.has_method("eval"):
+		return
+	var js := ""
+	js += "const editor=document.querySelector('.editor');if(editor){editor.style.display='none';}"
+	js += "const main=document.querySelector('.main');if(main){main.style.gridTemplateColumns='1fr';}"
+	js += "const chatInput=document.getElementById('chatInput');if(chatInput){chatInput.focus();}"
+	web.call_deferred("eval", js)
 
 func _input(ev: InputEvent) -> void:
 	if visible and ev.is_action_pressed("ui_cancel"):

@@ -190,6 +190,7 @@ var wall_jump_lock_timer := 0.0 # bloqueo de control tras wall jump
 var attack_timer := 0.0
 # Cooldown entre disparos/cadencia real (calculada por tamaño de bala).
 var attack_cooldown_timer := 0.0
+var attack_cooldown_duration := 0.01
 var lock_controls := false # micro “hit-stop” al atacar
 var overlay_blocks_movement := false
 
@@ -273,6 +274,7 @@ func _physics_process(delta: float) -> void:
 
 	if attack_cooldown_timer > 0.0:
 		attack_cooldown_timer = max(0.0, attack_cooldown_timer - delta)
+	_update_shoot_delay_ui()
 
 	# 2) Entrada del jugador
 	var raw_dir := Input.get_axis("move_left", "move_right")
@@ -543,6 +545,7 @@ func _attack(dir: Direction) -> void:
 	# daño y cadencia de esa bala.
 	var tuned_stats := _compute_bullet_stats_from_profile()
 	attack_cooldown_timer = float(tuned_stats.get("cadence", bullet_cadence_base))
+	attack_cooldown_duration = max(0.01, attack_cooldown_timer)
 	_spawn_css_bullet(tuned_stats)
 
 	# Pequeño “hit-stop” opcional:
@@ -557,6 +560,14 @@ func _end_attack() -> void:
 		attack_area.monitoring = false
 		attack_area.visible = false
 	state = State.FALL if not is_on_floor() else State.IDLE
+
+
+func _update_shoot_delay_ui() -> void:
+	var hud := get_tree().get_first_node_in_group("main_hud")
+	if hud == null or not hud.has_method("set_shoot_delay_progress"):
+		return
+	var ratio := 1.0 - (attack_cooldown_timer / attack_cooldown_duration)
+	hud.call("set_shoot_delay_progress", clampf(ratio, 0.0, 1.0))
 
 func _spawn_css_bullet(precomputed_stats: Dictionary = {}) -> void:
 	if bullet_scene == null:
