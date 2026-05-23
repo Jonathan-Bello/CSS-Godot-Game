@@ -16,8 +16,6 @@ var _emis_conversation_id: String = ""
 var _last_loaded_html: String = ""
 var _overlay_template_path: String = "res://features/ui/hud/web_overlay_editor.html"
 
-var _loading_fx_rect: ColorRect = null
-var _loading_fx_label: Label = null
 var _loading_sfx_player: AudioStreamPlayer = null
 @export var overlay_open_prelude_seconds: float = 0.32
 var _awaiting_html_ready: bool = false
@@ -41,7 +39,7 @@ func _ready() -> void:
 		web.connect("ipc_message", Callable(self , "_on_web_ipc_message"))
 
 	_ensure_emis_client()
-	_ensure_loading_fx_nodes()
+	_ensure_loading_sfx_player()
 	_layout_and_sync()
 	print("[WebOverlay] READY")
 
@@ -123,22 +121,7 @@ func close() -> void:
 
 
 
-func _ensure_loading_fx_nodes() -> void:
-	if _loading_fx_rect == null:
-		_loading_fx_rect = ColorRect.new()
-		_loading_fx_rect.name = "OverlayLoadingFx"
-		_loading_fx_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-		_loading_fx_rect.color = Color(0.04, 0.06, 0.12, 0.0)
-		_loading_fx_rect.visible = false
-		add_child(_loading_fx_rect)
-	if _loading_fx_label == null:
-		_loading_fx_label = Label.new()
-		_loading_fx_label.name = "OverlayLoadingLabel"
-		_loading_fx_label.text = "Sincronizando enlace..."
-		_loading_fx_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		_loading_fx_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		_loading_fx_label.modulate = Color(1, 1, 1, 0.0)
-		_loading_fx_rect.add_child(_loading_fx_label)
+func _ensure_loading_sfx_player() -> void:
 	if _loading_sfx_player == null:
 		_loading_sfx_player = AudioStreamPlayer.new()
 		_loading_sfx_player.name = "OverlayOpenSfx"
@@ -168,42 +151,15 @@ func _build_overlay_open_sfx() -> AudioStreamWAV:
 	return wav
 
 func _play_overlay_open_prelude() -> void:
-	_ensure_loading_fx_nodes()
-	if _loading_fx_rect == null:
-		return
-	_loading_fx_rect.visible = true
-	_loading_fx_rect.position = panel.position
-	_loading_fx_rect.size = panel.size
-	_loading_fx_rect.color = Color(0.04, 0.06, 0.12, 0.0)
-	if _loading_fx_label:
-		_loading_fx_label.position = Vector2.ZERO
-		_loading_fx_label.size = _loading_fx_rect.size
-		_loading_fx_label.modulate = Color(1, 1, 1, 0.0)
-	var tween := create_tween()
-	tween.tween_property(_loading_fx_rect, "color", Color(0.04, 0.06, 0.12, 0.88), 0.12)
-	if _loading_fx_label:
-		tween.parallel().tween_property(_loading_fx_label, "modulate", Color(1, 1, 1, 1.0), 0.12)
+	_ensure_loading_sfx_player()
 	if _loading_sfx_player and _loading_sfx_player.stream:
 		_loading_sfx_player.play()
 	await get_tree().create_timer(overlay_open_prelude_seconds).timeout
-	var tween_out := create_tween()
-	tween_out.tween_property(_loading_fx_rect, "color", Color(0.04, 0.06, 0.12, 0.0), 0.10)
-	if _loading_fx_label:
-		tween_out.parallel().tween_property(_loading_fx_label, "modulate", Color(1, 1, 1, 0.0), 0.10)
-	await tween_out.finished
-	# Se mantiene visible hasta que llegue html_loaded.
 
 func _finish_overlay_open_after_html_ready() -> void:
 	if web:
 		web.visible = true
 		web.call_deferred("focus")
-	if _loading_fx_rect:
-		var tween_out := create_tween()
-		tween_out.tween_property(_loading_fx_rect, "color", Color(0.04, 0.06, 0.12, 0.0), 0.10)
-		if _loading_fx_label:
-			tween_out.parallel().tween_property(_loading_fx_label, "modulate", Color(1, 1, 1, 0.0), 0.10)
-		await tween_out.finished
-		_loading_fx_rect.visible = false
 
 func _input(ev: InputEvent) -> void:
 	if visible and ev.is_action_pressed("ui_cancel"):
