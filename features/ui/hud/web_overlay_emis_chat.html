@@ -1,0 +1,74 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<style>
+  @font-face{font-family:'OverlayDisplay';src:url('__OVERLAY_FONT_DATA_URI__') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent;color:#fff;font-family:'OverlayDisplay','Quantico','Segoe UI',sans-serif}
+  .wrap{display:grid;grid-template-rows:auto 1fr;height:100%;padding:12px;box-sizing:border-box;gap:10px}
+  .top{display:flex;justify-content:flex-end}
+  .close-x{width:36px;height:36px;border:1px solid #556d9f;border-radius:10px;background:#1a2440;color:#fff;font-size:20px;font-weight:700;cursor:pointer}
+  .main{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,1.6fr);gap:10px;min-height:0}
+  .preview{display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;background:radial-gradient(circle at 30% 20%, #1a2f59 0%, #0b1222 58%);border:1px solid #314266;border-radius:14px;min-height:0}
+  .preview #svg{display:block;flex:0 0 auto;max-width:200px;max-height:200px;min-width:24px;min-height:24px;filter:drop-shadow(0 8px 16px rgba(0,0,0,.45))}
+  .chat-shell{display:grid;grid-template-rows:auto 1fr auto;gap:8px;background:linear-gradient(145deg,#131e37,#0d1529);border:1px solid #314266;border-radius:14px;padding:12px;min-height:0}
+  .chat-shell h3{margin:0;font-size:14px;color:#ffd57f}
+  .chat-messages{display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0;padding-right:2px}
+  .chat-bubble{width:fit-content;max-width:min(92%,760px);padding:8px 10px;border-radius:10px;font-size:12px;line-height:1.4;word-break:break-word;white-space:pre-wrap;border:1px solid transparent}
+  .chat-bubble.user{margin-left:auto;background:#23406f;color:#e6f1ff;border-color:#36578f}
+  .chat-bubble.emis{margin-right:auto;background:#191f34;color:#ffe8b6;border-color:#424f7a}
+  .chat-input-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+  .chat-input-row input{background:#0b1222;color:#fff;border:1px solid #345;border-radius:8px;padding:8px}
+  .chat-typing{font-size:11px;color:#ffde9f;min-height:16px}
+  .chat-typing.hidden{visibility:hidden}
+  button{background:#4a90e2;border:0;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+  button:disabled{opacity:.5;cursor:wait}
+</style></head>
+<body>
+  <div class="wrap">
+    <div class="top"><button class="close-x" onclick="closeOverlay()" aria-label="Cerrar">×</button></div>
+    <div class="main">
+      <div class="preview">
+        <svg id="svg" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+          <defs><style id="styleEl"></style></defs>
+          <rect id="shape" x="28" y="28" width="200" height="200" rx="24" ry="24"/>
+        </svg>
+      </div>
+      <aside class="chat-shell">
+        <h3>💬 Emis</h3>
+        <div id="chatMessages" class="chat-messages"></div>
+        <div id="chatTyping" class="chat-typing hidden">Emis escribiendo…</div>
+        <div class="chat-input-row">
+          <input id="chatInput" type="text" maxlength="240" placeholder="Pregúntale a Emis"/>
+          <button id="chatSend">Enviar</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+<script>
+const svg=document.getElementById('svg');
+const styleEl=document.getElementById('styleEl');
+const chatMessagesEl=document.getElementById('chatMessages');
+const chatInputEl=document.getElementById('chatInput');
+const chatSendEl=document.getElementById('chatSend');
+const chatTypingEl=document.getElementById('chatTyping');
+let chatMessages=[{role:'emis',text:'¡Hola! Soy Emis. ¿Qué necesitas?'}];
+let chatWaitingReply=false;
+const EMIS_CHAT_CONTRACT_VERSION='emis_chat_v1';
+let lastCss='';
+
+function closeOverlay(){try{ipc.postMessage('close');ipc.postMessage(JSON.stringify({type:'close'}));}catch(_e){}}
+function escapeHtml(raw){return String(raw||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function setChatWaitingState(w){chatWaitingReply=!!w;if(chatInputEl)chatInputEl.disabled=chatWaitingReply;if(chatSendEl)chatSendEl.disabled=chatWaitingReply;if(chatTypingEl)chatTypingEl.classList.toggle('hidden',!chatWaitingReply);}
+function renderChatMessages(){if(!chatMessagesEl)return;chatMessagesEl.innerHTML=chatMessages.map(m=>'<div class="chat-bubble '+(m.role==='user'?'user':'emis')+'">'+escapeHtml(m.text||'')+'</div>').join('');chatMessagesEl.scrollTop=chatMessagesEl.scrollHeight;}
+function pushChatMessage(role,text){const t=String(text||'').trim();if(!t)return;chatMessages.push({role:role==='user'?'user':'emis',text:t});renderChatMessages();}
+function normalizeEmisReplyText(payload){if(!payload||typeof payload!=='object')return '';if(typeof payload.reply==='string'&&payload.reply.trim())return payload.reply.trim();if(typeof payload.message==='string'&&payload.message.trim())return payload.message.trim();return '';}
+function sendChatMessage(){if(!chatInputEl||chatWaitingReply)return;const message=String(chatInputEl.value||'').trim();if(!message)return;pushChatMessage('user',message);chatInputEl.value='';setChatWaitingState(true);try{ipc.postMessage(JSON.stringify({type:'chat_request',contract_version:EMIS_CHAT_CONTRACT_VERSION,message,context:{contract_version:EMIS_CHAT_CONTRACT_VERSION,history:chatMessages,snapshot:{css_text:lastCss}}}));}catch(_e){pushChatMessage('emis','No pude enviar tu mensaje.');setChatWaitingState(false);}}
+window.onEmisReply=function(payload){try{if(payload&&payload.error){pushChatMessage('emis','Tuvimos un problema al responder.');return;}const r=normalizeEmisReplyText(payload);if(!r){pushChatMessage('emis','No pude entender la respuesta de Emis.');return;}pushChatMessage('emis',r);}finally{setChatWaitingState(false);if(chatInputEl)chatInputEl.focus();}};
+function hydrateFromGodot(payload){if(!payload||typeof payload!=='object')return;lastCss=typeof payload.css_text==='string'?payload.css_text:lastCss;const txt=typeof payload.svg_text==='string'?payload.svg_text:'';if(styleEl&&lastCss)styleEl.textContent=lastCss;if(txt){const parsed=new DOMParser().parseFromString(txt,'image/svg+xml');const next=parsed.documentElement;if(next&&next.nodeName.toLowerCase()==='svg'){while(svg.firstChild)svg.removeChild(svg.firstChild);for(const child of Array.from(next.children)){svg.appendChild(document.importNode(child,true));}}}}
+window.hydrateFromGodot=hydrateFromGodot;
+renderChatMessages();
+if(chatSendEl)chatSendEl.addEventListener('click',sendChatMessage);
+if(chatInputEl)chatInputEl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();sendChatMessage();}});
+setChatWaitingState(false);
+ipc.postMessage('html_loaded');
+</script>
+</body></html>

@@ -14,6 +14,12 @@ var _web_hydration_payload: Dictionary = {}
 var _emis_client: Node = null
 var _emis_conversation_id: String = ""
 var _last_loaded_html: String = ""
+var _overlay_template_path: String = "res://features/ui/hud/web_overlay_editor.html"
+
+var _loading_sfx_player: AudioStreamPlayer = null
+@export var overlay_open_prelude_seconds: float = 0.32
+var _awaiting_html_ready: bool = false
+
 
 signal overlay_opened
 signal overlay_closed
@@ -33,6 +39,7 @@ func _ready() -> void:
 		web.connect("ipc_message", Callable(self , "_on_web_ipc_message"))
 
 	_ensure_emis_client()
+	_ensure_loading_sfx_player()
 	_layout_and_sync()
 	print("[WebOverlay] READY")
 
@@ -66,20 +73,29 @@ func _emit_overlay_closed() -> void:
 	emit_signal("overlay_closed")
 
 func open() -> void:
-	print("[WebOverlay] open()")
+	_open_with_template("res://features/ui/hud/web_overlay_editor.html")
+
+func open_chat_overlay() -> void:
+	_open_with_template("res://features/ui/hud/web_overlay_emis_chat.html")
+
+func _open_with_template(template_path: String) -> void:
+	_overlay_template_path = template_path
+	print("[WebOverlay] open() template=", _overlay_template_path)
 	visible = true
 	panel.visible = true
-	web.visible = true
+	web.visible = false
 
 	# Mientras esté abierto, el panel debe “parar” el input de la escena
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	await get_tree().process_frame
 	_layout_and_sync()
+	await _play_overlay_open_prelude()
+	_awaiting_html_ready = true
+	web.set("html", "")
+	web.set("url", "about:blank")
 	_load_editor_html()
-	web.call_deferred("focus")
-	_emit_overlay_opened()
-	print("[WebOverlay] open -> HTML cargado, focus defer")
+	print("[WebOverlay] open -> esperando html_loaded")
 
 func close() -> void:
 	print("[WebOverlay] close()")
@@ -102,6 +118,48 @@ func close() -> void:
 	web.set("url", "about:blank")
 
 	_emit_overlay_closed()
+
+
+
+func _ensure_loading_sfx_player() -> void:
+	if _loading_sfx_player == null:
+		_loading_sfx_player = AudioStreamPlayer.new()
+		_loading_sfx_player.name = "OverlayOpenSfx"
+		add_child(_loading_sfx_player)
+		_loading_sfx_player.stream = _build_overlay_open_sfx()
+
+func _build_overlay_open_sfx() -> AudioStreamWAV:
+	var sample_rate: int = 22050
+	var duration: float = maxf(0.08, overlay_open_prelude_seconds)
+	var frame_count: int = int(float(sample_rate) * duration)
+	var bytes := PackedByteArray()
+	bytes.resize(frame_count * 2)
+	for i in range(frame_count):
+		var t: float = float(i) / float(sample_rate)
+		var progress: float = minf(t / duration, 1.0)
+		var env: float = progress * (1.0 - progress) * 4.0
+		var freq: float = lerpf(520.0, 880.0, progress)
+		var amp: float = sin(TAU * freq * t) * env * 0.32
+		var sample: int = int(clampf(amp, -1.0, 1.0) * 32767.0)
+		bytes[i * 2] = sample & 0xFF
+		bytes[i * 2 + 1] = (sample >> 8) & 0xFF
+	var wav := AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = sample_rate
+	wav.stereo = false
+	wav.data = bytes
+	return wav
+
+func _play_overlay_open_prelude() -> void:
+	_ensure_loading_sfx_player()
+	if _loading_sfx_player and _loading_sfx_player.stream:
+		_loading_sfx_player.play()
+	await get_tree().create_timer(overlay_open_prelude_seconds).timeout
+
+func _finish_overlay_open_after_html_ready() -> void:
+	if web:
+		web.visible = true
+		web.call_deferred("focus")
 
 func _input(ev: InputEvent) -> void:
 	if visible and ev.is_action_pressed("ui_cancel"):
@@ -172,7 +230,9 @@ func _inject_window_var(var_name: String, value: String) -> void:
 # HTML LOADER
 # -----------------------------
 func _read_editor_html_template() -> String:
-	var template_path := "res://features/ui/hud/web_overlay_editor.html"
+	var template_path := _overlay_template_path
+	if template_path == "":
+		template_path = "res://features/ui/hud/web_overlay_editor.html"
 	if not FileAccess.file_exists(template_path):
 		push_warning("[WebOverlay] No se encontró template HTML: %s" % template_path)
 		return ""
@@ -256,6 +316,11 @@ func _on_web_ipc_message(msg: String) -> void:
 		if not _web_hydration_payload.is_empty():
 			_hydrate_web_editor(_web_hydration_payload)
 			_web_hydration_payload = {}
+		if _awaiting_html_ready:
+			_awaiting_html_ready = false
+			await _finish_overlay_open_after_html_ready()
+			_emit_overlay_opened()
+			print("[WebOverlay] open -> HTML visible y focus listo")
 		return
 
 	if msg == "img_error":

@@ -327,6 +327,7 @@ z_index = 2
 layout_mode = 2
 
 [node name="EmisButton" type="TextureButton" parent="BottomRight/Panel"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -344,6 +345,33 @@ texture_normal = ExtResource("3")
 ignore_texture_size = true
 stretch_mode = 5
 
+
+[node name="EmisDialog" type="PanelContainer" parent="BottomRight/Panel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -238.0
+offset_top = -112.0
+offset_right = 10.0
+offset_bottom = -44.0
+
+[node name="Margin" type="MarginContainer" parent="BottomRight/Panel/EmisDialog"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="EmisDialogLabel" type="Label" parent="BottomRight/Panel/EmisDialog/Margin"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "¡Ey! Tengo una pista para ti."
+autowrap_mode = 3
 [node name="EmisBadge" type="Label" parent="BottomRight/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
