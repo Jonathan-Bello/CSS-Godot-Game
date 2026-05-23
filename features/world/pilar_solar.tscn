@@ -1,24 +1,23 @@
 [gd_scene load_steps=5 format=3 uid="uid://d4bd58fueck4y"]
 
-[ext_resource type="Script" path="res://core/pilar_solar.gd" id="1"]
+[ext_resource type="Script" uid="uid://bkx1q2umxh5yp" path="res://core/pilar_solar.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://assets/art/tilesets/master_tileset_128x128.svg" id="2"]
-
-[sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(162, 130.5)
 
 [sub_resource type="AtlasTexture" id="2"]
 atlas = ExtResource("2")
-region = Rect2(384, 256, 128, 128)
+region = Rect2(287, 287, 128, 128)
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(162, 130.5)
 
 [node name="PilarSolar" type="Area2D"]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1")
 overlay_path = NodePath("../Player/Camera2D/Control/PanelContainer/WebView")
-pillar_sprite_path = NodePath("PillarSprite")
 
 [node name="PillarSprite" type="Sprite2D" parent="."]
-position = Vector2(0, 10)
+position = Vector2(33, 58)
 texture = SubResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
