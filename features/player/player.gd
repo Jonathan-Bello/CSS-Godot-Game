@@ -237,6 +237,12 @@ func _ready() -> void:
 	_play_if_changed(&"idle", true)
 
 
+
+func restore_all() -> void:
+	var hud := get_tree().get_first_node_in_group("main_hud")
+	if hud and hud.has_method("restore_all"):
+		hud.call("restore_all")
+
 func _physics_process(delta: float) -> void:
 	_update_aim_raycast()
 	_update_shoot_arm_aim(delta)
