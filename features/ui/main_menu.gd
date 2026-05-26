@@ -1,9 +1,9 @@
 extends Control
 
-@export_file("*.tscn") var new_game_scene: String = "res://content/levels/level.tscn"
+@export_file("*.tscn") var new_game_scene: String = "res://content/levels/tutorial_cave.tscn"
 @export var title_music: AudioStream = preload("res://assets/music/Verdant Circuit.mp3")
-@export var accept_sfx: AudioStream = preload("res://assets/sfx/itempick1.wav")
-@export var focus_sfx: AudioStream = preload("res://assets/sfx/itemback.wav")
+@export var accept_sfx: AudioStream = preload("res://assets/sfx/Menu_Select_01.mp3")
+@export var focus_sfx: AudioStream = preload("res://assets/sfx/Menu_Select_00.mp3")
 
 @onready var new_button: Button = %NewButton
 @onready var load_button: Button = %LoadButton
@@ -25,7 +25,10 @@ func _on_new_pressed() -> void:
 	_play_accept_sfx()
 	if has_node("/root/AudioManager"):
 		AudioManager.stop_music(0.35)
-	get_tree().change_scene_to_file(new_game_scene)
+	if has_node("/root/SceneTransition"):
+		await SceneTransition.transition_to_scene(new_game_scene, "PlayerStart", 0.35)
+	else:
+		get_tree().change_scene_to_file(new_game_scene)
 
 func _on_load_pressed() -> void:
 	_play_accept_sfx()

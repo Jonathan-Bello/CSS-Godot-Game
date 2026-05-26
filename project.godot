@@ -31,6 +31,7 @@ CssUnlocks="*res://core/css_unlocks.gd"
 FontBootstrap="*res://core/font_bootstrap.gd"
 MovementUnlocks="*res://core/movement_unlocks.gd"
 AudioManager="*res://core/audio_manager.gd"
+SceneTransition="*res://core/scene_transition.gd"
 
 [display]
 

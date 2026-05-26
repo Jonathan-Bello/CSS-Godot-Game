@@ -3,6 +3,8 @@ class_name CssRobotEnemy
 
 @export var speed: float = 90.0
 @export var max_health: int = 10
+@export var contact_damage: int = 1
+@export var contact_knockback: Vector2 = Vector2(950.0, -620.0)
 # Afinidad editable desde inspector:
 # - properties: propiedades/valores CSS a los que reacciona el enemigo.
 # - property_bonus: daño adicional por match de propiedad.
@@ -22,9 +24,16 @@ var move_dir: float = -1.0
 
 @onready var robot_sprite: Polygon2D = $RobotSprite
 @onready var life_label: Label = $LifeLabel
+@onready var contact_damage_area: Area2D = get_node_or_null("ContactDamageArea")
 
 func _ready() -> void:
 	health = max_health
+	if contact_damage_area:
+		contact_damage_area.collision_layer = 0
+		contact_damage_area.collision_mask = 2
+		contact_damage_area.monitorable = false
+		if not contact_damage_area.body_entered.is_connected(_on_contact_damage_body_entered):
+			contact_damage_area.body_entered.connect(_on_contact_damage_body_entered)
 	_update_label()
 
 func _physics_process(_delta: float) -> void:
@@ -46,6 +55,11 @@ func apply_css_bullet_hit(bullet_profile: Dictionary) -> void:
 
 	if health <= 0:
 		queue_free()
+
+func _on_contact_damage_body_entered(body: Node) -> void:
+	if body == null or not body.has_method("apply_enemy_contact_damage"):
+		return
+	body.call("apply_enemy_contact_damage", self, contact_damage, contact_knockback)
 
 # Fusiona configuración local con la que entregue el recurso externo.
 func _resolve_affinity() -> Dictionary:

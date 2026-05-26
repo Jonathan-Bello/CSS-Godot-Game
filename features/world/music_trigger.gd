@@ -11,6 +11,9 @@ class_name MusicTrigger
 var _played := false
 
 func _ready() -> void:
+	collision_layer = 0
+	collision_mask = 2
+	monitorable = false
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
