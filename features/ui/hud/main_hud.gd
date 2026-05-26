@@ -74,8 +74,8 @@ func set_player_health(current: float, maximum: float) -> void:
 	current_health_slots = clampi(int(round(current)), 0, max_health_slots)
 	_update_health_slots()
 
-func set_boss_visible(is_visible: bool) -> void:
-	boss_container.visible = is_visible
+func set_boss_visible(should_show: bool) -> void:
+	boss_container.visible = should_show
 
 func set_boss_data(name_text: String, current: float, maximum: float) -> void:
 	boss_name_label.text = "< %s >" % name_text.to_upper()

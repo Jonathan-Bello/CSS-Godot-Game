@@ -27,7 +27,7 @@ func _ready() -> void:
 	health = max_health
 	_update_label()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	velocity.x = move_dir * speed
 	move_and_slide()
 	if is_on_wall():
