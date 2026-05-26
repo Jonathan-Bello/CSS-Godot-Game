@@ -122,9 +122,6 @@ extends CharacterBody2D
 @export_node_path("Node2D") var shoot_origin_path: NodePath = ^"Skeleton2D/origen/cintura/torso/brazoD"
 ## Sprite visual del brazo derecho vinculado al hueso brazoD.
 @export_node_path("CanvasItem") var shoot_arm_sprite_path: NodePath = ^"Skeleton2D/sprites/BrazoD"
-## RayCast2D para apuntado hacia el mouse.
-@export_node_path("RayCast2D") var aim_raycast_path: NodePath = ^"hitboxes/aim_raycast"
-
 @export_group("Disparo CSS")
 @export var bullet_scene: PackedScene = preload("res://features/combat/css_bullet.tscn")
 @export var bullet_speed: float = 1800.0
@@ -206,7 +203,6 @@ var external_control_lock := false
 @onready var shoot_arm: Node2D = get_node_or_null(shoot_arm_path)
 @onready var shoot_origin: Node2D = get_node_or_null(shoot_origin_path)
 @onready var shoot_arm_sprite: CanvasItem = get_node_or_null(shoot_arm_sprite_path)
-@onready var aim_raycast: RayCast2D = get_node_or_null(aim_raycast_path)
 @onready var lbl_state: Label = get_node_or_null(lbl_state_path)
 @onready var lbl_vel: Label = get_node_or_null(lbl_vel_path)
 @onready var lbl_flags: Label = get_node_or_null(lbl_flags_path)
@@ -227,7 +223,6 @@ func _ready() -> void:
 		wall_probe.force_raycast_update()
 	if shoot_origin == null: push_warning("shoot_origin no encontrado en '%s'." % shoot_origin_path)
 	if shoot_arm_sprite == null: push_warning("shoot_arm_sprite no encontrado en '%s'." % shoot_arm_sprite_path)
-	if aim_raycast == null: push_warning("aim_raycast no encontrado en '%s'." % aim_raycast_path)
 	if attack_area:
 		attack_area.monitoring = false
 		attack_area.visible = false
@@ -247,7 +242,6 @@ func restore_all() -> void:
 		hud.call("restore_all")
 
 func _physics_process(delta: float) -> void:
-	_update_aim_raycast()
 	_update_shoot_arm_aim(delta)
 	if debug_show_shoot_bone:
 		queue_redraw()
@@ -553,8 +547,7 @@ func _attack(dir: Direction) -> void:
 	# Pequeño “hit-stop” opcional:
 	if ATTACK_KNOCK_PAUSE > 0.0:
 		lock_controls = true
-		await get_tree().create_timer(ATTACK_KNOCK_PAUSE).timeout
-		lock_controls = false
+		get_tree().create_timer(ATTACK_KNOCK_PAUSE).timeout.connect(_unlock_controls_after_attack_pause)
 
 ## Finaliza el ataque y limpia el área.
 func _end_attack() -> void:
@@ -619,25 +612,16 @@ func _update_shoot_arm_aim(_delta: float) -> void:
 		offset_degrees = -offset_degrees
 	shoot_arm.global_rotation = aim_direction.angle() + deg_to_rad(offset_degrees)
 
-func _update_aim_raycast() -> void:
-	if aim_raycast == null:
-		return
-	var mouse_global := get_global_mouse_position()
-	var from := aim_raycast.global_position
-	aim_raycast.target_position = mouse_global - from
-	aim_raycast.force_raycast_update()
-
 func _get_aim_direction() -> Vector2:
 	var from := shoot_origin.global_position if shoot_origin else global_position
 	var target := get_global_mouse_position()
-	if aim_raycast:
-		target = aim_raycast.to_global(aim_raycast.target_position)
-		if aim_raycast.is_colliding():
-			target = aim_raycast.get_collision_point()
 	var direction := target - from
 	if direction.length_squared() <= 0.0001:
 		return Vector2(float(_facing_sign()), 0.0)
 	return direction.normalized()
+
+func _unlock_controls_after_attack_pause() -> void:
+	lock_controls = false
 
 func equip_bullet_from_profile(profile: Dictionary) -> void:
 	if profile.is_empty():

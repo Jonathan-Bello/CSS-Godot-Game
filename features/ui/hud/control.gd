@@ -318,7 +318,7 @@ func _on_web_ipc_message(msg: String) -> void:
 			_web_hydration_payload = {}
 		if _awaiting_html_ready:
 			_awaiting_html_ready = false
-			await _finish_overlay_open_after_html_ready()
+			_finish_overlay_open_after_html_ready()
 			_emit_overlay_opened()
 			print("[WebOverlay] open -> HTML visible y focus listo")
 		return

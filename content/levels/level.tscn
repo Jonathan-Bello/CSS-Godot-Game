@@ -256,7 +256,7 @@ scale = Vector2(2.4913106, 1.673611)
 texture = ExtResource("15_57uqs")
 
 [node name="PilarSolar" parent="." instance=ExtResource("4_pilar")]
-position = Vector2(-1206, 1108)
+position = Vector2(-1148, 1127)
 
 [node name="EmisDialogTrigger" parent="." instance=ExtResource("11_u1ss0")]
 position = Vector2(161, 67)

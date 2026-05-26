@@ -42,7 +42,7 @@ const RELEVANT_PROPERTIES := {
 
 # Recorre un texto CSS "key: value; key2: value2;" y se queda únicamente con
 # las propiedades que el combate entiende (RELEVANT_PROPERTIES).
-static func parse_relevant_properties(css_text: String) -> Dictionary:
+func parse_relevant_properties(css_text: String) -> Dictionary:
 	var parsed := {}
 	for chunk in css_text.split(";"):
 		var pair := chunk.strip_edges()
@@ -63,7 +63,7 @@ static func parse_relevant_properties(css_text: String) -> Dictionary:
 # - "blue" -> "#0000ff"
 # - "rgb(0, 0, 255)" -> "#0000ff"
 # - "border: 1px solid red" -> "#ff0000"
-static func normalize_property_value(key: String, value: String) -> String:
+func normalize_property_value(key: String, value: String) -> String:
 	if key in ["background", "background-color", "color", "border-color", "outline-color"]:
 		var maybe_color := normalize_color(value)
 		if maybe_color != "":
@@ -79,7 +79,7 @@ static func normalize_property_value(key: String, value: String) -> String:
 	return value.strip_edges().to_lower()
 
 # Convierte colores de distintos formatos a un string canónico.
-static func normalize_color(raw_color: String) -> String:
+func normalize_color(raw_color: String) -> String:
 	var color_value := raw_color.strip_edges().to_lower()
 	if color_value == "":
 		return ""
@@ -99,7 +99,7 @@ static func normalize_color(raw_color: String) -> String:
 
 # Normaliza el diccionario de afinidad del enemigo (claves + valores) para que
 # la comparación con la bala sea consistente y sin falsos negativos.
-static func normalize_affinity(affinity: Dictionary) -> Dictionary:
+func normalize_affinity(affinity: Dictionary) -> Dictionary:
 	var normalized := {}
 	for raw_key in affinity.keys():
 		var key := _normalize_property_name(String(raw_key).strip_edges().to_lower())
@@ -112,7 +112,7 @@ static func normalize_affinity(affinity: Dictionary) -> Dictionary:
 # - Si no existe propiedad en bala => daño base.
 # - Si existe propiedad pero valor distinto => daño base + property_bonus.
 # - Si coincide propiedad y valor exacto => daño base + critical_bonus.
-static func compute_damage(bullet_profile: Dictionary, target_affinity: Dictionary) -> Dictionary:
+func compute_damage(bullet_profile: Dictionary, target_affinity: Dictionary) -> Dictionary:
 	var base_damage := int(max(1, int(bullet_profile.get("base_damage", bullet_profile.get("damage", 1)))))
 	var bullet_properties: Dictionary = bullet_profile.get("properties", {})
 	var enemy_properties: Dictionary = normalize_affinity(target_affinity.get("properties", {}))
@@ -159,13 +159,13 @@ static func compute_damage(bullet_profile: Dictionary, target_affinity: Dictiona
 	}
 
 # Unifica aliases de propiedades.
-static func _normalize_property_name(raw_key: String) -> String:
+func _normalize_property_name(raw_key: String) -> String:
 	if raw_key == "background":
 		return "background-color"
 	return raw_key
 
 # Intenta extraer color dentro de la definición de borde.
-static func _extract_border_color(value: String) -> String:
+func _extract_border_color(value: String) -> String:
 	for token in value.split(" "):
 		var maybe_color := normalize_color(token)
 		if maybe_color != "":
@@ -173,7 +173,7 @@ static func _extract_border_color(value: String) -> String:
 	return ""
 
 # Intenta extraer el primer color dentro de box-shadow/text-shadow.
-static func _extract_first_shadow_color(value: String) -> String:
+func _extract_first_shadow_color(value: String) -> String:
 	for token in value.split(" "):
 		var maybe_color := normalize_color(token)
 		if maybe_color != "":
@@ -181,7 +181,7 @@ static func _extract_first_shadow_color(value: String) -> String:
 	return ""
 
 # Normaliza hex corto (#0af) y acepta hex largo (#00aaff / #00aaffcc).
-static func _normalize_hex(value: String) -> String:
+func _normalize_hex(value: String) -> String:
 	var compact := value.strip_edges().to_lower()
 	if compact.length() == 4:
 		return "#%s%s%s" % [compact[1] + compact[1], compact[2] + compact[2], compact[3] + compact[3]]
@@ -190,7 +190,7 @@ static func _normalize_hex(value: String) -> String:
 	return ""
 
 # Convierte "rgb(...)" / "rgba(...)" a Color.
-static func _parse_rgb_string(value: String):
+func _parse_rgb_string(value: String):
 	var start := value.find("(")
 	var end := value.find(")")
 	if start == -1 or end == -1 or end <= start:
@@ -207,7 +207,7 @@ static func _parse_rgb_string(value: String):
 	return Color(r, g, b, a)
 
 # Convierte Color a string hexadecimal estable.
-static func _to_hex_string(color: Color) -> String:
+func _to_hex_string(color: Color) -> String:
 	if color.a < 1.0:
 		return "#%02x%02x%02x%02x" % [
 			int(round(color.r * 255.0)),
@@ -221,7 +221,7 @@ static func _to_hex_string(color: Color) -> String:
 		int(round(color.b * 255.0))
 	]
 
-static func _is_property_unlocked(prop: String) -> bool:
+func _is_property_unlocked(prop: String) -> bool:
 	var tree := Engine.get_main_loop() as SceneTree
 	if tree == null:
 		return true
