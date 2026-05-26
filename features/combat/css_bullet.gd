@@ -255,6 +255,10 @@ func _process_hit_target(target: Node) -> void:
 			"css_text": css_text
 		}
 		receiver.call("apply_css_bullet_hit", bullet_profile)
+		_destroy_on_impact()
+		return
+	if target is Area2D:
+		return
 	_destroy_on_impact()
 
 func _on_area_entered(area: Area2D) -> void:

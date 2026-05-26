@@ -147,7 +147,7 @@ extends CharacterBody2D
 var bullet_profile_path: String = ""
 var current_bullet_profile: Dictionary = {}
 const DEFAULT_BULLET_CSS_TEXT := "background-color: #ff3b3b; width: 28px; height: 16px; border-radius: 6px;"
-var _warned_missing_bullet_profile: bool = false
+var _warned_missing_bullet_profile: bool = true
 
 @export_group("Debug — Labels (opcional)")
 @export_node_path("Label") var lbl_state_path: NodePath = ^"debug/lbl_state"
@@ -163,8 +163,20 @@ var _warned_missing_bullet_profile: bool = false
 @export_group("Audio")
 @export var shoot_sfx: AudioStream = preload("res://assets/sfx/retro_laser_01.ogg")
 @export var dash_sfx: AudioStream = preload("res://assets/sfx/teleport_01.ogg")
-@export var respawn_sfx: AudioStream = preload("res://assets/sfx/teleport_02.ogg")
+@export var respawn_sfx: AudioStream = preload("res://assets/sfx/WarpDrive_02.mp3")
 @export var equip_ammo_sfx: AudioStream = preload("res://assets/sfx/carga_municion.ogg")
+@export var footstep_sfx: AudioStream = preload("res://assets/sfx/step_metal.ogg")
+@export var landing_sfx: AudioStream = preload("res://assets/sfx/jumpland.wav")
+@export var death_sfx: AudioStream = preload("res://assets/sfx/Jingle_Lose_00.mp3")
+@export_range(0.08, 0.8, 0.01) var footstep_interval: float = 0.28
+@export_range(0.0, 2800.0, 25.0) var landing_velocity_threshold: float = 650.0
+@export_range(0.0, 2.0, 0.05) var death_respawn_delay: float = 0.55
+@export_group("Vida y Daño")
+@export_range(1, 10, 1) var max_health: int = 4
+@export_range(0, 10, 1) var current_health: int = 2
+@export var enemy_knockback: Vector2 = Vector2(950.0, -620.0)
+@export_range(0.0, 3.0, 0.05) var damage_invulnerability_time: float = 1.1
+@export_range(0.0, 0.5, 0.01) var damage_control_lock_time: float = 0.18
 
 
 # ─────────────────────────────────────────────────────────
@@ -206,7 +218,13 @@ var external_control_lock := false
 var respawn_checkpoint_position: Vector2 = Vector2.ZERO
 var has_respawn_checkpoint := false
 var _is_respawning := false
+var _is_dying := false
 var _resurrection_sfx_player: AudioStreamPlayer2D = null
+var _active_footstep_sfx: AudioStream = null
+var _footstep_timer := 0.0
+var _damage_invulnerability_timer := 0.0
+var _damage_control_lock_timer := 0.0
+var _damage_blink_timer := 0.0
 
 
 # ─────────────────────────────────────────────────────────
@@ -231,7 +249,9 @@ var _resurrection_sfx_player: AudioStreamPlayer2D = null
 func _ready() -> void:
 	add_to_group("player")
 	set_respawn_checkpoint(global_position)
+	_active_footstep_sfx = footstep_sfx
 	_ensure_resurrection_sfx_player()
+	_sync_health_ui()
 	# Consejos de wiring si algo falta:
 	if anim == null: push_warning("AnimationPlayer no encontrado en '%s'." % anim_path)
 	if gfx_root == null: push_warning("gfx_root no encontrado en '%s'." % gfx_root_path)
@@ -255,13 +275,27 @@ func _ready() -> void:
 
 
 func restore_all() -> void:
+	current_health = max_health
 	var hud := get_tree().get_first_node_in_group("main_hud")
 	if hud and hud.has_method("restore_all"):
 		hud.call("restore_all")
+	_sync_health_ui()
 
 func set_respawn_checkpoint(checkpoint_position: Vector2) -> void:
 	respawn_checkpoint_position = checkpoint_position
 	has_respawn_checkpoint = true
+
+func kill_and_respawn() -> void:
+	if _is_dying or _is_respawning:
+		return
+	_is_dying = true
+	modulate = Color(1, 1, 1, 1)
+	set_external_control_lock(true)
+	_play_world_sfx(death_sfx, -5.0)
+	if death_respawn_delay > 0.0:
+		await get_tree().create_timer(death_respawn_delay).timeout
+	_is_dying = false
+	respawn_at_checkpoint()
 
 func respawn_at_checkpoint() -> void:
 	if _is_respawning:
@@ -280,6 +314,11 @@ func respawn_at_checkpoint() -> void:
 
 func _reset_respawn_state() -> void:
 	velocity = Vector2.ZERO
+	current_health = max_health
+	_damage_invulnerability_timer = 0.0
+	_damage_control_lock_timer = 0.0
+	_damage_blink_timer = 0.0
+	modulate = Color(1, 1, 1, 1)
 	time_since_grounded = 0.0
 	time_since_jump_pressed = 999.0
 	can_double_jump = _can_use_double_jump()
@@ -314,6 +353,7 @@ func _play_resurrection_animation(start_position: Vector2, target_position: Vect
 
 func _ensure_resurrection_sfx_player() -> void:
 	if _resurrection_sfx_player != null:
+		_resurrection_sfx_player.stream = respawn_sfx
 		return
 	_resurrection_sfx_player = AudioStreamPlayer2D.new()
 	_resurrection_sfx_player.name = "RespawnResurrectionSfx"
@@ -364,9 +404,11 @@ func _physics_process(delta: float) -> void:
 	_update_shoot_arm_aim(delta)
 	if debug_show_shoot_bone:
 		queue_redraw()
-	if _is_respawning:
+	if _is_respawning or _is_dying:
 		_debug_draw()
 		return
+	var was_on_floor := is_on_floor()
+	_update_damage_timers(delta)
 	# 1) Timers base (suelo, coyote, cooldowns)
 	if is_on_floor():
 		time_since_grounded = 0.0
@@ -400,13 +442,13 @@ func _physics_process(delta: float) -> void:
 	var want_down := Input.is_action_pressed("move_down")
 
 	# 3) Saltos (coyote+buffer+doble) y dash / ataque
-	if not lock_controls and not overlay_blocks_movement and not external_control_lock:
+	if not lock_controls and _damage_control_lock_timer <= 0.0 and not overlay_blocks_movement and not external_control_lock:
 		_handle_jump_buffer()
 		_handle_dash(dir)
 		_handle_attack_input()
 
 	# 4) Movimiento horizontal (no durante dash/attack, ni en push lock)
-	if state != State.DASH and wall_jump_lock_timer <= 0.0 and not lock_controls and not overlay_blocks_movement and not external_control_lock:
+	if state != State.DASH and wall_jump_lock_timer <= 0.0 and not lock_controls and _damage_control_lock_timer <= 0.0 and not overlay_blocks_movement and not external_control_lock:
 		_hmove(dir, delta)
 
 	# 5) Gravedad HK-like
@@ -416,11 +458,13 @@ func _physics_process(delta: float) -> void:
 	_update_wall_slide_state(dir)
 
 	# 7) Aplicar física
+	var previous_vertical_velocity := velocity.y
 	move_and_slide()
 
 	# 8) FSM y animaciones
 	_update_state()
 	_update_animation()
+	_update_movement_audio(delta, dir, was_on_floor, previous_vertical_velocity)
 
 	# 9) Debug
 	_debug_draw()
@@ -855,6 +899,72 @@ func _play_world_sfx(stream: AudioStream, volume_db: float = -4.0, pitch_scale: 
 	player.finished.connect(player.queue_free)
 	add_child(player)
 	player.play()
+
+func set_footstep_sfx(stream: AudioStream) -> void:
+	_active_footstep_sfx = stream if stream != null else footstep_sfx
+
+func reset_footstep_sfx() -> void:
+	_active_footstep_sfx = footstep_sfx
+
+func apply_enemy_contact_damage(source: Node2D, damage: int = 1, knockback: Vector2 = Vector2.ZERO) -> void:
+	if _is_dying or _is_respawning or _damage_invulnerability_timer > 0.0:
+		return
+	var final_damage := maxi(1, damage)
+	current_health = clampi(current_health - final_damage, 0, max_health)
+	_sync_health_ui()
+	var direction := 1.0
+	if source != null:
+		direction = sign(global_position.x - source.global_position.x)
+		if direction == 0.0:
+			direction = float(_facing_sign())
+	var impulse := knockback
+	if impulse == Vector2.ZERO:
+		impulse = enemy_knockback
+	velocity.x = direction * abs(impulse.x)
+	velocity.y = -abs(impulse.y)
+	state = State.FALL
+	_damage_control_lock_timer = damage_control_lock_time
+	_damage_invulnerability_timer = damage_invulnerability_time
+	_damage_blink_timer = 0.0
+	if current_health <= 0:
+		kill_and_respawn()
+
+func _sync_health_ui() -> void:
+	var hud := get_tree().get_first_node_in_group("main_hud")
+	if hud and hud.has_method("set_player_health"):
+		hud.call("set_player_health", current_health, max_health)
+
+func _update_damage_timers(delta: float) -> void:
+	if _damage_control_lock_timer > 0.0:
+		_damage_control_lock_timer = max(0.0, _damage_control_lock_timer - delta)
+	if _damage_invulnerability_timer <= 0.0:
+		if modulate.a != 1.0:
+			modulate.a = 1.0
+		return
+	_damage_invulnerability_timer = max(0.0, _damage_invulnerability_timer - delta)
+	_damage_blink_timer -= delta
+	if _damage_blink_timer <= 0.0:
+		_damage_blink_timer = 0.08
+		modulate.a = 0.35 if modulate.a >= 0.9 else 1.0
+	if _damage_invulnerability_timer <= 0.0:
+		modulate.a = 1.0
+
+func _update_movement_audio(delta: float, input_dir: float, was_on_floor: bool, previous_vertical_velocity: float) -> void:
+	var on_floor := is_on_floor()
+	if on_floor and not was_on_floor and previous_vertical_velocity >= landing_velocity_threshold:
+		var landing_volume := clampf(-12.0 + ((previous_vertical_velocity - landing_velocity_threshold) / 220.0), -12.0, -6.0)
+		_play_world_sfx(landing_sfx, landing_volume, randf_range(0.94, 1.04))
+
+	var moving_on_floor :Variant = on_floor and abs(velocity.x) > RUN_THRESHOLD and abs(input_dir) > 0.0 and state == State.RUN
+	if not moving_on_floor or overlay_blocks_movement or external_control_lock or lock_controls:
+		_footstep_timer = minf(_footstep_timer, footstep_interval * 0.35)
+		return
+
+	_footstep_timer -= delta * clampf(abs(velocity.x) / maxf(MAX_SPEED, 1.0), 0.75, 1.45)
+	if _footstep_timer > 0.0:
+		return
+	_play_world_sfx(_active_footstep_sfx, -16.0, randf_range(0.92, 1.08))
+	_footstep_timer = footstep_interval
 
 # ============================================================================
 # FSM básica (elige anim cuando no hay estado dominante)
