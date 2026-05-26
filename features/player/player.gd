@@ -153,6 +153,12 @@ var _warned_missing_bullet_profile: bool = false
 @export_node_path("Label") var lbl_state_path: NodePath = ^"debug/lbl_state"
 @export_node_path("Label") var lbl_vel_path: NodePath = ^"debug/lbl_vel"
 @export_node_path("Label") var lbl_flags_path: NodePath = ^"debug/lbl_flags"
+@export_group("Respawn")
+@export var respawn_hover_offset: Vector2 = Vector2(0.0, -220.0)
+@export var respawn_hover_lift: Vector2 = Vector2(0.0, -32.0)
+@export var respawn_hover_time: float = 0.55
+@export var respawn_fall_time: float = 0.85
+@export var respawn_landing_hold_time: float = 0.12
 
 
 # ─────────────────────────────────────────────────────────
@@ -191,6 +197,10 @@ var attack_cooldown_duration := 0.01
 var lock_controls := false # micro “hit-stop” al atacar
 var overlay_blocks_movement := false
 var external_control_lock := false
+var respawn_checkpoint_position: Vector2 = Vector2.ZERO
+var has_respawn_checkpoint := false
+var _is_respawning := false
+var _resurrection_sfx_player: AudioStreamPlayer2D = null
 
 
 # ─────────────────────────────────────────────────────────
@@ -214,6 +224,8 @@ var external_control_lock := false
 # ============================================================================
 func _ready() -> void:
 	add_to_group("player")
+	set_respawn_checkpoint(global_position)
+	_ensure_resurrection_sfx_player()
 	# Consejos de wiring si algo falta:
 	if anim == null: push_warning("AnimationPlayer no encontrado en '%s'." % anim_path)
 	if gfx_root == null: push_warning("gfx_root no encontrado en '%s'." % gfx_root_path)
@@ -241,10 +253,114 @@ func restore_all() -> void:
 	if hud and hud.has_method("restore_all"):
 		hud.call("restore_all")
 
+func set_respawn_checkpoint(checkpoint_position: Vector2) -> void:
+	respawn_checkpoint_position = checkpoint_position
+	has_respawn_checkpoint = true
+
+func respawn_at_checkpoint() -> void:
+	if _is_respawning:
+		return
+	_is_respawning = true
+	set_external_control_lock(true)
+	_reset_respawn_state()
+	var target_position := respawn_checkpoint_position if has_respawn_checkpoint else global_position
+	var start_position := target_position + respawn_hover_offset
+	global_position = start_position
+	restore_all()
+	_play_resurrection_sfx()
+	await _play_resurrection_animation(start_position, target_position)
+	set_external_control_lock(false)
+	_is_respawning = false
+
+func _reset_respawn_state() -> void:
+	velocity = Vector2.ZERO
+	time_since_grounded = 0.0
+	time_since_jump_pressed = 999.0
+	can_double_jump = _can_use_double_jump()
+	dash_cooldown = 0.0
+	dash_timer = 0.0
+	wall_stick_timer = 0.0
+	wall_coyote_timer = 0.0
+	wall_jump_lock_timer = 0.0
+	attack_timer = 0.0
+	attack_cooldown_timer = 0.0
+	lock_controls = false
+	state = State.IDLE
+	if attack_area:
+		attack_area.monitoring = false
+		attack_area.visible = false
+	_play_if_changed(&"idle", true)
+
+func _play_resurrection_animation(start_position: Vector2, target_position: Vector2) -> void:
+	var original_modulate := modulate
+	modulate = Color(original_modulate.r, original_modulate.g, original_modulate.b, 0.0)
+	global_position = start_position
+
+	create_tween().tween_property(self, "modulate:a", original_modulate.a, 0.28).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	var move_tween := create_tween()
+	move_tween.tween_property(self, "global_position", start_position + respawn_hover_lift, respawn_hover_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	move_tween.tween_property(self, "global_position", target_position, respawn_fall_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	move_tween.tween_interval(respawn_landing_hold_time)
+	await move_tween.finished
+	global_position = target_position
+	modulate = original_modulate
+
+func _ensure_resurrection_sfx_player() -> void:
+	if _resurrection_sfx_player != null:
+		return
+	_resurrection_sfx_player = AudioStreamPlayer2D.new()
+	_resurrection_sfx_player.name = "RespawnResurrectionSfx"
+	_resurrection_sfx_player.volume_db = -7.0
+	_resurrection_sfx_player.stream = _build_resurrection_sfx()
+	add_child(_resurrection_sfx_player)
+
+func _play_resurrection_sfx() -> void:
+	_ensure_resurrection_sfx_player()
+	if _resurrection_sfx_player == null:
+		return
+	_resurrection_sfx_player.stop()
+	_resurrection_sfx_player.play()
+
+func _build_resurrection_sfx() -> AudioStreamWAV:
+	var sample_rate := 32000
+	var duration := 1.45
+	var frame_count := int(float(sample_rate) * duration)
+	var bytes := PackedByteArray()
+	bytes.resize(frame_count * 2)
+
+	for i in range(frame_count):
+		var t := float(i) / float(sample_rate)
+		var progress := clampf(t / duration, 0.0, 1.0)
+		var attack := minf(progress / 0.18, 1.0)
+		var release := clampf((1.0 - progress) / 0.28, 0.0, 1.0)
+		var env := attack * release
+		var rise_freq := lerpf(210.0, 620.0, progress)
+		var shimmer_freq := 1180.0 + sin(TAU * 4.0 * t) * 90.0
+		var bell_env := clampf((progress - 0.48) / 0.2, 0.0, 1.0) * release
+		var sample_value := 0.0
+		sample_value += sin(TAU * rise_freq * t) * 0.18 * env
+		sample_value += sin(TAU * rise_freq * 1.5 * t) * 0.08 * env
+		sample_value += sin(TAU * shimmer_freq * t) * 0.035 * env
+		sample_value += sin(TAU * 880.0 * t) * 0.08 * bell_env
+		var sample := int(clampf(sample_value, -1.0, 1.0) * 32767.0)
+		bytes[i * 2] = sample & 0xFF
+		bytes[i * 2 + 1] = (sample >> 8) & 0xFF
+
+	var wav := AudioStreamWAV.new()
+	wav.format = AudioStreamWAV.FORMAT_16_BITS
+	wav.mix_rate = sample_rate
+	wav.stereo = false
+	wav.data = bytes
+	return wav
+
 func _physics_process(delta: float) -> void:
 	_update_shoot_arm_aim(delta)
 	if debug_show_shoot_bone:
 		queue_redraw()
+	if _is_respawning:
+		_debug_draw()
+		return
 	# 1) Timers base (suelo, coyote, cooldowns)
 	if is_on_floor():
 		time_since_grounded = 0.0
