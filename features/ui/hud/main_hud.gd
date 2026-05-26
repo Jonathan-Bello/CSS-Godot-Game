@@ -29,6 +29,7 @@ extends CanvasLayer
 @onready var emis_dialog_label: Label = %EmisDialogLabel
 @onready var emis_dialog_hint_label: Label = %EmisDialogHintLabel
 @onready var shoot_delay_bar: ProgressBar = %ShootDelayBar
+@export_range(5.0, 240.0, 1.0) var emis_dialog_chars_per_second: float = 44.0
 
 @export var emis_alert_message: String = "¡Ey! Tengo una pista para ti."
 var emis_alert_active: bool = false
@@ -39,6 +40,9 @@ var _dialog_queue: Array[String] = []
 var _dialog_index: int = -1
 var _dialog_lock_player: bool = false
 var _dialog_active: bool = false
+var _dialog_reveal_text: String = ""
+var _dialog_reveal_chars: int = 0
+var _dialog_reveal_accum: float = 0.0
 
 
 func _ready() -> void:
@@ -58,6 +62,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not _dialog_active:
 		return
 	if event.is_action_pressed("interact"):
+		if _is_dialog_revealing():
+			_reveal_dialog_instantly()
+			get_viewport().set_input_as_handled()
+			return
 		advance_emis_dialog()
 		get_viewport().set_input_as_handled()
 
@@ -80,6 +88,7 @@ func set_emis_notification(visible_notification: bool) -> void:
 
 
 func _process(delta: float) -> void:
+	_update_dialog_reveal(delta)
 	if emis_button == null:
 		return
 	if emis_alert_active:
@@ -168,7 +177,7 @@ func advance_emis_dialog() -> void:
 		_finish_emis_dialog()
 		return
 	if emis_dialog_label:
-		emis_dialog_label.text = _dialog_queue[_dialog_index]
+		_start_dialog_reveal(_dialog_queue[_dialog_index])
 	if emis_dialog:
 		emis_dialog.visible = true
 
@@ -176,6 +185,9 @@ func _finish_emis_dialog() -> void:
 	_dialog_active = false
 	_dialog_queue.clear()
 	_dialog_index = -1
+	_dialog_reveal_text = ""
+	_dialog_reveal_chars = 0
+	_dialog_reveal_accum = 0.0
 	if emis_dialog:
 		emis_dialog.visible = false
 	set_emis_alert(false)
@@ -187,3 +199,36 @@ func _apply_dialog_player_lock(locked: bool) -> void:
 	var player := get_tree().get_first_node_in_group("player")
 	if player and player.has_method("set_external_control_lock"):
 		player.call("set_external_control_lock", locked)
+
+func _start_dialog_reveal(text: String) -> void:
+	_dialog_reveal_text = text
+	_dialog_reveal_chars = 0
+	_dialog_reveal_accum = 0.0
+	if emis_dialog_label:
+		emis_dialog_label.text = _dialog_reveal_text
+		emis_dialog_label.visible_characters = 0
+
+func _update_dialog_reveal(delta: float) -> void:
+	if emis_dialog_label == null:
+		return
+	if _dialog_reveal_text == "":
+		return
+	if _dialog_reveal_chars >= _dialog_reveal_text.length():
+		return
+	_dialog_reveal_accum += maxf(delta, 0.0) * maxf(emis_dialog_chars_per_second, 1.0)
+	var reveal_step := int(floor(_dialog_reveal_accum))
+	if reveal_step <= 0:
+		return
+	_dialog_reveal_accum -= float(reveal_step)
+	_dialog_reveal_chars = mini(_dialog_reveal_chars + reveal_step, _dialog_reveal_text.length())
+	emis_dialog_label.visible_characters = _dialog_reveal_chars
+
+func _is_dialog_revealing() -> bool:
+	return _dialog_reveal_chars < _dialog_reveal_text.length()
+
+func _reveal_dialog_instantly() -> void:
+	if emis_dialog_label == null:
+		return
+	_dialog_reveal_chars = _dialog_reveal_text.length()
+	_dialog_reveal_accum = 0.0
+	emis_dialog_label.visible_characters = _dialog_reveal_chars
