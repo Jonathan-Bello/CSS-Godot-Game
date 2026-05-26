@@ -20,7 +20,7 @@ curved_lines_2d/add_stroke_enabled=true
 [application]
 
 config/name="CSSGame"
-run/main_scene="uid://bqqdr6qwiergq"
+run/main_scene="res://features/ui/main_menu.tscn"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -30,6 +30,7 @@ CssAffinity="*res://core/css_affinity.gd"
 CssUnlocks="*res://core/css_unlocks.gd"
 FontBootstrap="*res://core/font_bootstrap.gd"
 MovementUnlocks="*res://core/movement_unlocks.gd"
+AudioManager="*res://core/audio_manager.gd"
 
 [display]
 
