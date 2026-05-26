@@ -160,6 +160,12 @@ var _warned_missing_bullet_profile: bool = false
 @export var respawn_fall_time: float = 0.85
 @export var respawn_landing_hold_time: float = 0.12
 
+@export_group("Audio")
+@export var shoot_sfx: AudioStream = preload("res://assets/sfx/retro_laser_01.ogg")
+@export var dash_sfx: AudioStream = preload("res://assets/sfx/teleport_01.ogg")
+@export var respawn_sfx: AudioStream = preload("res://assets/sfx/teleport_02.ogg")
+@export var equip_ammo_sfx: AudioStream = preload("res://assets/sfx/carga_municion.ogg")
+
 
 # ─────────────────────────────────────────────────────────
 # ESTADOS / ENUMS
@@ -312,7 +318,7 @@ func _ensure_resurrection_sfx_player() -> void:
 	_resurrection_sfx_player = AudioStreamPlayer2D.new()
 	_resurrection_sfx_player.name = "RespawnResurrectionSfx"
 	_resurrection_sfx_player.volume_db = -7.0
-	_resurrection_sfx_player.stream = _build_resurrection_sfx()
+	_resurrection_sfx_player.stream = respawn_sfx
 	add_child(_resurrection_sfx_player)
 
 func _play_resurrection_sfx() -> void:
@@ -538,6 +544,7 @@ func _do_dash(dir_x: float) -> void:
 	dash_timer = DASH_TIME
 	dash_cooldown = DASH_COOLDOWN
 	_play_if_changed(&"dash", false)
+	_play_world_sfx(dash_sfx, -8.0)
 
 
 # ============================================================================
@@ -712,6 +719,7 @@ func _spawn_css_bullet(precomputed_stats: Dictionary = {}) -> void:
 	get_tree().current_scene.add_child(bullet)
 	if bullet.has_method("set_shooter"):
 		bullet.call("set_shooter", self)
+	_play_world_sfx(shoot_sfx, -7.0)
 
 func _update_shoot_arm_aim(_delta: float) -> void:
 	if shoot_arm_sprite:
@@ -772,6 +780,7 @@ func equip_bullet_from_profile(profile: Dictionary) -> void:
 		bullet_profile_path,
 		image_path
 	])
+	_play_world_sfx(equip_ammo_sfx, -6.0)
 	
 func _load_json_dictionary(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -832,6 +841,20 @@ func _to_packed_rules(source: Variant) -> PackedStringArray:
 		if key != "":
 			rules.append(key)
 	return rules
+
+func _play_world_sfx(stream: AudioStream, volume_db: float = -4.0, pitch_scale: float = 1.0) -> void:
+	if stream == null:
+		return
+	if has_node("/root/AudioManager"):
+		AudioManager.play_sfx_at(stream, global_position, volume_db, pitch_scale)
+		return
+	var player := AudioStreamPlayer2D.new()
+	player.stream = stream
+	player.volume_db = volume_db
+	player.pitch_scale = pitch_scale
+	player.finished.connect(player.queue_free)
+	add_child(player)
+	player.play()
 
 # ============================================================================
 # FSM básica (elige anim cuando no hay estado dominante)

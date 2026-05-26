@@ -9,6 +9,7 @@ extends Area2D
 @export var sprite_separation: Vector2 = Vector2(16, 16)
 @export var off_region: Rect2 = Rect2(287, 287, 128, 128)
 @export var respawn_offset: Vector2 = Vector2(0.0, 12.0)
+@export var terminal_sfx: AudioStream = preload("res://assets/sfx/terminal_01.ogg")
 
 var on_region: Rect2:
 	get:
@@ -50,6 +51,7 @@ func _input(event: InputEvent) -> void:
 		_activate_checkpoint()
 
 func _activate_checkpoint() -> void:
+	_play_terminal_sfx()
 	if overlay:
 		overlay.call("open")
 	_is_activated = true
@@ -89,3 +91,16 @@ func _on_body_exited(body: Node) -> void:
 	if body == current_player:
 		player_in_range = false
 		current_player = null
+
+func _play_terminal_sfx() -> void:
+	if terminal_sfx == null:
+		return
+	if has_node("/root/AudioManager"):
+		AudioManager.play_sfx_at(terminal_sfx, global_position, -5.0)
+		return
+	var player := AudioStreamPlayer2D.new()
+	player.stream = terminal_sfx
+	player.volume_db = -5.0
+	player.finished.connect(player.queue_free)
+	add_child(player)
+	player.play()

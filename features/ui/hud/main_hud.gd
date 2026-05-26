@@ -30,6 +30,8 @@ extends CanvasLayer
 @onready var emis_dialog_hint_label: Label = %EmisDialogHintLabel
 @onready var shoot_delay_bar: ProgressBar = %ShootDelayBar
 @export_range(5.0, 240.0, 1.0) var emis_dialog_chars_per_second: float = 44.0
+@export var emis_dialog_tick_sfx: AudioStream = preload("res://assets/sfx/dialogs/quick_1.ogg")
+@export_range(0.0, 0.2, 0.005) var emis_dialog_tick_interval: float = 0.03
 
 @export var emis_alert_message: String = "¡Ey! Tengo una pista para ti."
 var emis_alert_active: bool = false
@@ -43,6 +45,7 @@ var _dialog_active: bool = false
 var _dialog_reveal_text: String = ""
 var _dialog_reveal_chars: int = 0
 var _dialog_reveal_accum: float = 0.0
+var _dialog_tick_cooldown: float = 0.0
 
 
 func _ready() -> void:
@@ -88,6 +91,7 @@ func set_emis_notification(visible_notification: bool) -> void:
 
 
 func _process(delta: float) -> void:
+	_dialog_tick_cooldown = maxf(0.0, _dialog_tick_cooldown - delta)
 	_update_dialog_reveal(delta)
 	if emis_button == null:
 		return
@@ -188,6 +192,7 @@ func _finish_emis_dialog() -> void:
 	_dialog_reveal_text = ""
 	_dialog_reveal_chars = 0
 	_dialog_reveal_accum = 0.0
+	_dialog_tick_cooldown = 0.0
 	if emis_dialog:
 		emis_dialog.visible = false
 	set_emis_alert(false)
@@ -204,6 +209,7 @@ func _start_dialog_reveal(text: String) -> void:
 	_dialog_reveal_text = text
 	_dialog_reveal_chars = 0
 	_dialog_reveal_accum = 0.0
+	_dialog_tick_cooldown = 0.0
 	if emis_dialog_label:
 		emis_dialog_label.text = _dialog_reveal_text
 		emis_dialog_label.visible_characters = 0
@@ -220,8 +226,10 @@ func _update_dialog_reveal(delta: float) -> void:
 	if reveal_step <= 0:
 		return
 	_dialog_reveal_accum -= float(reveal_step)
+	var previous_chars := _dialog_reveal_chars
 	_dialog_reveal_chars = mini(_dialog_reveal_chars + reveal_step, _dialog_reveal_text.length())
 	emis_dialog_label.visible_characters = _dialog_reveal_chars
+	_play_dialog_tick(previous_chars, _dialog_reveal_chars)
 
 func _is_dialog_revealing() -> bool:
 	return _dialog_reveal_chars < _dialog_reveal_text.length()
@@ -232,3 +240,24 @@ func _reveal_dialog_instantly() -> void:
 	_dialog_reveal_chars = _dialog_reveal_text.length()
 	_dialog_reveal_accum = 0.0
 	emis_dialog_label.visible_characters = _dialog_reveal_chars
+
+func _play_dialog_tick(previous_chars: int, current_chars: int) -> void:
+	if emis_dialog_tick_sfx == null or current_chars <= previous_chars:
+		return
+	if _dialog_tick_cooldown > 0.0:
+		return
+	var last_index := clampi(current_chars - 1, 0, _dialog_reveal_text.length() - 1)
+	var shown_char := _dialog_reveal_text.substr(last_index, 1)
+	if shown_char.strip_edges() == "":
+		return
+	_dialog_tick_cooldown = emis_dialog_tick_interval
+	if has_node("/root/AudioManager"):
+		AudioManager.play_sfx(emis_dialog_tick_sfx, -14.0, randf_range(0.96, 1.05))
+		return
+	var player := AudioStreamPlayer.new()
+	player.stream = emis_dialog_tick_sfx
+	player.volume_db = -14.0
+	player.pitch_scale = randf_range(0.96, 1.05)
+	player.finished.connect(player.queue_free)
+	add_child(player)
+	player.play()
