@@ -8,6 +8,7 @@ extends Area2D
 @export var sprite_size: Vector2 = Vector2(128, 128)
 @export var sprite_separation: Vector2 = Vector2(16, 16)
 @export var off_region: Rect2 = Rect2(287, 287, 128, 128)
+@export var respawn_offset: Vector2 = Vector2(0.0, 12.0)
 
 var on_region: Rect2:
 	get:
@@ -53,7 +54,14 @@ func _activate_checkpoint() -> void:
 		overlay.call("open")
 	_is_activated = true
 	_apply_pillar_state(true)
+	_register_respawn_checkpoint()
 	_restore_player_and_hub()
+
+func _register_respawn_checkpoint() -> void:
+	if current_player == null:
+		return
+	if current_player.has_method("set_respawn_checkpoint"):
+		current_player.call("set_respawn_checkpoint", global_position + respawn_offset)
 
 func _restore_player_and_hub() -> void:
 	if current_player and current_player.has_method("restore_all"):
