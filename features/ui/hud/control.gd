@@ -7,7 +7,7 @@ const SOLAR_PILLAR_TUTORIAL_VERSION := 1
 @onready var web: Control = $PanelContainer/WebView
 
 @export var window_size: Vector2 = Vector2(1664, 900)
-@export var content_padding: int = 8
+@export var content_padding: int = 0
 
 var last_css: String = ""
 var last_svg: String = ""
@@ -30,22 +30,13 @@ signal overlay_closed
 
 func _ready() -> void:
 	add_to_group("web_overlay")
-	_ensure_runtime_webview()
 	visible = false
 	panel.visible = false
 	web.visible = false
 
-	_use_dom_overlay = _should_use_dom_overlay()
+	_use_dom_overlay = OS.has_feature("web")
 	if _use_dom_overlay:
 		_setup_dom_overlay_bridge()
-	else:
-		# Estado seguro WebView2
-		web.set("url", "about:blank")
-		web.set("transparent", true)
-		web.set("devtools", true)
-
-	if not _use_dom_overlay and web.has_signal("ipc_message") and not web.is_connected("ipc_message", Callable(self , "_on_web_ipc_message")):
-		web.connect("ipc_message", Callable(self , "_on_web_ipc_message"))
 
 	_ensure_emis_client()
 	_ensure_loading_sfx_player()
@@ -58,19 +49,9 @@ func _notification(what: int) -> void:
 
 func _layout_and_sync() -> void:
 	var vp := get_viewport_rect().size
-	var target := window_size
-	var margin_x :Variant = max(24.0, vp.x * 0.06)
-	var margin_y : Variant= max(24.0, vp.y * 0.08)
-	var max_size := Vector2(
-		max(640.0, vp.x - margin_x * 2.0),
-		max(480.0, vp.y - margin_y * 2.0)
-	)
-	target.x = min(target.x, max_size.x)
-	target.y = min(target.y, max_size.y)
-
-	panel.custom_minimum_size = target
-	panel.size = target
-	panel.position = (vp - panel.size) * 0.5
+	panel.custom_minimum_size = vp
+	panel.size = vp
+	panel.position = Vector2.ZERO
 
 	web.position = panel.position + Vector2(content_padding, content_padding)
 	web.size = panel.size - Vector2(content_padding * 2, content_padding * 2)
@@ -94,13 +75,36 @@ func _ensure_runtime_webview() -> void:
 	native_web.name = "WebView"
 	native_web.visible = false
 	native_web.set("transparent", true)
+	native_web.set("url", "about:blank")
+	native_web.set("html", "")
+	native_web.set("devtools", false)
 	native_web.set("focused_when_created", false)
 	parent.add_child(native_web)
 	parent.move_child(native_web, index)
 	web = native_web
 
 func _should_use_dom_overlay() -> bool:
-	return OS.has_feature("web") or web == null or not web.has_method("load_html")
+	return OS.has_feature("web")
+
+func _prepare_overlay_backend() -> bool:
+	_use_dom_overlay = _should_use_dom_overlay()
+	if _use_dom_overlay:
+		if _dom_overlay_callback == null:
+			_setup_dom_overlay_bridge()
+		return _get_js_bridge() != null
+
+	_ensure_runtime_webview()
+	if web == null or not web.has_method("load_html"):
+		push_warning("[WebOverlay] WebView nativo no disponible; no se puede abrir overlay HTML en escritorio")
+		return false
+
+	web.set("url", "about:blank")
+	web.set("html", "")
+	web.set("transparent", true)
+	web.set("devtools", false)
+	if web.has_signal("ipc_message") and not web.is_connected("ipc_message", Callable(self , "_on_web_ipc_message")):
+		web.connect("ipc_message", Callable(self , "_on_web_ipc_message"))
+	return true
 
 func _get_js_bridge() -> Object:
 	if not Engine.has_singleton("JavaScriptBridge"):
@@ -132,7 +136,7 @@ func _dom_overlay_bootstrap_js() -> String:
       var frame = document.createElement('iframe');
       frame.id = 'css-game-html-overlay-frame';
       frame.setAttribute('allow', 'autoplay; fullscreen; clipboard-read; clipboard-write');
-      frame.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1664px,88vw);height:min(900px,84vh);border:0;background:transparent;';
+      frame.style.cssText = 'position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:transparent;display:block;';
       root.appendChild(frame);
       document.body.appendChild(root);
     }
@@ -150,6 +154,8 @@ func _dom_overlay_bootstrap_js() -> String:
     var root = ensureOverlay();
     var frame = document.getElementById('css-game-html-overlay-frame');
     root.style.display = 'block';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
     frame.srcdoc = patchHtml(html);
     setTimeout(function(){ try{ frame.focus(); }catch(e){} }, 30);
   };
@@ -158,6 +164,8 @@ func _dom_overlay_bootstrap_js() -> String:
     var frame = document.getElementById('css-game-html-overlay-frame');
     if(frame) frame.srcdoc = 'about:blank';
     if(root) root.style.display = 'none';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
   };
   window.__cssGameOverlayEval = function(code){
     var frame = document.getElementById('css-game-html-overlay-frame');
@@ -194,6 +202,8 @@ func open_chat_overlay() -> void:
 func _open_with_template(template_path: String) -> void:
 	_overlay_template_path = template_path
 	print("[WebOverlay] open() template=", _overlay_template_path)
+	if not _prepare_overlay_backend():
+		return
 	visible = true
 	panel.visible = true
 	if not _use_dom_overlay:
