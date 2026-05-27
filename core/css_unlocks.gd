@@ -2,10 +2,11 @@ extends Node
 
 # Sistema de progreso de propiedades CSS desbloqueadas.
 # - Si una propiedad está bloqueada, sigue escribiéndose en el CSS
-#   pero no aporta bonus de combate.
+#   pero no activa mecanismos ni daño por afinidad.
 # - El estado se persiste en user://progress/css_unlocks.json
 
 const SAVE_PATH := "user://progress/css_unlocks.json"
+const SAVE_VERSION := 2
 var MAIN_PROPERTIES: PackedStringArray = PackedStringArray([
 	"background",
 	"background-color",
@@ -26,12 +27,10 @@ var MAIN_PROPERTIES: PackedStringArray = PackedStringArray([
 
 # Propiedades mínimas desbloqueadas al iniciar una partida nueva.
 const DEFAULT_UNLOCKED := {
-	"background": true,
 	"background-color": true,
 	"fill": true,
 	"width": true,
-	"height": true,
-	"border-radius": true
+	"height": true
 }
 
 var _unlock_state: Dictionary = {}
@@ -102,12 +101,17 @@ func _load_state() -> void:
 	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return
+	var parsed_dict: Dictionary = parsed
+	var save_version := int(parsed_dict.get("__version", 0))
+	if save_version != SAVE_VERSION:
+		_save_state()
+		return
 
-	for raw_key in parsed.keys():
+	for raw_key in parsed_dict.keys():
 		var key := _normalize_property(String(raw_key))
-		if key == "":
+		if key == "" or key.begins_with("__"):
 			continue
-		_unlock_state[key] = bool(parsed[raw_key])
+		_unlock_state[key] = bool(parsed_dict[raw_key])
 
 func _save_state() -> void:
 	var dir_path := "user://progress"
@@ -120,7 +124,9 @@ func _save_state() -> void:
 	if file == null:
 		push_warning("[CssUnlocks] No se pudo guardar estado de desbloqueos")
 		return
-	file.store_string(JSON.stringify(_unlock_state, "\t"))
+	var saved_state := _unlock_state.duplicate(true)
+	saved_state["__version"] = SAVE_VERSION
+	file.store_string(JSON.stringify(saved_state, "\t"))
 	file.flush()
 
 func _extract_keys(css_text: String) -> PackedStringArray:

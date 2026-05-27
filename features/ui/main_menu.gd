@@ -1,6 +1,7 @@
 extends Control
 
-@export_file("*.tscn") var new_game_scene: String = "res://content/levels/tutorial_cave.tscn"
+@export_file("*.tscn") var new_game_scene: String = "res://features/ui/game_intro.tscn"
+@export var new_game_spawn_marker: String = ""
 @export var title_music: AudioStream = preload("res://assets/music/Verdant Circuit.mp3")
 @export var accept_sfx: AudioStream = preload("res://assets/sfx/Menu_Select_01.mp3")
 @export var focus_sfx: AudioStream = preload("res://assets/sfx/Menu_Select_00.mp3")
@@ -26,7 +27,7 @@ func _on_new_pressed() -> void:
 	if has_node("/root/AudioManager"):
 		AudioManager.stop_music(0.35)
 	if has_node("/root/SceneTransition"):
-		await SceneTransition.transition_to_scene(new_game_scene, "PlayerStart", 0.35)
+		await SceneTransition.transition_to_scene(new_game_scene, new_game_spawn_marker, 0.35)
 	else:
 		get_tree().change_scene_to_file(new_game_scene)
 

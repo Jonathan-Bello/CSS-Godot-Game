@@ -1,0 +1,88 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://features/ui/game_intro.gd" id="1_intro"]
+[ext_resource type="FontFile" path="res://assets/fonts/quantico_regular.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lore"]
+font = ExtResource("2_font")
+font_size = 34
+font_color = Color(0.88, 0.96, 0.91, 1)
+line_spacing = 8.0
+
+[node name="GameIntro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_intro")
+
+[node name="Black" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Stage" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ImageSlot" type="TextureRect" parent="Stage"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TextMargin" type="MarginContainer" parent="Stage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 140.0
+offset_top = 120.0
+offset_right = -140.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextLayout" type="VBoxContainer" parent="Stage/TextMargin"]
+layout_mode = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="LoreLabel" type="Label" parent="Stage/TextMargin/TextLayout"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = ""
+label_settings = SubResource("LabelSettings_lore")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Flash" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.95, 0.72, 0)

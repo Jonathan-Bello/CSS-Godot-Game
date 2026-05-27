@@ -25,6 +25,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_menu")
+new_game_scene = "res://features/ui/game_intro.tscn"
+new_game_spawn_marker = ""
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1

@@ -1,6 +1,8 @@
 extends Control
 
 const EmisClientScript = preload("res://core/emis_client.gd")
+const TUTORIAL_FLAGS_PATH := "user://progress/tutorial_flags.json"
+const SOLAR_PILLAR_TUTORIAL_VERSION := 1
 @onready var panel: PanelContainer = $PanelContainer
 @onready var web: Control = $PanelContainer/WebView
 
@@ -263,14 +265,57 @@ func _read_overlay_font_data_uri() -> String:
 		return ""
 	return "data:font/ttf;base64,%s" % Marshalls.raw_to_base64(bytes)
 
+func _read_text_resource(path: String) -> String:
+	if not FileAccess.file_exists(path):
+		push_warning("[WebOverlay] No se encontró recurso HTML: %s" % path)
+		return ""
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		push_warning("[WebOverlay] No se pudo abrir recurso HTML: %s" % path)
+		return ""
+	return file.get_as_text()
+
+func _read_codemirror_css() -> String:
+	var paths := PackedStringArray([
+		"res://features/ui/hud/vendor/codemirror/codemirror.min.css",
+		"res://features/ui/hud/vendor/codemirror/show-hint.min.css"
+	])
+	var chunks: Array[String] = []
+	for path in paths:
+		var text := _read_text_resource(path)
+		if text != "":
+			chunks.append(text)
+	return "\n".join(chunks)
+
+func _read_codemirror_js() -> String:
+	var paths := PackedStringArray([
+		"res://features/ui/hud/vendor/codemirror/codemirror.min.js",
+		"res://features/ui/hud/vendor/codemirror/css.min.js",
+		"res://features/ui/hud/vendor/codemirror/show-hint.min.js",
+		"res://features/ui/hud/vendor/codemirror/css-hint.min.js"
+	])
+	var chunks: Array[String] = []
+	for path in paths:
+		var text := _read_text_resource(path)
+		if text != "":
+			chunks.append(text.replace("</script>", "<\\/script>"))
+	return "\n".join(chunks)
+
 func _load_editor_html() -> void:
 	_web_hydration_payload = _read_bullet_hydration_payload()
+	if _overlay_template_path.ends_with("web_overlay_editor.html"):
+		var should_show_solar_tutorial := _should_show_first_solar_pillar_tutorial()
+		_web_hydration_payload["show_solar_pillar_tutorial"] = should_show_solar_tutorial
+		_web_hydration_payload["first_solar_pillar_opened"] = not should_show_solar_tutorial
+		_web_hydration_payload["solar_pillar_tutorial_version"] = SOLAR_PILLAR_TUTORIAL_VERSION
 	var html := _read_editor_html_template()
 	if html == "":
 		html = "<!doctype html><html><body style='margin:0;background:#111;color:#fff'>Editor no disponible</body></html>"
 
 	var font_data_uri := _read_overlay_font_data_uri()
 	html = html.replace("__OVERLAY_FONT_DATA_URI__", font_data_uri)
+	html = html.replace("__CODEMIRROR_CSS__", _read_codemirror_css())
+	html = html.replace("__CODEMIRROR_JS__", _read_codemirror_js())
 
 	_last_loaded_html = html
 	var base_url := "https://overlay.local/"
@@ -356,6 +401,10 @@ func _on_web_ipc_message(msg: String) -> void:
 			"equip_bullet":
 				_save_and_equip_bullet(data)
 				close()
+			"solar_pillar_tutorial_started":
+				_mark_first_solar_pillar_opened(false)
+			"solar_pillar_tutorial_done":
+				_mark_first_solar_pillar_opened(true)
 			"chat_request":
 				_handle_chat_request(data)
 
@@ -762,6 +811,49 @@ func _read_bullet_hydration_payload() -> Dictionary:
 	if svg_text != "":
 		base_payload["svg_text"] = svg_text
 	return base_payload
+
+func _read_tutorial_flags() -> Dictionary:
+	if not FileAccess.file_exists(TUTORIAL_FLAGS_PATH):
+		return {}
+	var file := FileAccess.open(TUTORIAL_FLAGS_PATH, FileAccess.READ)
+	if file == null:
+		return {}
+	var parsed: Variant = JSON.parse_string(file.get_as_text())
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return {}
+	var flags: Dictionary = parsed
+	return flags
+
+func _save_tutorial_flags(flags: Dictionary) -> void:
+	var dir_path := "user://progress"
+	var mkdir_err := DirAccess.make_dir_recursive_absolute(dir_path)
+	if mkdir_err != OK and mkdir_err != ERR_ALREADY_EXISTS:
+		push_warning("[WebOverlay] No se pudo crear directorio progress. err=%s" % mkdir_err)
+		return
+	var file := FileAccess.open(TUTORIAL_FLAGS_PATH, FileAccess.WRITE)
+	if file == null:
+		push_warning("[WebOverlay] No se pudo guardar tutorial_flags")
+		return
+	file.store_string(JSON.stringify(flags, "\t"))
+	file.flush()
+
+func _should_show_first_solar_pillar_tutorial() -> bool:
+	var flags := _read_tutorial_flags()
+	var completed_version := int(flags.get("solar_pillar_tutorial_completed_version", 0))
+	return completed_version < SOLAR_PILLAR_TUTORIAL_VERSION
+
+func _mark_first_solar_pillar_opened(completed: bool = false) -> void:
+	var flags := _read_tutorial_flags()
+	if not bool(flags.get("first_solar_pillar_opened", false)):
+		flags["first_solar_pillar_opened_at"] = Time.get_datetime_string_from_system(true, true)
+	flags["first_solar_pillar_opened"] = true
+	flags["solar_pillar_tutorial_seen"] = bool(flags.get("solar_pillar_tutorial_seen", false)) or completed
+	flags["solar_pillar_tutorial_started_version"] = SOLAR_PILLAR_TUTORIAL_VERSION
+	if completed:
+		flags["solar_pillar_tutorial_seen"] = true
+		flags["solar_pillar_tutorial_completed_version"] = SOLAR_PILLAR_TUTORIAL_VERSION
+		flags["solar_pillar_tutorial_completed_at"] = Time.get_datetime_string_from_system(true, true)
+	_save_tutorial_flags(flags)
 
 func _hydrate_web_editor(payload: Dictionary) -> void:
 	if payload.is_empty() or not web.has_method("eval"):

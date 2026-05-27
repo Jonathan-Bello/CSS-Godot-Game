@@ -168,6 +168,7 @@ var _warned_missing_bullet_profile: bool = true
 @export var footstep_sfx: AudioStream = preload("res://assets/sfx/step_metal.ogg")
 @export var landing_sfx: AudioStream = preload("res://assets/sfx/jumpland.wav")
 @export var death_sfx: AudioStream = preload("res://assets/sfx/Jingle_Lose_00.mp3")
+@export var hurt_sfx: AudioStream = preload("res://assets/sfx/dialogs/female_standard_1.ogg")
 @export var footstep_tile_probe_offset: Vector2 = Vector2(0.0, 132.0)
 @export_range(0.08, 0.8, 0.01) var footstep_interval: float = 0.28
 @export_range(0.0, 2800.0, 25.0) var landing_velocity_threshold: float = 650.0
@@ -951,6 +952,8 @@ func apply_enemy_contact_damage(source: Node2D, damage: int = 1, knockback: Vect
 	var final_damage := maxi(1, damage)
 	current_health = clampi(current_health - final_damage, 0, max_health)
 	_sync_health_ui()
+	if current_health > 0:
+		_play_world_sfx(hurt_sfx, -10.0, randf_range(0.94, 1.04))
 	var direction := 1.0
 	if source != null:
 		direction = sign(global_position.x - source.global_position.x)
