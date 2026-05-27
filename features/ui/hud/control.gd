@@ -21,6 +21,8 @@ var _overlay_template_path: String = "res://features/ui/hud/web_overlay_editor.h
 var _loading_sfx_player: AudioStreamPlayer = null
 @export var overlay_open_prelude_seconds: float = 0.32
 var _awaiting_html_ready: bool = false
+var _use_dom_overlay: bool = false
+var _dom_overlay_callback: Variant = null
 
 
 signal overlay_opened
@@ -28,16 +30,21 @@ signal overlay_closed
 
 func _ready() -> void:
 	add_to_group("web_overlay")
+	_ensure_runtime_webview()
 	visible = false
 	panel.visible = false
 	web.visible = false
 
-	# Estado seguro WebView2
-	web.set("url", "about:blank")
-	web.set("transparent", true)
-	web.set("devtools", true)
+	_use_dom_overlay = _should_use_dom_overlay()
+	if _use_dom_overlay:
+		_setup_dom_overlay_bridge()
+	else:
+		# Estado seguro WebView2
+		web.set("url", "about:blank")
+		web.set("transparent", true)
+		web.set("devtools", true)
 
-	if not web.is_connected("ipc_message", Callable(self , "_on_web_ipc_message")):
+	if not _use_dom_overlay and web.has_signal("ipc_message") and not web.is_connected("ipc_message", Callable(self , "_on_web_ipc_message")):
 		web.connect("ipc_message", Callable(self , "_on_web_ipc_message"))
 
 	_ensure_emis_client()
@@ -68,6 +75,110 @@ func _layout_and_sync() -> void:
 	web.position = panel.position + Vector2(content_padding, content_padding)
 	web.size = panel.size - Vector2(content_padding * 2, content_padding * 2)
 
+func _ensure_runtime_webview() -> void:
+	if OS.has_feature("web"):
+		return
+	if web != null and web.has_method("load_html"):
+		return
+	if not ClassDB.can_instantiate("WebView"):
+		return
+	var parent := web.get_parent()
+	if parent == null:
+		return
+	var index := web.get_index()
+	parent.remove_child(web)
+	web.queue_free()
+	var native_web := ClassDB.instantiate("WebView") as Control
+	if native_web == null:
+		return
+	native_web.name = "WebView"
+	native_web.visible = false
+	native_web.set("transparent", true)
+	native_web.set("focused_when_created", false)
+	parent.add_child(native_web)
+	parent.move_child(native_web, index)
+	web = native_web
+
+func _should_use_dom_overlay() -> bool:
+	return OS.has_feature("web") or web == null or not web.has_method("load_html")
+
+func _get_js_bridge() -> Object:
+	if not Engine.has_singleton("JavaScriptBridge"):
+		return null
+	return Engine.get_singleton("JavaScriptBridge")
+
+func _setup_dom_overlay_bridge() -> void:
+	var bridge := _get_js_bridge()
+	if bridge == null:
+		push_warning("[WebOverlay] JavaScriptBridge no disponible para overlay web")
+		return
+	_dom_overlay_callback = bridge.call("create_callback", Callable(self, "_on_dom_overlay_message"))
+	var window = bridge.call("get_interface", "window")
+	if window != null:
+		window.__cssGameGodotOverlayMessage = _dom_overlay_callback
+	bridge.call("eval", _dom_overlay_bootstrap_js(), true)
+
+func _dom_overlay_bootstrap_js() -> String:
+	return """
+(function(){
+  if(window.__cssGameOverlayInstalled) return;
+  window.__cssGameOverlayInstalled = true;
+  function ensureOverlay(){
+    var root = document.getElementById('css-game-html-overlay');
+    if(!root){
+      root = document.createElement('div');
+      root.id = 'css-game-html-overlay';
+      root.style.cssText = 'position:fixed;inset:0;z-index:2147483647;display:none;background:rgba(2,4,10,.72);';
+      var frame = document.createElement('iframe');
+      frame.id = 'css-game-html-overlay-frame';
+      frame.setAttribute('allow', 'autoplay; fullscreen; clipboard-read; clipboard-write');
+      frame.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1664px,88vw);height:min(900px,84vh);border:0;background:transparent;';
+      root.appendChild(frame);
+      document.body.appendChild(root);
+    }
+    return root;
+  }
+  function patchHtml(html){
+    var bridgeScript = '<script>window.ipc={postMessage:function(message){parent.postMessage({__cssGameOverlayIpc:true,message:String(message)},\"*\");}};<\\/script>';
+    var text = String(html || '');
+    if(text.indexOf('window.ipc') === -1){
+      text = text.replace('</head>', bridgeScript + '</head>');
+    }
+    return text;
+  }
+  window.__cssGameOverlayOpen = function(html){
+    var root = ensureOverlay();
+    var frame = document.getElementById('css-game-html-overlay-frame');
+    root.style.display = 'block';
+    frame.srcdoc = patchHtml(html);
+    setTimeout(function(){ try{ frame.focus(); }catch(e){} }, 30);
+  };
+  window.__cssGameOverlayClose = function(){
+    var root = document.getElementById('css-game-html-overlay');
+    var frame = document.getElementById('css-game-html-overlay-frame');
+    if(frame) frame.srcdoc = 'about:blank';
+    if(root) root.style.display = 'none';
+  };
+  window.__cssGameOverlayEval = function(code){
+    var frame = document.getElementById('css-game-html-overlay-frame');
+    if(!frame || !frame.contentWindow) return;
+    frame.contentWindow.eval(String(code || ''));
+  };
+  window.addEventListener('message', function(event){
+    var data = event.data;
+    if(!data || data.__cssGameOverlayIpc !== true) return;
+    if(typeof window.__cssGameGodotOverlayMessage === 'function'){
+      window.__cssGameGodotOverlayMessage(String(data.message || ''));
+    }
+  });
+})();
+"""
+
+func _on_dom_overlay_message(args: Array) -> void:
+	if args.is_empty():
+		return
+	_on_web_ipc_message(String(args[0]))
+
 func _emit_overlay_opened() -> void:
 	emit_signal("overlay_opened")
 
@@ -85,7 +196,8 @@ func _open_with_template(template_path: String) -> void:
 	print("[WebOverlay] open() template=", _overlay_template_path)
 	visible = true
 	panel.visible = true
-	web.visible = false
+	if not _use_dom_overlay:
+		web.visible = false
 
 	# Mientras esté abierto, el panel debe “parar” el input de la escena
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -94,8 +206,11 @@ func _open_with_template(template_path: String) -> void:
 	_layout_and_sync()
 	await _play_overlay_open_prelude()
 	_awaiting_html_ready = true
-	web.set("html", "")
-	web.set("url", "about:blank")
+	if _use_dom_overlay:
+		_close_dom_overlay()
+	else:
+		web.set("html", "")
+		web.set("url", "about:blank")
 	_load_editor_html()
 	print("[WebOverlay] open -> esperando html_loaded")
 
@@ -103,21 +218,25 @@ func close() -> void:
 	print("[WebOverlay] close()")
 
 	# Quita el foco del WebView
-	if web.has_method("focus_parent"):
+	if not _use_dom_overlay and web.has_method("focus_parent"):
 		web.call_deferred("focus_parent")
-	if web.has_method("unfocus"):
+	if not _use_dom_overlay and web.has_method("unfocus"):
 		web.call_deferred("unfocus")
 	get_viewport().gui_release_focus()
 
 	# Oculta overlay y deja de interceptar input
-	web.visible = false
+	if _use_dom_overlay:
+		_close_dom_overlay()
+	else:
+		web.visible = false
 	panel.visible = false
 	visible = false
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	# Limpia contenido para próximas aperturas
-	web.set("html", "")
-	web.set("url", "about:blank")
+	if not _use_dom_overlay:
+		web.set("html", "")
+		web.set("url", "about:blank")
 
 	_emit_overlay_closed()
 
@@ -159,9 +278,37 @@ func _play_overlay_open_prelude() -> void:
 	await get_tree().create_timer(overlay_open_prelude_seconds).timeout
 
 func _finish_overlay_open_after_html_ready() -> void:
+	if _use_dom_overlay:
+		return
 	if web:
 		web.visible = true
 		web.call_deferred("focus")
+
+func _open_dom_overlay(html: String) -> void:
+	var bridge := _get_js_bridge()
+	if bridge == null:
+		push_warning("[WebOverlay] JavaScriptBridge no disponible para abrir overlay")
+		return
+	bridge.call("eval", "window.__cssGameOverlayOpen(%s);" % JSON.stringify(html), true)
+
+func _close_dom_overlay() -> void:
+	var bridge := _get_js_bridge()
+	if bridge == null:
+		return
+	bridge.call("eval", "if(window.__cssGameOverlayClose){window.__cssGameOverlayClose();}", true)
+
+func _eval_overlay_js(js: String) -> void:
+	if _use_dom_overlay:
+		var bridge := _get_js_bridge()
+		if bridge == null:
+			push_warning("[WebOverlay] JavaScriptBridge no disponible para eval")
+			return
+		bridge.call("eval", "window.__cssGameOverlayEval(%s);" % JSON.stringify(js), true)
+		return
+	if not web.has_method("eval"):
+		push_warning("[WebOverlay] WebView sin metodo eval")
+		return
+	web.call_deferred("eval", js)
 
 func _input(ev: InputEvent) -> void:
 	if visible and ev.is_action_pressed("ui_cancel"):
@@ -318,6 +465,9 @@ func _load_editor_html() -> void:
 	html = html.replace("__CODEMIRROR_JS__", _read_codemirror_js())
 
 	_last_loaded_html = html
+	if _use_dom_overlay:
+		_open_dom_overlay(html)
+		return
 	var base_url := "https://overlay.local/"
 	var supports_base_url := false
 	for method_info in web.get_method_list():
@@ -635,14 +785,11 @@ func _get_emis_client() -> Node:
 	return null
 
 func _send_emis_reply_to_web(payload: Dictionary) -> void:
-	if not web.has_method("eval"):
-		push_warning("[Emis] WebView sin método eval para responder")
-		return
 	var safe_payload := payload
 	if safe_payload.is_empty():
 		safe_payload = {"error": "Respuesta vacía del backend Emis"}
 	var js := "window.onEmisReply(%s);" % JSON.stringify(safe_payload)
-	web.call_deferred("eval", js)
+	_eval_overlay_js(js)
 
 func _save_css_draft(data: Dictionary) -> void:
 	last_css = String(data.get("css", ""))
@@ -856,10 +1003,10 @@ func _mark_first_solar_pillar_opened(completed: bool = false) -> void:
 	_save_tutorial_flags(flags)
 
 func _hydrate_web_editor(payload: Dictionary) -> void:
-	if payload.is_empty() or not web.has_method("eval"):
+	if payload.is_empty():
 		return
 	var js := "hydrateFromGodot(%s);" % JSON.stringify(payload)
-	web.call_deferred("eval", js)
+	_eval_overlay_js(js)
 
 func _extract_css_rules(text: String) -> PackedStringArray:
 	var rules := PackedStringArray()

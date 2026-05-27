@@ -249,7 +249,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="WebView" type="WebView" parent="Player/Camera2D/Control/PanelContainer"]
+[node name="WebView" type="Control" parent="Player/Camera2D/Control/PanelContainer"]
 transparent = true
 focused_when_created = false
 layout_mode = 2
