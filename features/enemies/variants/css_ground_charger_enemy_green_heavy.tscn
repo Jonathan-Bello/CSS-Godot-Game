@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://features/enemies/css_ground_charger_enemy.tscn" id="1_base"]
+
+[node name="CssGroundChargerEnemyGreenHeavy" instance=ExtResource("1_base")]
+variant_id = &"green_heavy"
+max_health = 12
+patrol_speed = 65.0
+detection_range = 700.0
+windup_time = 0.58
+charge_speed = 620.0
+charge_start_boost = 1.2
+variant_css_properties = {
+"background-color": "green",
+"fill": "green"
+}
+variant_visual_tint = Color(0.35, 0.95, 0.44, 1)
+variant_visual_scale = Vector2(1.28, 1.28)
+variant_outline_enabled = true
+variant_outline_color = Color(0.02, 0.12, 0.04, 1)
+variant_health_multiplier = 1.35
+variant_contact_damage_multiplier = 2.0

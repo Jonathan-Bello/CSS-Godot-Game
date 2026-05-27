@@ -117,7 +117,7 @@ func _update_visual_from_css(text: String) -> void:
 	var w := int(clamp(rule_map.get("width", 28), 6, 256))
 	var h := int(clamp(rule_map.get("height", 16), 6, 256))
 	var radius := int(clamp(rule_map.get("border-radius", 0), 0, min(w, h) / 2))
-	var color: Color = rule_map.get("background-color", Color(1, 1, 1, 1))
+	var color := _resolve_visual_color(rule_map)
 
 	var img := Image.create(w, h, false, Image.FORMAT_RGBA8)
 	img.fill(Color(0, 0, 0, 0))
@@ -195,18 +195,18 @@ func _extract_rule_map(text: String) -> Dictionary:
 func _parse_css_value(key: String, raw_value: String) -> Variant:
 	if key in ["width", "height", "border-radius"]:
 		return float(raw_value.replace("px", "").strip_edges())
-	if key == "background-color":
-		if raw_value.begins_with("#"):
-			return Color(raw_value)
-		if raw_value.begins_with("rgb"):
-			var inside := raw_value.substr(raw_value.find("(") + 1, raw_value.find(")") - raw_value.find("(") - 1)
-			var numbers := inside.split(",")
-			if numbers.size() >= 3:
-				var r := float(numbers[0].strip_edges()) / 255.0
-				var g := float(numbers[1].strip_edges()) / 255.0
-				var b := float(numbers[2].strip_edges()) / 255.0
-				return Color(r, g, b, 1.0)
+	if key in ["background-color", "fill", "color"]:
+		var normalized := CssAffinity.normalize_color(raw_value)
+		if normalized != "":
+			return Color(normalized)
 	return raw_value
+
+func _resolve_visual_color(rule_map: Dictionary) -> Color:
+	for key in ["background-color", "fill", "color"]:
+		var raw_value: Variant = rule_map.get(key)
+		if raw_value is Color:
+			return raw_value
+	return Color(1, 1, 1, 1)
 
 # Helper geométrico para máscara de esquinas redondeadas.
 func _inside_rounded_rect(x: int, y: int, w: int, h: int, radius: int) -> bool:

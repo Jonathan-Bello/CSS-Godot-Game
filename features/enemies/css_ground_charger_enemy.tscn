@@ -1,0 +1,75 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbv8i6i13p6rh"]
+
+[ext_resource type="Script" uid="uid://b0dxnm1cr7l" path="res://features/enemies/css_ground_charger_enemy.gd" id="1_charge"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_charger"]
+radius = 42.0
+height = 128.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_contact"]
+size = Vector2(108, 118)
+
+[node name="CssGroundChargerEnemy" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_charge")
+max_health = 8
+contact_knockback = Vector2(1100, -520)
+css_affinity = {
+"critical_bonus": 4,
+"properties": {
+"background-color": "red",
+"fill": "red"
+},
+"property_bonus": 1
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, -44)
+shape = SubResource("CapsuleShape2D_charger")
+
+[node name="ContactDamageArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactDamageArea"]
+position = Vector2(0, -42)
+shape = SubResource("RectangleShape2D_contact")
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Skeleton2D"]
+
+[node name="Parts" type="Node2D" parent="Skeleton2D"]
+modulate = Color(1, 0.42, 0.36, 1)
+position = Vector2(0, -48)
+
+[node name="Body" type="Polygon2D" parent="Skeleton2D/Parts"]
+color = Color(0.84, 0.18, 0.14, 1)
+polygon = PackedVector2Array(-42, -36, 42, -36, 58, -2, 32, 42, -38, 42, -58, -4)
+
+[node name="Shell" type="Polygon2D" parent="Skeleton2D/Parts"]
+z_index = -1
+position = Vector2(0, -18)
+color = Color(0.22, 0.1, 0.12, 1)
+polygon = PackedVector2Array(-56, -20, 35, -34, 62, -8, 34, 18, -52, 16)
+
+[node name="Eye" type="Polygon2D" parent="Skeleton2D/Parts"]
+z_index = 2
+position = Vector2(-18, -8)
+color = Color(1, 0.88, 0.62, 1)
+polygon = PackedVector2Array(-10, -6, 18, -6, 24, 0, 18, 6, -10, 6, -16, 0)
+
+[node name="LegFront" type="Polygon2D" parent="Skeleton2D/Parts"]
+z_index = -1
+position = Vector2(-26, 38)
+color = Color(0.45, 0.08, 0.08, 1)
+polygon = PackedVector2Array(-16, -4, 14, -4, 20, 34, -8, 34)
+
+[node name="LegBack" type="Polygon2D" parent="Skeleton2D/Parts"]
+z_index = -2
+position = Vector2(26, 38)
+color = Color(0.36, 0.07, 0.08, 1)
+polygon = PackedVector2Array(-14, -4, 18, -4, 10, 34, -20, 34)

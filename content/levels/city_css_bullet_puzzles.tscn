@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bwv5wrm3q6hs3"]
+[gd_scene load_steps=16 format=3 uid="uid://bwv5wrm3q6hs3"]
 
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://features/player/player.tscn" id="1_player"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://features/ui/hud/control.gd" id="2_control"]
@@ -8,15 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://c4e1e1ik2l6gt" path="res://features/obstacles/css_toggle_platform.tscn" id="6_toggle"]
 [ext_resource type="PackedScene" path="res://features/world/respawn_zone.tscn" id="7_respawn"]
 [ext_resource type="PackedScene" uid="uid://b8y4a82c2x8a5" path="res://features/world/emis_dialog_trigger.tscn" id="8_emis"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_city_back"]
-load_path = "res://.godot/imported/Fondo.svg-736c17634a6edeed6519caa7b3b75ef4.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_city_mid"]
-load_path = "res://.godot/imported/Intermedio.svg-f01de8bbd7e3534304aeb43812f5355a.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_city_front"]
-load_path = "res://.godot/imported/Principal.svg-7220b846c9d8db2014e8977e0e700555.ctex"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_start"]
 size = Vector2(1200, 160)
@@ -41,34 +32,17 @@ size = Vector2(128, 720)
 
 [node name="CityCssBulletPuzzles" type="Node2D"]
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="BackLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.35, 1)
-motion_mirroring = Vector2(7680, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BackLayer"]
-position = Vector2(0, -2820)
-texture = SubResource("CompressedTexture2D_city_back")
-centered = false
-
-[node name="MidLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.55, 1)
-motion_mirroring = Vector2(5760, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/MidLayer"]
-position = Vector2(0, -2660)
-texture = SubResource("CompressedTexture2D_city_mid")
-centered = false
-
-[node name="FrontLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.78, 1)
-motion_mirroring = Vector2(4800, 0)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/FrontLayer"]
-position = Vector2(0, -2160)
-texture = SubResource("CompressedTexture2D_city_front")
-centered = false
+[node name="ParallaxBackground" parent="."]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(165, 442)

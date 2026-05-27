@@ -32,6 +32,7 @@ const CSS_NAMED_COLORS := {
 const RELEVANT_PROPERTIES := {
 	"background": true,
 	"background-color": true,
+	"fill": true,
 	"color": true,
 	"border": true,
 	"border-color": true,
@@ -64,7 +65,7 @@ func parse_relevant_properties(css_text: String) -> Dictionary:
 # - "rgb(0, 0, 255)" -> "#0000ff"
 # - "border: 1px solid red" -> "#ff0000"
 func normalize_property_value(key: String, value: String) -> String:
-	if key in ["background", "background-color", "color", "border-color", "outline-color"]:
+	if key in ["background", "background-color", "fill", "color", "border-color", "outline-color"]:
 		var maybe_color := normalize_color(value)
 		if maybe_color != "":
 			return maybe_color

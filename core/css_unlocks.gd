@@ -9,6 +9,7 @@ const SAVE_PATH := "user://progress/css_unlocks.json"
 var MAIN_PROPERTIES: PackedStringArray = PackedStringArray([
 	"background",
 	"background-color",
+	"fill",
 	"color",
 	"border",
 	"border-color",
@@ -27,6 +28,7 @@ var MAIN_PROPERTIES: PackedStringArray = PackedStringArray([
 const DEFAULT_UNLOCKED := {
 	"background": true,
 	"background-color": true,
+	"fill": true,
 	"width": true,
 	"height": true,
 	"border-radius": true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=448 format=3 uid="uid://cw7r7u61gr40"]
+[gd_scene load_steps=448 format=3 uid="uid://djmwl8b3t8eq1"]
 
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="1_0pnw0"]
 [ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="2_xrtvm"]
@@ -2445,7 +2445,7 @@ point_count = 4
 resource_local_to_scene = true
 script = ExtResource("3_e6whx")
 
-[node name="ParallaxBackground" type="ParallaxBackground"]
+[node name="CityParallaxBackground" type="ParallaxBackground"]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
 position = Vector2(4, -538)

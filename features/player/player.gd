@@ -168,6 +168,7 @@ var _warned_missing_bullet_profile: bool = true
 @export var footstep_sfx: AudioStream = preload("res://assets/sfx/step_metal.ogg")
 @export var landing_sfx: AudioStream = preload("res://assets/sfx/jumpland.wav")
 @export var death_sfx: AudioStream = preload("res://assets/sfx/Jingle_Lose_00.mp3")
+@export var footstep_tile_probe_offset: Vector2 = Vector2(0.0, 132.0)
 @export_range(0.08, 0.8, 0.01) var footstep_interval: float = 0.28
 @export_range(0.0, 2800.0, 25.0) var landing_velocity_threshold: float = 650.0
 @export_range(0.0, 2.0, 0.05) var death_respawn_delay: float = 0.55
@@ -221,6 +222,7 @@ var _is_respawning := false
 var _is_dying := false
 var _resurrection_sfx_player: AudioStreamPlayer2D = null
 var _active_footstep_sfx: AudioStream = null
+var _footstep_sfx_forced := false
 var _footstep_timer := 0.0
 var _damage_invulnerability_timer := 0.0
 var _damage_control_lock_timer := 0.0
@@ -440,6 +442,7 @@ func _physics_process(delta: float) -> void:
 	var raw_dir := Input.get_axis("move_left", "move_right")
 	var dir := _apply_deadzone(raw_dir)
 	var want_down := Input.is_action_pressed("move_down")
+	_reset_wall_climb_state_if_locked()
 
 	# 3) Saltos (coyote+buffer+doble) y dash / ataque
 	if not lock_controls and _damage_control_lock_timer <= 0.0 and not overlay_blocks_movement and not external_control_lock:
@@ -491,6 +494,11 @@ func _hmove(dir: float, delta: float) -> void:
 		var s := gfx_root.scale
 		s.x = 1.0 if dir > 0.0 else -1.0
 		gfx_root.scale = s
+
+	if _should_block_air_wall_push(dir):
+		if sign(velocity.x) == sign(dir):
+			velocity.x = 0.0
+		return
 
 	var on_floor := is_on_floor()
 	var target := dir * MAX_SPEED
@@ -552,7 +560,7 @@ func _apply_gravity(delta: float, want_down: bool) -> void:
 		return
 
 	# En WALL_SLIDE: gravedad reducida + clamp de velocidad
-	if state == State.WALL_SLIDE:
+	if _can_use_wall_climb() and state == State.WALL_SLIDE:
 		velocity.y = min(velocity.y + WALL_SLIDE_GRAVITY * delta, WALL_SLIDE_SPEED_MAX)
 		return
 
@@ -599,10 +607,7 @@ func _do_dash(dir_x: float) -> void:
 func _update_wall_slide_state(dir: float) -> void:
 	if wall_probe == null: return
 	if not _can_use_wall_climb():
-		if state == State.WALL_SLIDE:
-			state = State.FALL
-		wall_coyote_timer = 0.0
-		wall_stick_timer = 0.0
+		_reset_wall_climb_state_if_locked()
 		return
 	if state == State.DASH or state == State.ATTACK: return
 
@@ -624,6 +629,9 @@ func _update_wall_slide_state(dir: float) -> void:
 
 	# --- Salir del slide (dejó de empujar o dejó de colisionar) ---
 	if state == State.WALL_SLIDE:
+		if not _can_use_wall_climb():
+			state = State.FALL
+			return
 		# breve "stick" si SIGUE tocando pared (sensación pegajosa)
 		if on_front_wall and wall_stick_timer > 0.0:
 			return
@@ -642,6 +650,23 @@ func _wall_jump(wall_dir: int) -> void:
 	state = State.JUMP
 	wall_jump_lock_timer = WALL_JUMP_PUSH_TIME
 	_play_if_changed(&"wall_jump", false)
+
+
+func _reset_wall_climb_state_if_locked() -> void:
+	if _can_use_wall_climb():
+		return
+	if state == State.WALL_SLIDE:
+		state = State.FALL
+	wall_coyote_timer = 0.0
+	wall_stick_timer = 0.0
+	last_wall_dir = 0
+
+
+func _should_block_air_wall_push(dir: float) -> bool:
+	if _can_use_wall_climb() or wall_probe == null or is_on_floor() or dir == 0.0:
+		return false
+	wall_probe.force_raycast_update()
+	return wall_probe.is_colliding() and int(sign(dir)) == _facing_sign()
 
 
 # ============================================================================
@@ -900,11 +925,25 @@ func _play_world_sfx(stream: AudioStream, volume_db: float = -4.0, pitch_scale: 
 	add_child(player)
 	player.play()
 
-func set_footstep_sfx(stream: AudioStream) -> void:
+func set_footstep_sfx(stream: AudioStream, force_override: bool = false) -> void:
 	_active_footstep_sfx = stream if stream != null else footstep_sfx
+	_footstep_sfx_forced = force_override
 
 func reset_footstep_sfx() -> void:
 	_active_footstep_sfx = footstep_sfx
+	_footstep_sfx_forced = false
+
+func _resolve_footstep_sfx() -> AudioStream:
+	if _footstep_sfx_forced:
+		return _active_footstep_sfx if _active_footstep_sfx != null else footstep_sfx
+	var probe_position := global_position + footstep_tile_probe_offset
+	for surface in get_tree().get_nodes_in_group("footstep_surface"):
+		if surface == null or not surface.has_method("get_footstep_sfx_at_global_position"):
+			continue
+		var stream: Variant = surface.call("get_footstep_sfx_at_global_position", probe_position)
+		if stream is AudioStream:
+			return stream
+	return _active_footstep_sfx if _active_footstep_sfx != null else footstep_sfx
 
 func apply_enemy_contact_damage(source: Node2D, damage: int = 1, knockback: Vector2 = Vector2.ZERO) -> void:
 	if _is_dying or _is_respawning or _damage_invulnerability_timer > 0.0:
@@ -963,7 +1002,7 @@ func _update_movement_audio(delta: float, input_dir: float, was_on_floor: bool, 
 	_footstep_timer -= delta * clampf(abs(velocity.x) / maxf(MAX_SPEED, 1.0), 0.75, 1.45)
 	if _footstep_timer > 0.0:
 		return
-	_play_world_sfx(_active_footstep_sfx, -16.0, randf_range(0.92, 1.08))
+	_play_world_sfx(_resolve_footstep_sfx(), -16.0, randf_range(0.92, 1.08))
 	_footstep_timer = footstep_interval
 
 # ============================================================================
@@ -980,6 +1019,9 @@ func _update_state() -> void:
 		return
 
 	if state == State.WALL_SLIDE:
+		if not _can_use_wall_climb():
+			state = State.FALL
+			return
 		# Si se perdió el contacto y ya no hay "stick", caer
 		if wall_probe and not wall_probe.is_colliding() and wall_stick_timer <= 0.0:
 			state = State.FALL

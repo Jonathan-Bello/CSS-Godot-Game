@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2yhmcej56tey"]
+
+[ext_resource type="Script" uid="uid://r1p45tna36le" path="res://features/enemies/css_flying_enemy.gd" id="1_fly"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fly"]
+radius = 46.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_contact"]
+radius = 92.0
+
+[node name="CssFlyingEnemy" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_fly")
+max_health = 5
+contact_knockback = Vector2(850, -620)
+css_affinity = {
+"critical_bonus": 4,
+"properties": {
+"background-color": "blue",
+"fill": "blue"
+},
+"property_bonus": 1
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fly")
+
+[node name="ContactDamageArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactDamageArea"]
+shape = SubResource("CircleShape2D_contact")
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Skeleton2D"]
+
+[node name="Parts" type="Node2D" parent="Skeleton2D"]
+modulate = Color(0.32, 0.56, 1, 1)
+
+[node name="Core" type="Polygon2D" parent="Skeleton2D/Parts"]
+color = Color(0.18, 0.32, 0.95, 1)
+polygon = PackedVector2Array(-34, -22, 22, -34, 45, 0, 20, 35, -38, 24, -52, -4)
+
+[node name="Eye" type="Polygon2D" parent="Skeleton2D/Parts"]
+z_index = 2
+position = Vector2(9, -4)
+color = Color(0.94, 0.97, 1, 1)
+polygon = PackedVector2Array(-10, -7, 15, -7, 20, 0, 15, 7, -10, 7, -15, 0)
+
+[node name="WingLeft" type="Polygon2D" parent="Skeleton2D/Parts"]
+z_index = -1
+position = Vector2(-24, -3)
+color = Color(0.22, 0.74, 1, 0.7)
+polygon = PackedVector2Array(0, -8, -60, -30, -46, 6, -8, 18)
+
+[node name="WingRight" type="Polygon2D" parent="Skeleton2D/Parts"]
+z_index = -1
+position = Vector2(15, 8)
+color = Color(0.1, 0.28, 0.8, 0.75)
+polygon = PackedVector2Array(0, -10, 58, -20, 48, 18, -4, 18)

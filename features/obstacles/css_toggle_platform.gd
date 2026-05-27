@@ -3,9 +3,11 @@ class_name CssTogglePlatform
 
 @export var css_metadata: Dictionary = {
 	"properties": {
-		"background-color": "blue"
+		"background-color": "blue",
+		"fill": "blue"
 	}
 }
+@export var css_properties: Dictionary = {}
 @export var starts_active: bool = false
 @export var inactive_color: Color = Color(0.75, 0.85, 1.0, 0.2)
 @export var active_color: Color = Color(0.35, 0.6, 1.0, 1.0)
@@ -30,7 +32,7 @@ func apply_css_bullet_hit(bullet_profile: Dictionary) -> void:
 	_apply_state_visual(true)
 
 func _has_exact_match(bullet_profile: Dictionary) -> bool:
-	var target_props: Dictionary = CssAffinity.normalize_affinity(css_metadata.get("properties", {}))
+	var target_props: Dictionary = CssAffinity.normalize_affinity(_get_target_css_properties())
 	var bullet_props: Dictionary = bullet_profile.get("properties", {})
 
 	for raw_prop in target_props.keys():
@@ -41,6 +43,15 @@ func _has_exact_match(bullet_profile: Dictionary) -> bool:
 		if bullet_value == String(target_props[prop]):
 			return true
 	return false
+
+func _get_target_css_properties() -> Dictionary:
+	var merged := {}
+	var legacy_props: Variant = css_metadata.get("properties", {})
+	if legacy_props is Dictionary:
+		merged.merge(legacy_props as Dictionary, true)
+	if not css_properties.is_empty():
+		merged.merge(css_properties, true)
+	return merged
 
 func _play_hit_feedback() -> void:
 	var tw := create_tween()

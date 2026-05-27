@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxvxtju3h2ljm"]
+
+[ext_resource type="PackedScene" uid="uid://bbv8i6i13p6rh" path="res://features/enemies/css_ground_charger_enemy.tscn" id="1_base"]
+
+[node name="CssGroundChargerEnemyYellowFast" instance=ExtResource("1_base")]
+patrol_speed = 125.0
+detection_range = 900.0
+windup_time = 0.28
+charge_time = 0.48
+charge_speed = 930.0
+charge_start_boost = 1.45
+max_health = 6
+variant_id = &"yellow_fast"
+variant_css_properties = {
+"background-color": "yellow",
+"fill": "yellow"
+}
+variant_visual_tint = Color(1, 0.82, 0.2, 1)
+variant_critical_bonus_override = 5
+
+[node name="CollisionShape2D" parent="." index="0"]
+visible = true
+
+[node name="ContactDamageArea" parent="." index="1"]
+visible = true

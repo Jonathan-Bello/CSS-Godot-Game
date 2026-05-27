@@ -2,9 +2,11 @@ extends StaticBody2D
 class_name CssDestructibleBlock
 
 @export var max_health: int = 3
+@export var css_properties: Dictionary = {}
 @export var css_metadata: Dictionary = {
 	"properties": {
-		"background-color": "red"
+		"background-color": "red",
+		"fill": "red"
 	}
 }
 @export var default_color: Color = Color(0.76, 0.27, 0.27, 1.0)
@@ -38,7 +40,7 @@ func apply_css_bullet_hit(bullet_profile: Dictionary) -> void:
 	_play_damage_feedback()
 
 func _has_exact_match(bullet_profile: Dictionary) -> bool:
-	var target_props: Dictionary = CssAffinity.normalize_affinity(css_metadata.get("properties", {}))
+	var target_props: Dictionary = CssAffinity.normalize_affinity(_get_target_css_properties())
 	var bullet_props: Dictionary = bullet_profile.get("properties", {})
 
 	for raw_prop in target_props.keys():
@@ -49,6 +51,15 @@ func _has_exact_match(bullet_profile: Dictionary) -> bool:
 		if bullet_value == String(target_props[prop]):
 			return true
 	return false
+
+func _get_target_css_properties() -> Dictionary:
+	var merged := {}
+	var legacy_props: Variant = css_metadata.get("properties", {})
+	if legacy_props is Dictionary:
+		merged.merge(legacy_props as Dictionary, true)
+	if not css_properties.is_empty():
+		merged.merge(css_properties, true)
+	return merged
 
 func _play_damage_feedback() -> void:
 	if sprite_texture != null and sprite.texture == null:

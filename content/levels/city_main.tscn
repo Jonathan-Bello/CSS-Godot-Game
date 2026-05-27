@@ -1,20 +1,164 @@
-[gd_scene load_steps=23 format=3 uid="uid://fshw3fl0wsdj"]
+[gd_scene load_steps=34 format=4 uid="uid://fshw3fl0wsdj"]
 
+[ext_resource type="Texture2D" uid="uid://fulhv0a3r0x5" path="res://assets/art/tilesets/tileset_cueva.svg" id="1_86b2p"]
 [ext_resource type="Script" uid="uid://k76toqhebuxm" path="res://features/world/level_bootstrap.gd" id="1_bootstrap"]
-[ext_resource type="PackedScene" uid="uid://c2kh7j3b2ym6r" path="res://features/world/parallax.tscn" id="2_parallax"]
+[ext_resource type="Texture2D" uid="uid://h0ud0mdextd1" path="res://assets/art/tilesets/master_tileset_128x128.svg" id="2_odpp0"]
+[ext_resource type="PackedScene" uid="uid://djmwl8b3t8eq1" path="res://features/world/city_parallax_background.tscn" id="2_parallax"]
+[ext_resource type="Script" uid="uid://daykf8t7ti8t0" path="res://features/world/tile_footstep_surface.gd" id="3_footsteps"]
 [ext_resource type="PackedScene" uid="uid://cn1bukpgco5dm" path="res://features/player/player.tscn" id="3_player"]
 [ext_resource type="Script" uid="uid://b4ftisvqkc7l" path="res://features/ui/hud/control.gd" id="4_control"]
 [ext_resource type="PackedScene" uid="uid://01hx4wpcphus" path="res://features/ui/hud/main_hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://d4bd58fueck4y" path="res://features/world/pilar_solar.tscn" id="6_pilar"]
-[ext_resource type="PackedScene" uid="uid://d1r7i8x8fvl3j" path="res://features/obstacles/css_destructible_block.tscn" id="7_block"]
-[ext_resource type="PackedScene" uid="uid://c4e1e1ik2l6gt" path="res://features/obstacles/css_toggle_platform.tscn" id="8_toggle"]
 [ext_resource type="PackedScene" path="res://features/world/respawn_zone.tscn" id="9_respawn"]
 [ext_resource type="PackedScene" uid="uid://b8y4a82c2x8a5" path="res://features/world/emis_dialog_trigger.tscn" id="10_emis"]
-[ext_resource type="Script" uid="uid://cycix4a0shlqj" path="res://features/world/surface_audio_zone.gd" id="11_surface"]
+[ext_resource type="Script" uid="uid://rjxipc088xcd" path="res://features/world/footstep_audio_trigger.gd" id="11_surface"]
 [ext_resource type="Script" uid="uid://b1bortys85ulv" path="res://features/world/route_gate.gd" id="12_gate"]
-[ext_resource type="AudioStream" path="res://assets/music/green_glass_towers_the_silent_grid.ogg" id="13_music_city"]
 [ext_resource type="AudioStream" uid="uid://dnmla1lehhfpg" path="res://assets/music/cave themeb4.ogg" id="14_music_cave"]
+[ext_resource type="PackedScene" path="res://features/enemies/variants/css_flying_enemy_background_decoy.tscn" id="15_3cti1"]
 [ext_resource type="AudioStream" uid="uid://bbx12uhcrtkux" path="res://assets/music/space_boss_battle_bpm175.ogg" id="15_music_boss"]
+[ext_resource type="PackedScene" path="res://features/enemies/variants/css_flying_enemy_yellow_outlined.tscn" id="16_eig1l"]
+[ext_resource type="PackedScene" uid="uid://d2yhmcej56tey" path="res://features/enemies/css_flying_enemy.tscn" id="16_flying"]
+[ext_resource type="PackedScene" uid="uid://bbv8i6i13p6rh" path="res://features/enemies/css_ground_charger_enemy.tscn" id="17_charger"]
+[ext_resource type="Script" uid="uid://ds4eyy7eyt7dn" path="res://features/world/combat_arena_lock.gd" id="18_arena_lock"]
+
+[sub_resource type="Resource" id="Resource_medse"]
+metadata/__load_path__ = "res://assets/music/green_glass_towers_the_silent_grid.ogg"
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b73tu"]
+texture = ExtResource("1_86b2p")
+separation = Vector2i(16, 16)
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 11, -64, -35, 64, -64, 64)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -17, -64, -21, 64, -64, 64)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -17, -64, -21, 64, -64, 64)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -17, -64, 15, 64, -64, 64)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, -2, -64, 43, 12, 42, 64, -64, 64)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -64, 64, -64, 64, 64, 29, 64)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(23.143433, -64, 64, -64, 64, 64, 27.094742, 64)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, -15, -64, -11)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -64, 64, -64, 64, 64, 23, 64)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -64, 64, -64, 64, 64, -11, 64)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14, -64, 64, -64, 64, 64, -47, 64)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+0:2/0 = 0
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+5:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -28.223694, 64, -27.659218, 64, 27.659225, -64, 28.788166)
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -28.223694, 64, -27.659218, 64, 27.659225, -64, 28.788166)
+0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -28.223694, 64, -27.659218, 64, 27.659225, -64, 28.788166)
+1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+5:4/0 = 0
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 1, -9, -26, 64, -64, 64)
+0:5/0 = 0
+0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, 32, 64, -2, -17)
+3:5/0 = 0
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:5/0 = 0
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oum8j"]
+texture = ExtResource("2_odpp0")
+separation = Vector2i(16, 16)
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-51.931595, -28.223694, 53.625023, -25.965797, 51.367126, 17.498692, -4.515793, 29.91711, -51.367126, 15.240795)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-51.931595, -28.223694, 53.625023, -25.965797, 51.367126, 17.498692, -4.515793, 29.91711, -51.367126, 15.240795)
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-57.576332, -46.85133, 55.318436, -47.415802, 49.10923, -0.5644741, -47.415806, 0)
+6:2/0 = 0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-54.189487, -58.14081, 50.80265, -59.269756, 51.367126, 17.498692, -4.515793, 29.91711, -51.367126, 15.240795)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-54.189487, -58.14081, 50.80265, -59.269756, 51.367126, 17.498692, -4.515793, 29.91711, -51.367126, 15.240795)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-28.223694, -54.753963, 27.094742, -51.367123, 21.450005, -15.805267, -20.32106, -13.547371)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-50.238174, -42.335537, 45.72238, -42.900017, 47.98027, -18.063168, -32.739487, -14.676315)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-50.238174, -42.335537, 48.544746, -40.07764, 45.157906, -0.5644684, -37.81975, -4.515785, -44.593437, -20.885529)
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+6:3/0 = 0
+7:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_fc8pn"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_b73tu")
+sources/1 = SubResource("TileSetAtlasSource_oum8j")
 
 [sub_resource type="RectangleShape2D" id="Shape_ground"]
 size = Vector2(1900, 160)
@@ -29,10 +173,16 @@ size = Vector2(2600, 180)
 size = Vector2(120, 760)
 
 [sub_resource type="RectangleShape2D" id="Shape_respawn"]
-size = Vector2(11200, 170)
+size = Vector2(13600, 170)
 
 [sub_resource type="RectangleShape2D" id="Shape_zone"]
-size = Vector2(9500, 1200)
+size = Vector2(13200, 1200)
+
+[sub_resource type="RectangleShape2D" id="Shape_boss_wall"]
+size = Vector2(120, 780)
+
+[sub_resource type="RectangleShape2D" id="Shape_boss_trigger"]
+size = Vector2(960, 620)
 
 [sub_resource type="RectangleShape2D" id="Shape_gate"]
 size = Vector2(170, 330)
@@ -41,11 +191,23 @@ size = Vector2(170, 330)
 
 [node name="Bootstrap" type="Node" parent="."]
 script = ExtResource("1_bootstrap")
-start_music = ExtResource("13_music_city")
+start_music = SubResource("Resource_medse")
 
 [node name="Parallax" parent="." instance=ExtResource("2_parallax")]
-position = Vector2(-1200, -910)
 scale = Vector2(3.2, 2)
+transform = Transform2D(3.2, 0, 0, 2, 0, 0)
+
+[node name="tileset" type="Node2D" parent="."]
+position = Vector2(-277, 534)
+
+[node name="background" type="TileMapLayer" parent="tileset"]
+tile_set = SubResource("TileSet_fc8pn")
+
+[node name="foreground" type="TileMapLayer" parent="tileset"]
+position = Vector2(405, 1251)
+tile_map_data = PackedByteArray("AAD8//r/AAAEAAQAAAD8//v/AAAEAAQAAADx//r/AAAEAAMAAADw//r/AAAEAAMAAAD5//j/AAAEAAMAAAD9//j/AAABAAIAAAD8//j/AAABAAQAAAD8//n/AAAEAAQAAAD0//j/AAAFAAMAAAD1//j/AAAFAAMAAAD9//L/AAADAAQAAAD9//H/AAAFAAEAAAD9/+//AAAFAAEAAAD9//D/AAAFAAEAAAD9//n/AAACAAQAAAD9//r/AAACAAQAAAD+//n/AAACAAQAAAD+//r/AAACAAQAAAD9//v/AAACAAQAAAD+//j/AAACAAIAAAD+//v/AAACAAQAAAD///n/AAACAAQAAAD///r/AAACAAQAAAD///v/AAACAAQAAAADAPj/AAACAAIAAAADAPn/AAACAAQAAAAEAPb/AQABAAEAAAAEAPf/AAAEAAQAAAAEAPj/AAAEAAUAAAAEAPn/AAACAAQAAAAAAPj/AAACAAIAAAAAAPn/AAACAAQAAAABAPj/AAADAAIAAAABAPn/AAACAAQAAAACAPj/AAACAAIAAAACAPn/AAACAAQAAAD///j/AAACAAIAAAADAPD/AAAFAAEAAAADAPH/AAAFAAEAAAADAPL/AAABAAEAAAAEAPD/AAAEAAQAAAAEAPH/AQAEAAEAAAAEAPL/AQABAAEAACADAO//AAAFAAEAAAAEAO//AAAEAAQAAAD+/+//AAAFAAEAAAD+//D/AAAFAAEAAAD+//H/AAAFAAEAAAD+//L/AAABAAEAAAD//+//AAAFAAEAAAD///D/AAAFAAEAAAD///H/AAAFAAEAAAD///L/AAABAAEAAAAAAO//AAAFAAEAAAACAO//AAAFAAEAAAABAO//AAAFAAEAAAAAAPD/AAAFAAEAAAAAAPH/AAAFAAEAAAABAPD/AAAFAAEAAAABAPH/AAAFAAEAAAACAPD/AAAFAAEAAAACAPH/AAAFAAEAAAAAAPL/AAABAAEAAAACAPL/AAABAAEAAAAFAPH/AQAHAAEAAAAFAPL/AQAAAAEAACAFAPD/AQAHAAEAAAAGAPD/AQAHAAEAAAAGAPH/AQAHAAEAAAAGAPL/AQAAAAEAACAFAPb/AQAAAAEAAAAGAPb/AQAAAAEAAAAFAPf/AQAHAAEAAAAGAPf/AQAHAAEAAAAFAPj/AQAHAAEAAAAFAPn/AQAHAAEAAAAFAPr/AQAHAAEAAAAFAPv/AQAHAAEAAAAGAPj/AQAHAAEAAAAGAPn/AQAHAAEAAAAGAPr/AQAHAAEAAAAGAPv/AQAHAAEAAAABAPL/AAABAAEAAAAAAPr/AAACAAQAAAAAAPv/AAACAAQAAAABAPr/AAACAAQAAAABAPv/AAACAAQAAAACAPr/AAACAAQAAAACAPv/AAACAAQAAAADAPr/AAACAAQAAAADAPv/AAACAAQAAAAEAPr/AAACAAQAAAAEAPv/AAACAAQAAAD9//T/AAADAAMAACD9//P/AAADAAQAAAA=")
+tile_set = SubResource("TileSet_fc8pn")
+script = ExtResource("3_footsteps")
 
 [node name="Markers" type="Node2D" parent="."]
 
@@ -70,7 +232,7 @@ shoot_arm_aim_offset_degrees = -110.0
 position = Vector2(357, 19)
 limit_left = -220
 limit_top = -850
-limit_right = 10400
+limit_right = 12400
 limit_bottom = 1040
 
 [node name="Control" type="Control" parent="Player/Camera2D"]
@@ -109,30 +271,56 @@ color = Color(0.15, 0.19, 0.2, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/StartGround"]
 shape = SubResource("Shape_ground")
 
-[node name="Puzzle2Ground" type="StaticBody2D" parent="Geometry"]
+[node name="ConnectorGroundA" type="StaticBody2D" parent="Geometry"]
+position = Vector2(2190, 620)
+
+[node name="Visual" type="ColorRect" parent="Geometry/ConnectorGroundA"]
+offset_left = -420.0
+offset_top = -80.0
+offset_right = 420.0
+offset_bottom = 80.0
+color = Color(0.13, 0.17, 0.18, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/ConnectorGroundA"]
+shape = SubResource("Shape_gap_ground")
+
+[node name="DuoCombatGround" type="StaticBody2D" parent="Geometry"]
 position = Vector2(3000, 620)
 
-[node name="Visual" type="ColorRect" parent="Geometry/Puzzle2Ground"]
+[node name="Visual" type="ColorRect" parent="Geometry/DuoCombatGround"]
 offset_left = -420.0
 offset_top = -80.0
 offset_right = 420.0
 offset_bottom = 80.0
 color = Color(0.12, 0.16, 0.18, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Puzzle2Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/DuoCombatGround"]
 shape = SubResource("Shape_gap_ground")
 
-[node name="Puzzle3Ground" type="StaticBody2D" parent="Geometry"]
+[node name="ConnectorGroundB" type="StaticBody2D" parent="Geometry"]
+position = Vector2(3635, 620)
+
+[node name="Visual" type="ColorRect" parent="Geometry/ConnectorGroundB"]
+offset_left = -420.0
+offset_top = -80.0
+offset_right = 420.0
+offset_bottom = 80.0
+color = Color(0.13, 0.17, 0.18, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/ConnectorGroundB"]
+shape = SubResource("Shape_gap_ground")
+
+[node name="MixedCombatGround" type="StaticBody2D" parent="Geometry"]
 position = Vector2(4800, 620)
 
-[node name="Visual" type="ColorRect" parent="Geometry/Puzzle3Ground"]
+[node name="Visual" type="ColorRect" parent="Geometry/MixedCombatGround"]
 offset_left = -950.0
 offset_top = -80.0
 offset_right = 950.0
 offset_bottom = 80.0
 color = Color(0.15, 0.19, 0.2, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/Puzzle3Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/MixedCombatGround"]
 shape = SubResource("Shape_ground")
 
 [node name="FinalPathGround" type="StaticBody2D" parent="Geometry"]
@@ -161,6 +349,19 @@ color = Color(0.09, 0.18, 0.16, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/HubGround"]
 shape = SubResource("Shape_hub_ground")
 
+[node name="BossArenaGround" type="StaticBody2D" parent="Geometry"]
+position = Vector2(11200, 620)
+
+[node name="Visual" type="ColorRect" parent="Geometry/BossArenaGround"]
+offset_left = -1300.0
+offset_top = -90.0
+offset_right = 1300.0
+offset_bottom = 90.0
+color = Color(0.13, 0.12, 0.17, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Geometry/BossArenaGround"]
+shape = SubResource("Shape_hub_ground")
+
 [node name="LeftWall" type="StaticBody2D" parent="Geometry"]
 position = Vector2(-120, 250)
 
@@ -168,18 +369,18 @@ position = Vector2(-120, 250)
 shape = SubResource("Shape_wall")
 
 [node name="FallRespawnZone" parent="Geometry" instance=ExtResource("9_respawn")]
-position = Vector2(5100, 1010)
+position = Vector2(6200, 1010)
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Geometry/FallRespawnZone"]
 shape = SubResource("Shape_respawn")
 
-[node name="CityMetalSteps" type="Area2D" parent="."]
-position = Vector2(4700, 200)
+[node name="CityFootstepTrigger" type="Area2D" parent="."]
+position = Vector2(6200, 200)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("11_surface")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CityMetalSteps"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CityFootstepTrigger"]
 shape = SubResource("Shape_zone")
 
 [node name="Narrative" type="Node2D" parent="."]
@@ -187,104 +388,131 @@ shape = SubResource("Shape_zone")
 [node name="CityIntro" parent="Narrative" instance=ExtResource("10_emis")]
 position = Vector2(300, 470)
 scale = Vector2(2.5, 2)
-dialog_lines = PackedStringArray("Distrito CSS: tres pruebas conectadas.", "Usa los pilares para crear balas con propiedades CSS y abrir camino hacia el hub.")
+dialog_lines = PackedStringArray("Distrito de combate: aqui se prueba lectura de enemigos y afinidades CSS.", "Los enemigos azules reaccionan mejor a balas azules. Los rojos reaccionan mejor a balas rojas.")
 
-[node name="Puzzle2Hint" parent="Narrative" instance=ExtResource("10_emis")]
-position = Vector2(2450, 470)
+[node name="FlyingPairHint" parent="Narrative" instance=ExtResource("10_emis")]
+position = Vector2(2380, 470)
 scale = Vector2(2.4, 2)
-dialog_lines = PackedStringArray("Segundo puzzle: activa plataformas azules antes de cruzar.", "Prueba una bala con background-color: blue;.")
+dialog_lines = PackedStringArray("Los drones vuelan hacia ti cuando entras en su rango.", "Mantente en movimiento y usa background-color: blue; con fill: blue; para eliminarlos mas rapido.")
 
-[node name="Puzzle3Hint" parent="Narrative" instance=ExtResource("10_emis")]
-position = Vector2(4380, 470)
+[node name="ChargerHint" parent="Narrative" instance=ExtResource("10_emis")]
+position = Vector2(4120, 470)
 scale = Vector2(2.4, 2)
-dialog_lines = PackedStringArray("Tercer puzzle: combina bloques rojos y plataformas con color: blue;.", "Cambia la bala en el pilar cuando lo necesites.")
+dialog_lines = PackedStringArray("El enemigo rojo carga en linea recta despues de prepararse.", "Dale espacio, salta sobre su avance y castigalo con background-color: red; y fill: red;.")
 
-[node name="HubIntro" parent="Narrative" instance=ExtResource("10_emis")]
-position = Vector2(8160, 470)
+[node name="MixedArenaHint" parent="Narrative" instance=ExtResource("10_emis")]
+position = Vector2(6120, 470)
 scale = Vector2(2.5, 2)
-dialog_lines = PackedStringArray("Hub principal.", "Desde aqui puedes volver al tutorial, repetir la ciudad o entrar al combate final.")
+dialog_lines = PackedStringArray("Ahora combina prioridades: primero controla al que te encierra el espacio.", "La ciudad queda armada como una ruta de combate conectada hacia la arena del jefe.")
+
+[node name="BossArenaHint" parent="Narrative" instance=ExtResource("10_emis")]
+position = Vector2(10540, 470)
+scale = Vector2(2.5, 2)
+dialog_lines = PackedStringArray("Esta es la estructura base de la arena del jefe.", "Cuando cruces el centro, las paredes se cerraran. La IA del jefe queda para la siguiente fase.")
 
 [node name="Pillars" type="Node2D" parent="."]
 
-[node name="PilarPuzzle1" parent="Pillars" instance=ExtResource("6_pilar")]
+[node name="CombatLoadoutPillarA" parent="Pillars" instance=ExtResource("6_pilar")]
 position = Vector2(575, 430)
 overlay_path = NodePath("../../Player/Camera2D/Control/PanelContainer/WebView")
 
-[node name="PilarPuzzle2" parent="Pillars" instance=ExtResource("6_pilar")]
-position = Vector2(2920, 430)
+[node name="CombatLoadoutPillarB" parent="Pillars" instance=ExtResource("6_pilar")]
+position = Vector2(3360, 430)
 overlay_path = NodePath("../../Player/Camera2D/Control/PanelContainer/WebView")
 
-[node name="PilarPuzzle3" parent="Pillars" instance=ExtResource("6_pilar")]
-position = Vector2(4920, 430)
+[node name="CombatLoadoutPillarC" parent="Pillars" instance=ExtResource("6_pilar")]
+position = Vector2(5680, 430)
 overlay_path = NodePath("../../Player/Camera2D/Control/PanelContainer/WebView")
 
-[node name="Puzzle1" type="Node2D" parent="."]
+[node name="CombatRoute" type="Node2D" parent="."]
 
-[node name="RedBlockLow" parent="Puzzle1" instance=ExtResource("7_block")]
-position = Vector2(1275, 496)
-max_health = 1
+[node name="SoloFlyingArena" type="Node2D" parent="CombatRoute"]
 
-[node name="RedBlockMid" parent="Puzzle1" instance=ExtResource("7_block")]
-position = Vector2(1275, 368)
-max_health = 1
+[node name="SoloFlying" parent="CombatRoute/SoloFlyingArena" instance=ExtResource("16_flying")]
+position = Vector2(1460, 365)
 
-[node name="RedBlockHigh" parent="Puzzle1" instance=ExtResource("7_block")]
-position = Vector2(1275, 240)
-max_health = 1
+[node name="FlyingPairArena" type="Node2D" parent="CombatRoute"]
 
-[node name="Puzzle2" type="Node2D" parent="."]
+[node name="FlyingPairA" parent="CombatRoute/FlyingPairArena" instance=ExtResource("16_flying")]
+position = Vector2(2540, 350)
 
-[node name="BlueTogglePlatform1" parent="Puzzle2" instance=ExtResource("8_toggle")]
-position = Vector2(2460, 455)
-scale = Vector2(2.25, 0.45)
-inactive_color = Color(0.35, 0.6, 1, 0.18)
-active_color = Color(0.16, 0.5, 1, 1)
+[node name="FlyingPairB" parent="CombatRoute/FlyingPairArena" instance=ExtResource("16_flying")]
+position = Vector2(2920, 420)
+detection_range = 620.0
 
-[node name="BlueTogglePlatform2" parent="Puzzle2" instance=ExtResource("8_toggle")]
-position = Vector2(2870, 385)
-scale = Vector2(2.25, 0.45)
-inactive_color = Color(0.35, 0.6, 1, 0.18)
-active_color = Color(0.16, 0.5, 1, 1)
+[node name="ChargerArena" type="Node2D" parent="CombatRoute"]
 
-[node name="BlueTogglePlatform3" parent="Puzzle2" instance=ExtResource("8_toggle")]
-position = Vector2(3280, 455)
-scale = Vector2(2.25, 0.45)
-inactive_color = Color(0.35, 0.6, 1, 0.18)
-active_color = Color(0.16, 0.5, 1, 1)
+[node name="SoloCharger" parent="CombatRoute/ChargerArena" instance=ExtResource("17_charger")]
+position = Vector2(4480, 560)
 
-[node name="Puzzle3" type="Node2D" parent="."]
+[node name="MixedArena" type="Node2D" parent="CombatRoute"]
 
-[node name="ComboRedBlockLow" parent="Puzzle3" instance=ExtResource("7_block")]
-position = Vector2(5260, 496)
-max_health = 1
+[node name="MixedCharger" parent="CombatRoute/MixedArena" instance=ExtResource("17_charger")]
+position = Vector2(6140, 560)
+detection_range = 680.0
 
-[node name="ComboRedBlockMid" parent="Puzzle3" instance=ExtResource("7_block")]
-position = Vector2(5260, 368)
-max_health = 1
+[node name="MixedFlying" parent="CombatRoute/MixedArena" instance=ExtResource("16_flying")]
+position = Vector2(6540, 350)
+detection_range = 660.0
 
-[node name="ComboBlueTogglePlatform1" parent="Puzzle3" instance=ExtResource("8_toggle")]
-position = Vector2(5740, 455)
-scale = Vector2(2.25, 0.45)
-css_metadata = {
-"properties": {
-"color": "blue"
-}
-}
-inactive_color = Color(0.35, 0.6, 1, 0.18)
-active_color = Color(0.16, 0.5, 1, 1)
+[node name="CssFlyingEnemyBackgroundDecoy" parent="CombatRoute/MixedArena" instance=ExtResource("15_3cti1")]
+position = Vector2(2098, 185)
 
-[node name="ComboBlueTogglePlatform2" parent="Puzzle3" instance=ExtResource("8_toggle")]
-position = Vector2(6150, 385)
-scale = Vector2(2.25, 0.45)
-css_metadata = {
-"properties": {
-"color": "blue"
-}
-}
-inactive_color = Color(0.35, 0.6, 1, 0.18)
-active_color = Color(0.16, 0.5, 1, 1)
+[node name="CssFlyingEnemyYellowOutlined" parent="CombatRoute/MixedArena" instance=ExtResource("16_eig1l")]
+position = Vector2(1732, 151)
+
+[node name="BossArenaPreview" type="Node2D" parent="CombatRoute"]
+
+[node name="BossArenaLeftWall" type="StaticBody2D" parent="CombatRoute/BossArenaPreview"]
+visible = false
+position = Vector2(10600, -580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombatRoute/BossArenaPreview/BossArenaLeftWall"]
+shape = SubResource("Shape_boss_wall")
+disabled = true
+
+[node name="Visual" type="ColorRect" parent="CombatRoute/BossArenaPreview/BossArenaLeftWall"]
+offset_left = -60.0
+offset_top = -390.0
+offset_right = 60.0
+offset_bottom = 390.0
+color = Color(0.09, 0.12, 0.13, 1)
+
+[node name="BossArenaRightWall" type="StaticBody2D" parent="CombatRoute/BossArenaPreview"]
+visible = false
+position = Vector2(11800, -580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombatRoute/BossArenaPreview/BossArenaRightWall"]
+shape = SubResource("Shape_boss_wall")
+disabled = true
+
+[node name="Visual" type="ColorRect" parent="CombatRoute/BossArenaPreview/BossArenaRightWall"]
+offset_left = -60.0
+offset_top = -390.0
+offset_right = 60.0
+offset_bottom = 390.0
+color = Color(0.09, 0.12, 0.13, 1)
+
+[node name="BossArenaTrigger" type="Area2D" parent="CombatRoute/BossArenaPreview"]
+position = Vector2(11200, 300)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("18_arena_lock")
+left_wall_path = NodePath("../BossArenaLeftWall")
+right_wall_path = NodePath("../BossArenaRightWall")
+left_closed_position = Vector2(10600, 250)
+right_closed_position = Vector2(11800, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombatRoute/BossArenaPreview/BossArenaTrigger"]
+shape = SubResource("Shape_boss_trigger")
+
+[node name="BossPlaceholder" type="Polygon2D" parent="CombatRoute/BossArenaPreview"]
+position = Vector2(11200, 440)
+color = Color(1, 0.76, 0.22, 0.32)
+polygon = PackedVector2Array(-90, -120, 90, -120, 135, 0, 70, 120, -70, 120, -135, 0)
 
 [node name="RouteGates" type="Node2D" parent="."]
+position = Vector2(0, -475)
 
 [node name="PathToHubGate" type="Area2D" parent="RouteGates"]
 position = Vector2(7850, 410)

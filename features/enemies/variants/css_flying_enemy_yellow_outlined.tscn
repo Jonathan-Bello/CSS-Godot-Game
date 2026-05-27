@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://features/enemies/css_flying_enemy.tscn" id="1_base"]
+
+[node name="CssFlyingEnemyYellowOutlined" instance=ExtResource("1_base")]
+variant_id = &"yellow_outlined"
+max_health = 6
+chase_speed = 295.0
+variant_css_properties = {
+"background-color": "yellow",
+"fill": "yellow"
+}
+variant_visual_tint = Color(1, 0.88, 0.24, 1)
+variant_outline_enabled = true
+variant_outline_color = Color(0.08, 0.07, 0.02, 1)
+variant_outline_scale = 1.12
+variant_critical_bonus_override = 5
