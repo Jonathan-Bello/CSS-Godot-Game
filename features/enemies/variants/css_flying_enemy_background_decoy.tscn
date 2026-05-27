@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://features/enemies/css_flying_enemy.tscn" id="1_base"]
+
+[node name="CssFlyingEnemyBackgroundDecoy" instance=ExtResource("1_base")]
+variant_id = &"background_decoy"
+patrol_radius = Vector2(260, 80)
+patrol_speed = 0.65
+detection_range = -1.0
+variant_visual_tint = Color(0.42, 0.48, 0.52, 0.48)
+variant_visual_scale = Vector2(0.72, 0.72)
+variant_z_index = -12
+variant_contact_enabled = false
+variant_world_collision_enabled = false

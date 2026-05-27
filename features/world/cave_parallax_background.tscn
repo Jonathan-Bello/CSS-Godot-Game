@@ -1,0 +1,2299 @@
+[gd_scene load_steps=182 format=3 uid="uid://bx8kg42cavebg"]
+
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="1_shape"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="2_arc_list"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="2_i7nkk"]
+
+[sub_resource type="Curve2D" id="Curve2D_Back_001"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 960, -540, 0, 0, 0, 0, -960, -540, 0, 0, 0, 0, -960, 540, 0, 0, 0, 0, 960, 540, 0, 0, 0, 0, 960, -540)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Back_001"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_002"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -160, -145, 0, 0, 0, 0, -20, -245, 0, 0, 0, 0, 140, -205, 0, 0, 0, 0, 220, -55, 0, 0, 0, 0, 140, 145, 0, 0, 0, 0, -30, 245, 0, 0, 0, 0, -170, 105, 0, 0, 0, 0, -220, -35, 0, 0, 0, 0, -160, -145)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Back_002"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_003"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -170, -215, 0, 0, 0, 0, 50, -275, 0, 0, 0, 0, 210, -155, 0, 0, 0, 0, 260, 55, 0, 0, 0, 0, 150, 245, 0, 0, 0, 0, -90, 275, 0, 0, 0, 0, -230, 115, 0, 0, 0, 0, -260, -75, 0, 0, 0, 0, -170, -215)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Back_003"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_004"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -135, -235, 0, 0, 0, 0, 55, -260, 0, 0, 0, 0, 205, -120, 0, 0, 0, 0, 235, 75, 0, 0, 0, 0, 115, 240, 0, 0, 0, 0, -85, 260, 0, 0, 0, 0, -215, 110, 0, 0, 0, 0, -235, -80, 0, 0, 0, 0, -135, -235)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Back_004"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_005"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -960, -230, 0, 0, 0, 0, 960, -230, 0, 0, 0, 0, 960, 230, 0, 0, 0, 0, -960, 230, 0, 0, 0, 0, -960, -230)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Back_005"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_006"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -105, 192.5, 0, 0, 0, 0, -105, -132.5, 0, 0, 0, 0, -55, -132.5, 0, 0, 0, 0, -55, -47.5, 0, 0, 0, 0, -5, -47.5, 0, 0, 0, 0, -5, -192.5, 0, 0, 0, 0, 45, -192.5, 0, 0, 0, 0, 45, -92.5, 0, 0, 0, 0, 105, -92.5, 0, 0, 0, 0, 105, 192.5, 0, 0, 0, 0, -105, 192.5)
+}
+point_count = 11
+
+[sub_resource type="Resource" id="Resource_Back_006"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_007"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -80, 117.5, 0, 0, 0, 0, -80, -62.5, 0, 0, 0, 0, -40, -62.5, 0, 0, 0, 0, -40, -117.5, 0, 0, 0, 0, 15, -117.5, 0, 0, 0, 0, 15, -32.5, 0, 0, 0, 0, 80, -32.5, 0, 0, 0, 0, 80, 117.5, 0, 0, 0, 0, -80, 117.5)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Back_007"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_008"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -130, 220, 0, 0, 0, 0, -130, -160, 0, 0, 0, 0, -95, -160, 0, 0, 0, 0, -95, -80, 0, 0, 0, 0, -35, -80, 0, 0, 0, 0, -35, -220, 0, 0, 0, 0, 20, -220, 0, 0, 0, 0, 20, -100, 0, 0, 0, 0, 70, -100, 0, 0, 0, 0, 70, -20, 0, 0, 0, 0, 130, -20, 0, 0, 0, 0, 130, 220, 0, 0, 0, 0, -130, 220)
+}
+point_count = 13
+
+[sub_resource type="Resource" id="Resource_Back_008"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_009"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -112.5, 127.5, 0, 0, 0, 0, -112.5, -97.5, 0, 0, 0, 0, -62.5, -97.5, 0, 0, 0, 0, -62.5, -42.5, 0, 0, 0, 0, -22.5, -42.5, 0, 0, 0, 0, -22.5, -127.5, 0, 0, 0, 0, 47.5, -127.5, 0, 0, 0, 0, 47.5, -77.5, 0, 0, 0, 0, 112.5, -77.5, 0, 0, 0, 0, 112.5, 127.5, 0, 0, 0, 0, -112.5, 127.5)
+}
+point_count = 11
+
+[sub_resource type="Resource" id="Resource_Back_009"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_010"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -97.5, 255, 0, 0, 0, 0, -97.5, -155, 0, 0, 0, 0, -62.5, -155, 0, 0, 0, 0, -62.5, -205, 0, 0, 0, 0, -17.5, -205, 0, 0, 0, 0, -17.5, -255, 0, 0, 0, 0, 27.5, -255, 0, 0, 0, 0, 27.5, -160, 0, 0, 0, 0, 57.5, -115, 0, 0, 0, 0, 97.5, -160, 0, 0, 0, 0, 97.5, 255, 0, 0, 0, 0, -97.5, 255)
+}
+point_count = 12
+
+[sub_resource type="Resource" id="Resource_Back_010"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_011"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -105, 160, 0, 0, 0, 0, -105, -120, 0, 0, 0, 0, -55, -120, 0, 0, 0, 0, -55, -45, 0, 0, 0, 0, -5, -45, 0, 0, 0, 0, -5, -160, 0, 0, 0, 0, 55, -160, 0, 0, 0, 0, 55, -80, 0, 0, 0, 0, 105, -80, 0, 0, 0, 0, 105, 160, 0, 0, 0, 0, -105, 160)
+}
+point_count = 11
+
+[sub_resource type="Resource" id="Resource_Back_011"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_012"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -62.5, 200, 0, 0, 0, 0, 22.5, -200, 0, 0, 0, 0, 62.5, -180, 0, 0, 0, 0, -12.5, 200, 0, 0, 0, 0, -62.5, 200)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Back_012"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_013"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 10, 230, 0, 0, 0, 0, -70, -210, 0, 0, 0, 0, -40, -230, 0, 0, 0, 0, 70, 230, 0, 0, 0, 0, 10, 230)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Back_013"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_014"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -55, 230, 0, 0, 0, 0, 15, -230, 0, 0, 0, 0, 55, -200, 0, 0, 0, 0, 0, 230, 0, 0, 0, 0, -55, 230)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Back_014"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_015"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -20, 75, -8.703704, -225, 30, -80, -30, 90, -18.703705, 5, -55, -60, 0, 0, 31.296295, 225)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Back_015"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_016"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -15, 80, -41.835938, -230, 20, -65, -35, 115, -36.835938, -20, -70, -70, 0, 0, 48.164063, 230)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Back_016"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_017"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -20, 90, -24.140625, -212.5, 30, -70, -30, 65, -24.140625, 22.5, -60, -55, 0, 0, 35.859375, 212.5)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Back_017"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_018"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -7.5, 2, 0, 0, 0, 0, 7.5, -12, 0, 0, 0, 0, 4.5, 12, 0, 0, 0, 0, -7.5, 2)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Back_018"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_019"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -10, -0.5, 0, 0, 0, 0, 10, -13.5, 0, 0, 0, 0, 2, 13.5, 0, 0, 0, 0, -10, -0.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Back_019"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_020"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -7.5, 1.5, 0, 0, 0, 0, 7.5, -13.5, 0, 0, 0, 0, 2.5, 13.5, 0, 0, 0, 0, -7.5, 1.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Back_020"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_021"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -12.5, 1, 0, 0, 0, 0, 12.5, -17, 0, 0, 0, 0, 2.5, 17, 0, 0, 0, 0, -12.5, 1)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Back_021"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Back_022"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -8, 2.5, 0, 0, 0, 0, 8, -12.5, 0, 0, 0, 0, 4, 12.5, 0, 0, 0, 0, -8, 2.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Back_022"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_023"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -145, 200, 0, 0, 0, 0, -145, -120, 0, 0, 0, 0, -60, -120, 0, 0, 0, 0, -60, -200, 0, 0, 0, 0, 25, -200, 0, 0, 0, 0, 65, -120, 0, 0, 0, 0, 145, -120, 0, 0, 0, 0, 145, 200, 0, 0, 0, 0, -145, 200)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_023"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_024"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -192.5, 235, 0, 0, 0, 0, -192.5, -155, 0, 0, 0, 0, -137.5, -155, 0, 0, 0, 0, -137.5, -235, 0, 0, 0, 0, -42.5, -235, 0, 0, 0, 0, 57.5, -140, 0, 0, 0, 0, 192.5, -140, 0, 0, 0, 0, 192.5, 235, 0, 0, 0, 0, -192.5, 235)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_024"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_025"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -155, 235, 0, 0, 0, 0, -155, -140, 0, 0, 0, 0, -95, -140, 0, 0, 0, 0, -95, -235, 0, 0, 0, 0, -15, -235, 0, 0, 0, 0, 45, -145, 0, 0, 0, 0, 155, -145, 0, 0, 0, 0, 155, 235, 0, 0, 0, 0, -155, 235)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_025"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_026"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -185, 247.5, 0, 0, 0, 0, -185, -157.5, 0, 0, 0, 0, -115, -157.5, 0, 0, 0, 0, -115, -247.5, 0, 0, 0, 0, -20, -247.5, 0, 0, 0, 0, 45, -157.5, 0, 0, 0, 0, 185, -157.5, 0, 0, 0, 0, 185, 247.5, 0, 0, 0, 0, -185, 247.5)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_026"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_027"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -197.5, 300, 0, 0, 0, 0, -197.5, -190, 0, 0, 0, 0, -122.5, -190, 0, 0, 0, 0, -122.5, -300, 0, 0, 0, 0, -37.5, -300, 0, 0, 0, 0, 17.5, -190, 0, 0, 0, 0, 197.5, -190, 0, 0, 0, 0, 197.5, 300, 0, 0, 0, 0, -197.5, 300)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_027"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_028"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -120, -25, 0, 0, 0, 0, 120, -25, 0, 0, 0, 0, 120, 2, 0, 0, 0, 0, 50, 25, 0, 0, 0, 0, -80, 25, 0, 0, 0, 0, -120, 2, 0, 0, 0, 0, -120, -25)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Mid_028"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_029"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -170, -30, 0, 0, 0, 0, 170, -30, 0, 0, 0, 0, 170, 2, 0, 0, 0, 0, 90, 30, 0, 0, 0, 0, -110, 30, 0, 0, 0, 0, -170, 2, 0, 0, 0, 0, -170, -30)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Mid_029"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_030"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -140, -25, 0, 0, 0, 0, 140, -25, 0, 0, 0, 0, 140, 3, 0, 0, 0, 0, 80, 25, 0, 0, 0, 0, -100, 25, 0, 0, 0, 0, -140, 3, 0, 0, 0, 0, -140, -25)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Mid_030"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_031"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -165, -32.5, 0, 0, 0, 0, 165, -32.5, 0, 0, 0, 0, 165, 2.5, 0, 0, 0, 0, 85, 32.5, 0, 0, 0, 0, -115, 32.5, 0, 0, 0, 0, -165, 2.5, 0, 0, 0, 0, -165, -32.5)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Mid_031"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_032"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -130, -30, 0, 0, 0, 0, 130, -30, 0, 0, 0, 0, 130, 5, 0, 0, 0, 0, 75, 30, 0, 0, 0, 0, -90, 30, 0, 0, 0, 0, -130, 5, 0, 0, 0, 0, -130, -30)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Mid_032"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_033"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -95, 130, 0, 0, 0, 0, -95, -80, 0, 0, 0, 0, -45, -80, 0, 0, 0, 0, -45, 10, 0, 0, 0, 0, -5, 10, 0, 0, 0, 0, -5, -130, 0, 0, 0, 0, 55, -130, 0, 0, 0, 0, 55, -50, 0, 0, 0, 0, 95, -50, 0, 0, 0, 0, 95, 130, 0, 0, 0, 0, -95, 130)
+}
+point_count = 11
+
+[sub_resource type="Resource" id="Resource_Mid_033"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_034"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -90, 102.5, 0, 0, 0, 0, -90, -57.5, 0, 0, 0, 0, -30, -57.5, 0, 0, 0, 0, -30, -2.5, 0, 0, 0, 0, 30, -2.5, 0, 0, 0, 0, 30, -102.5, 0, 0, 0, 0, 90, -102.5, 0, 0, 0, 0, 90, 102.5, 0, 0, 0, 0, -90, 102.5)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_034"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_035"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -80, 145, 0, 0, 0, 0, -80, -110, 0, 0, 0, 0, -30, -110, 0, 0, 0, 0, -30, -20, 0, 0, 0, 0, 25, -20, 0, 0, 0, 0, 25, -145, 0, 0, 0, 0, 80, -145, 0, 0, 0, 0, 80, 145, 0, 0, 0, 0, -80, 145)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_035"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_036"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -90, 127.5, 0, 0, 0, 0, -90, -82.5, 0, 0, 0, 0, -35, -82.5, 0, 0, 0, 0, -35, 2.5, 0, 0, 0, 0, 15, 2.5, 0, 0, 0, 0, 15, -127.5, 0, 0, 0, 0, 90, -127.5, 0, 0, 0, 0, 90, 127.5, 0, 0, 0, 0, -90, 127.5)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Mid_036"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_037"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -60, 100, 0, 0, 0, 0, -60, -100, 0, 0, 0, 0, 10, -100, 0, 0, 0, 0, 10, -10, 0, 0, 0, 0, 60, -10, 0, 0, 0, 0, 60, 100, 0, 0, 0, 0, -60, 100)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Mid_037"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_038"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 12, -34, 0, 0, 0, 0, -12, -34, 0, 0, 0, 0, -12, 34, 0, 0, 0, 0, 12, 34, 0, 0, 0, 0, 12, -34)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_038"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_039"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 17.5, -8, 0, 0, 0, 0, -17.5, -8, 0, 0, 0, 0, -17.5, 8, 0, 0, 0, 0, 17.5, 8, 0, 0, 0, 0, 17.5, -8)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_039"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_040"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 17.5, -8, 0, 0, 0, 0, -17.5, -8, 0, 0, 0, 0, -17.5, 8, 0, 0, 0, 0, 17.5, 8, 0, 0, 0, 0, 17.5, -8)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_040"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_041"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 13, -39, 0, 0, 0, 0, -13, -39, 0, 0, 0, 0, -13, 39, 0, 0, 0, 0, 13, 39, 0, 0, 0, 0, 13, -39)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_041"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_042"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 13.5, -45, 0, 0, 0, 0, -13.5, -45, 0, 0, 0, 0, -13.5, 45, 0, 0, 0, 0, 13.5, 45, 0, 0, 0, 0, 13.5, -45)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_042"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_043"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 11.5, -37.5, 0, 0, 0, 0, -11.5, -37.5, 0, 0, 0, 0, -11.5, 37.5, 0, 0, 0, 0, 11.5, 37.5, 0, 0, 0, 0, 11.5, -37.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_043"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_044"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 10, -3, 0, 0, 0, 0, -10, -3, 0, 0, 0, 0, -10, 3, 0, 0, 0, 0, 10, 3, 0, 0, 0, 0, 10, -3)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_044"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_045"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 14, -4, 0, 0, 0, 0, -14, -4, 0, 0, 0, 0, -14, 4, 0, 0, 0, 0, 14, 4, 0, 0, 0, 0, 14, -4)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_045"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_046"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 9, -4.5, 0, 0, 0, 0, -9, -4.5, 0, 0, 0, 0, -9, 4.5, 0, 0, 0, 0, 9, 4.5, 0, 0, 0, 0, 9, -4.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_046"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_047"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 11, -4, 0, 0, 0, 0, -11, -4, 0, 0, 0, 0, -11, 4, 0, 0, 0, 0, 11, 4, 0, 0, 0, 0, 11, -4)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_047"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_048"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -28, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 28, 0, 0, 0, 0, -20, 0, 0, 0, 0, 0, 0, -28)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_048"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_049"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -70, 47.5, 0, 0, 0, 0, 0, -47.5, 0, 0, 0, 0, 70, 47.5, 0, 0, 0, 0, -70, 47.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_049"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_050"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -80, 52.5, 0, 0, 0, 0, -10, -52.5, 0, 0, 0, 0, 80, 52.5, 0, 0, 0, 0, -80, 52.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_050"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_051"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -72.5, 47.5, 0, 0, 0, 0, -2.5, -47.5, 0, 0, 0, 0, 72.5, 47.5, 0, 0, 0, 0, -72.5, 47.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_051"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_052"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -35, -47.5, 0, 0, 0, 0, 35, -47.5, 0, 0, 0, 0, 35, 47.5, 0, 0, 0, 0, -35, 47.5, 0, 0, 0, 0, -35, -47.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Mid_052"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_053"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 40, -100, -19.629652, 230, 40, 75, -44.9999, -85, -24.629652, -25, -85, 50, 0, 0, 45.37035, -230)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Mid_053"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_054"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -50, -90, -50.37037, 190, -85, 50, 75, -45, 14.62963, -15, 65, 60, 0, 0, 29.62963, -190)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Mid_054"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_055"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 45, -100, 23.70081, 215, 60, 60, -60, -60, -11.29919, -25, -80, 55, 0, 0, 23.70081, -215)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Mid_055"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_056"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -50, -80, -26.527779, 215, -62, 60, 70, -70, 3.472222, 0, 75, 65, 0, 0, -1.527778, -215)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Mid_056"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_057"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, 3, 0, 0, 0, 0, 15, -20, 0, 0, 0, 0, 6, 20, 0, 0, 0, 0, -15, 3)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_057"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_058"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, 4, 0, 0, 0, 0, 15, -19, 0, 0, 0, 0, 4, 19, 0, 0, 0, 0, -15, 4)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_058"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_059"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, 3, 0, 0, 0, 0, 15, -20, 0, 0, 0, 0, 5, 20, 0, 0, 0, 0, -15, 3)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_059"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_060"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -16, 0, 0, 0, 0, 0, 16, -20, 0, 0, 0, 0, 3, 20, 0, 0, 0, 0, -16, 0)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_060"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Mid_061"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -16.5, -1.5, 0, 0, 0, 0, 16.5, -20.5, 0, 0, 0, 0, 3.5, 20.5, 0, 0, 0, 0, -16.5, -1.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Mid_061"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_062"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -960, -130.00002, 0, 0, 0, 0, 960, -130.00002, 0, 0, 0, 0, 960, 115.00001, 0, 0, 0, 0, 880, 90.00001, 0, 0, 0, 0, 800, 130.00002, 0, 0, 0, 0, 700, 80.00001, 0, 0, 0, 0, 580, 120.00001, 0, 0, 0, 0, 490, 40.00001, 0, 0, 0, 0, 360, 90.00001, 0, 0, 0, 0, 270, 15.00001, 0, 0, 0, 0, 140, 90.00001, 0, 0, 0, 0, 40, 30.00001, 0, 0, 0, 0, -60, 115.00001, 0, 0, 0, 0, -180, 50.00001, 0, 0, 0, 0, -300, 90.00001, 0, 0, 0, 0, -440, 1e-05, 0, 0, 0, 0, -570, 80.00001, 0, 0, 0, 0, -680, 20.00001, 0, 0, 0, 0, -775, 100.00001, 0, 0, 0, 0, -880, 60.00001, 0, 0, 0, 0, -960, 110.00001, 0, 0, 0, 0, -960, -130.00002)
+}
+point_count = 22
+
+[sub_resource type="Resource" id="Resource_Front_062"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_063"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -960, 172.4995, 0, 0, 0, 0, -960, -57.4995, 0, 0, 0, 0, -890, -172.4995, 0, 0, 0, 0, -815, -47.4995, 0, 0, 0, 0, -740, -162.4995, 0, 0, 0, 0, -645, -22.4995, 0, 0, 0, 0, -545, -147.4995, 0, 0, 0, 0, -430, -2.4995, 0, 0, 0, 0, -310, -117.4995, 0, 0, 0, 0, -210, 22.5005, 0, 0, 0, 0, -105, -107.4995, 0, 0, 0, 0, 5, 12.5005, 0, 0, 0, 0, 120, -127.4995, 0, 0, 0, 0, 245, 22.5005, 0, 0, 0, 0, 360, -107.4995, 0, 0, 0, 0, 480, 17.5005, 0, 0, 0, 0, 615, -147.4995, 0, 0, 0, 0, 720, -7.4995, 0, 0, 0, 0, 840, -157.4995, 0, 0, 0, 0, 960, -37.4995, 0, 0, 0, 0, 960, 172.4995, 0, 0, 0, 0, -960, 172.4995)
+}
+point_count = 22
+
+[sub_resource type="Resource" id="Resource_Front_063"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_064"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -170, 229.9995, 0, 0, 0, 0, -170, -184.9995, 0, 0, 0, 0, -60, -184.9995, 0, 0, 0, 0, -60, -114.9995, 0, 0, 0, 0, 10, -114.9995, 0, 0, 0, 0, 10, -229.9995, 0, 0, 0, 0, 90, -229.9995, 0, 0, 0, 0, 90, -124.9995, 0, 0, 0, 0, 170, -124.9995, 0, 0, 0, 0, 170, 229.9995, 0, 0, 0, 0, -170, 229.9995)
+}
+point_count = 11
+
+[sub_resource type="Resource" id="Resource_Front_064"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_065"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -155, 249.9995, 0, 0, 0, 0, -155, -164.9995, 0, 0, 0, 0, -85, -164.9995, 0, 0, 0, 0, -85, -104.9995, 0, 0, 0, 0, -10, -104.9995, 0, 0, 0, 0, -10, -249.9995, 0, 0, 0, 0, 65, -249.9995, 0, 0, 0, 0, 65, -149.9995, 0, 0, 0, 0, 155, -149.9995, 0, 0, 0, 0, 155, 249.9995, 0, 0, 0, 0, -155, 249.9995)
+}
+point_count = 11
+
+[sub_resource type="Resource" id="Resource_Front_065"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_066"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -85, 289.9995, 0, 0, 0, 0, -85, -269.9995, 0, 0, 0, 0, -25, -269.9995, 0, 0, 0, 0, -25, -179.9995, 0, 0, 0, 0, 25, -179.9995, 0, 0, 0, 0, 25, -289.9995, 0, 0, 0, 0, 85, -289.9995, 0, 0, 0, 0, 85, 289.9995, 0, 0, 0, 0, -85, 289.9995)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_Front_066"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_067"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -180, -32.5, 0, 0, 0, 0, 180, -32.5, 0, 0, 0, 0, 180, 2.5, 0, 0, 0, 0, 110, 32.5, 0, 0, 0, 0, -125, 32.5, 0, 0, 0, 0, -180, 2.5, 0, 0, 0, 0, -180, -32.5)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Front_067"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_068"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -205, -37.5, 0, 0, 0, 0, 205, -37.5, 0, 0, 0, 0, 205, 2.5, 0, 0, 0, 0, 125, 37.5, 0, 0, 0, 0, -135, 37.5, 0, 0, 0, 0, -205, 2.5, 0, 0, 0, 0, -205, -37.5)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Front_068"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_069"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -137.5, -27.5, 0, 0, 0, 0, 137.5, -27.5, 0, 0, 0, 0, 137.5, 2.5, 0, 0, 0, 0, 72.5, 27.5, 0, 0, 0, 0, -87.5, 27.5, 0, 0, 0, 0, -137.5, 2.5, 0, 0, 0, 0, -137.5, -27.5)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Front_069"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_070"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -132.5, -21.5, 0, 0, 0, 0, 132.5, -21.5, 0, 0, 0, 0, 132.5, 3.5, 0, 0, 0, 0, 62.5, 21.5, 0, 0, 0, 0, -87.5, 21.5, 0, 0, 0, 0, -132.5, 3.5, 0, 0, 0, 0, -132.5, -21.5)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Front_070"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_071"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -172.5, -25, 0, 0, 0, 0, 172.5, -25, 0, 0, 0, 0, 172.5, 0, 0, 0, 0, 0, 87.5, 25, 0, 0, 0, 0, -122.5, 25, 0, 0, 0, 0, -172.5, 0, 0, 0, 0, 0, -172.5, -25)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Front_071"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_072"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -120, -21.5, 0, 0, 0, 0, 120, -21.5, 0, 0, 0, 0, 120, 3.5, 0, 0, 0, 0, 60, 21.5, 0, 0, 0, 0, -85, 21.5, 0, 0, 0, 0, -120, 3.5, 0, 0, 0, 0, -120, -21.5)
+}
+point_count = 7
+
+[sub_resource type="Resource" id="Resource_Front_072"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_073"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -15, 115.00002, -60.06948, -315, 30, -120, -34.9998, 135, -55.06948, 5.00001, -95, -85, 0, 0, 64.93052, 315)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Front_073"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_074"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 15, 110.00002, 43.828125, -330, -40, -125, 40, 125, 48.828125, 1e-05, 90, -100, 0, 0, -61.171875, 330)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Front_074"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_075"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -30, 120.00002, -52.38426, -327.5, 30, -125, -35, 140, -52.38426, 7.50001, -95, -95, 0, 0, 62.61574, 327.5)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Front_075"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_076"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 15, 120.00002, 36.445313, -322.5, -45, -125, 40, 110, 56.445313, 32.50001, 105, -90, 0, 0, -68.55469, 322.5)
+}
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_Front_076"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_077"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -14.5, 5, 0, 0, 0, 0, 14.5, -25, 0, 0, 0, 0, 4.5, 25, 0, 0, 0, 0, -14.5, 5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Front_077"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_078"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -17.5, 2.5, 0, 0, 0, 0, 17.5, -27.5, 0, 0, 0, 0, 2.5, 27.5, 0, 0, 0, 0, -17.5, 2.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Front_078"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_079"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -16, -2.5, 0, 0, 0, 0, 16, -27.5, 0, 0, 0, 0, 4, 27.5, 0, 0, 0, 0, -16, -2.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Front_079"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_080"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -17, 2.5, 0, 0, 0, 0, 17, -27.5, 0, 0, 0, 0, 5, 27.5, 0, 0, 0, 0, -17, 2.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Front_080"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_081"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -16.5, 7.5, 0, 0, 0, 0, 16.5, -27.5, 0, 0, 0, 0, 1.5, 27.5, 0, 0, 0, 0, -16.5, 7.5)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Front_081"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_082"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, 6, 0, 0, 0, 0, 15, -29, 0, 0, 0, 0, 5, 29, 0, 0, 0, 0, -15, 6)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_Front_082"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_083"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -35, -7.5, 0, 0, 0, 0, 15, -47.5, 0, 0, 0, 0, 35, 22.5, 0, 0, 0, 0, -15, 47.5, 0, 0, 0, 0, -35, -7.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Front_083"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_084"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -31.5, -4.5, 0, 0, 0, 0, 18.5, -37.5, 0, 0, 0, 0, 31.5, 27.5, 0, 0, 0, 0, -16.5, 37.5, 0, 0, 0, 0, -31.5, -4.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Front_084"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_085"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -37.5, -5, 0, 0, 0, 0, 12.5, -40, 0, 0, 0, 0, 37.5, 20, 0, 0, 0, 0, -17.5, 40, 0, 0, 0, 0, -37.5, -5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Front_085"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_086"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -40, -15, 0, 0, 0, 0, 15, -45, 0, 0, 0, 0, 40, 20, 0, 0, 0, 0, -15, 45, 0, 0, 0, 0, -40, -15)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Front_086"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_087"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 12, -3.5, 0, 0, 0, 0, -12, -3.5, 0, 0, 0, 0, -12, 3.5, 0, 0, 0, 0, 12, 3.5, 0, 0, 0, 0, 12, -3.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Front_087"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_088"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 13, -3.5, 0, 0, 0, 0, -13, -3.5, 0, 0, 0, 0, -13, 3.5, 0, 0, 0, 0, 13, 3.5, 0, 0, 0, 0, 13, -3.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Front_088"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[sub_resource type="Curve2D" id="Curve2D_Front_089"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 12, -3.5, 0, 0, 0, 0, -12, -3.5, 0, 0, 0, 0, -12, 3.5, 0, 0, 0, 0, 12, 3.5, 0, 0, 0, 0, 12, -3.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_Front_089"]
+resource_local_to_scene = true
+script = ExtResource("2_arc_list")
+
+[node name="CaveParallaxBackground" type="ParallaxBackground"]
+scroll_ignore_camera_zoom = true
+
+[node name="CaveBackLayer" type="ParallaxLayer" parent="."]
+position = Vector2(0, -6)
+motion_scale = Vector2(0.1, 1)
+motion_mirroring = Vector2(3840, 0)
+
+[node name="CaveBackSvg" type="Node2D" parent="CaveBackLayer"]
+scale = Vector2(2, 2)
+metadata/svg_root = true
+
+[node name="BackShape001" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(960, 541.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_001")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_001")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape001"]
+color = Color(0.039216, 0.05098, 0.047059, 1)
+polygon = PackedVector2Array(960, -540, -960, -540, -960, 540, 960, 540)
+metadata/_edit_lock_ = true
+
+[node name="BackShape002" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.7912)
+position = Vector2(380, 366.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_002")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_002")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape002"]
+color = Color(0.992157, 0.941176, 0.835294, 1)
+polygon = PackedVector2Array(-160, -145, -20, -245, 140, -205, 220, -55, 140, 145, -30, 245, -170, 105, -220, -35)
+metadata/_edit_lock_ = true
+
+[node name="BackShape003" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.7728)
+position = Vector2(870, 376.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_003")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_003")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape003"]
+color = Color(0.992157, 0.941176, 0.835294, 1)
+polygon = PackedVector2Array(-170, -215, 50, -275, 210, -155, 260, 55, 150, 245, -90, 275, -230, 115, -260, -75)
+metadata/_edit_lock_ = true
+
+[node name="BackShape004" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.7176)
+position = Vector2(1455, 371.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_004")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_004")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape004"]
+color = Color(0.992157, 0.941176, 0.835294, 1)
+polygon = PackedVector2Array(-135, -235, 55, -260, 205, -120, 235, 75, 115, 240, -85, 260, -215, 110, -235, -80)
+metadata/_edit_lock_ = true
+
+[node name="BackShape005" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.52)
+position = Vector2(960, 851.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_005")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_005")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape005"]
+color = Color(0.05098, 0.07451, 0.07451, 1)
+polygon = PackedVector2Array(-960, -230, 960, -230, 960, 230, -960, 230)
+metadata/_edit_lock_ = true
+
+[node name="BackShape006" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.36)
+position = Vector2(365, 549)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_006")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_006")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape006"]
+color = Color(0.654902, 0.631373, 0.576471, 1)
+polygon = PackedVector2Array(-105, 192.5, -105, -132.5, -55, -132.5, -55, -47.5, -5, -47.5, -5, -192.5, 45, -192.5, 45, -92.5, 105, -92.5, 105, 192.5)
+metadata/_edit_lock_ = true
+
+[node name="BackShape007" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.36)
+position = Vector2(600, 624)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_007")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_007")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape007"]
+color = Color(0.654902, 0.631373, 0.576471, 1)
+polygon = PackedVector2Array(-80, 117.5, -80, -62.5, -40, -62.5, -40, -117.5, 15, -117.5, 15, -32.5, 80, -32.5, 80, 117.5)
+metadata/_edit_lock_ = true
+
+[node name="BackShape008" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.36)
+position = Vector2(870, 521.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_008")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_008")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape008"]
+color = Color(0.654902, 0.631373, 0.576471, 1)
+polygon = PackedVector2Array(-130, 220, -130, -160, -95, -160, -95, -80, -35, -80, -35, -220, 20, -220, 20, -100, 70, -100, 70, -20, 130, -20, 130, 220)
+metadata/_edit_lock_ = true
+
+[node name="BackShape009" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.36)
+position = Vector2(1152.5, 614)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_009")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_009")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape009"]
+color = Color(0.654902, 0.631373, 0.576471, 1)
+polygon = PackedVector2Array(-112.5, 127.5, -112.5, -97.5, -62.5, -97.5, -62.5, -42.5, -22.5, -42.5, -22.5, -127.5, 47.5, -127.5, 47.5, -77.5, 112.5, -77.5, 112.5, 127.5)
+metadata/_edit_lock_ = true
+
+[node name="BackShape010" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.36)
+position = Vector2(1432.5, 486.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_010")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_010")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape010"]
+color = Color(0.654902, 0.631373, 0.576471, 1)
+polygon = PackedVector2Array(-97.5, 255, -97.5, -155, -62.5, -155, -62.5, -205, -17.5, -205, -17.5, -255, 27.5, -255, 27.5, -160, 57.5, -115, 97.5, -160, 97.5, 255)
+metadata/_edit_lock_ = true
+
+[node name="BackShape011" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.36)
+position = Vector2(1715, 581.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_011")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_011")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape011"]
+color = Color(0.654902, 0.631373, 0.576471, 1)
+polygon = PackedVector2Array(-105, 160, -105, -120, -55, -120, -55, -45, -5, -45, -5, -160, 55, -160, 55, -80, 105, -80, 105, 160)
+metadata/_edit_lock_ = true
+
+[node name="BackShape012" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.24)
+position = Vector2(152.5, 881.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_012")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_012")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape012"]
+color = Color(0.529412, 0.505882, 0.45098, 1)
+polygon = PackedVector2Array(-62.5, 200, 22.5, -200, 62.5, -180, -12.5, 200)
+metadata/_edit_lock_ = true
+
+[node name="BackShape013" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.24)
+position = Vector2(1140, 851.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_013")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_013")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape013"]
+color = Color(0.529412, 0.505882, 0.45098, 1)
+polygon = PackedVector2Array(10, 230, -70, -210, -40, -230, 70, 230)
+metadata/_edit_lock_ = true
+
+[node name="BackShape014" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.24)
+position = Vector2(1805, 851.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_014")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_014")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape014"]
+color = Color(0.529412, 0.505882, 0.45098, 1)
+polygon = PackedVector2Array(-55, 230, 15, -230, 55, -200, 0, 230)
+metadata/_edit_lock_ = true
+
+[node name="BackLine015" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("line")]
+modulate = Color(1, 1, 1, 0.55)
+position = Vector2(438.7037, 226.5)
+script = ExtResource("1_shape")
+stroke_color = Color(0.152941, 0.227451, 0.168627, 1)
+stroke_width = 3.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Back_015")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_015")
+
+[node name="Stroke" type="Line2D" parent="CaveBackLayer/CaveBackSvg/BackLine015"]
+points = PackedVector2Array(-8.703704, -225, -11.782317, -210.93628, -13.645111, -196.86523, -14.484955, -168.67188, -7.297455, -54.140625, -8.354584, -39.505615, -10.481049, -24.77539, -13.867279, -9.942627, -18.703705, 5, -27.424406, 37.83203, -29.942717, 53.581543, -31.28183, 68.90625, -31.478365, 83.8208, -30.56894, 98.33984, -28.59018, 112.47803, -25.578705, 126.25, -21.571136, 139.67041, -16.604095, 152.7539, -3.9380798, 177.96875, 12.126372, 202.01172, 31.296295, 225)
+width = 3.0
+default_color = Color(0.152941, 0.227451, 0.168627, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="BackLine016" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("line")]
+modulate = Color(1, 1, 1, 0.55)
+position = Vector2(1151.8359, 231.5)
+script = ExtResource("1_shape")
+stroke_color = Color(0.152941, 0.227451, 0.168627, 1)
+stroke_width = 3.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Back_016")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_016")
+
+[node name="Stroke" type="Line2D" parent="CaveBackLayer/CaveBackSvg/BackLine016"]
+points = PackedVector2Array(-41.835938, -230, -44.031982, -215.17212, -45.10742, -200.67383, -44.570313, -172.57813, -31.289063, -68.984375, -31.156006, -56.661377, -31.923828, -44.404297, -33.760986, -32.191162, -36.835938, -20, -42.418213, 0.98999023, -46.103516, 20.888672, -47.98706, 39.77661, -48.164063, 57.734375, -46.729736, 74.84253, -43.779297, 91.18164, -39.40796, 106.832275, -33.710938, 121.875, -26.783445, 136.39038, -18.720703, 150.45898, 0.4296875, 177.57813, 48.164063, 230)
+width = 3.0
+default_color = Color(0.152941, 0.227451, 0.168627, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="BackLine017" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("line")]
+modulate = Color(1, 1, 1, 0.55)
+position = Vector2(1534.1406, 214)
+script = ExtResource("1_shape")
+stroke_color = Color(0.152941, 0.227451, 0.168627, 1)
+stroke_width = 3.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Back_017")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_017")
+
+[node name="Stroke" type="Line2D" parent="CaveBackLayer/CaveBackSvg/BackLine017"]
+points = PackedVector2Array(-24.140625, -212.5, -27.106934, -195.79834, -28.652344, -179.4336, -28.359375, -147.65625, -16.230469, -58.88672, -14.296875, -31.09375, -14.714355, -17.468262, -16.347656, -4.0039063, -19.416504, 9.313965, -24.140625, 22.5, -29.069824, 34.74121, -32.63672, 47.070313, -34.885254, 59.458008, -35.859375, 71.875, -35.603027, 84.29199, -34.160156, 96.67969, -31.574707, 109.00879, -27.890625, 121.25, -23.151855, 133.37402, -17.402344, 145.35156, -3.046875, 168.75, 14.824219, 191.21094, 35.859375, 212.5)
+width = 3.0
+default_color = Color(0.152941, 0.227451, 0.168627, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="BackShape018" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.45)
+position = Vector2(430.5, 139.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_018")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_018")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape018"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-7.5, 2, 7.5, -12, 4.5, 12)
+metadata/_edit_lock_ = true
+
+[node name="BackShape019" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.45)
+position = Vector2(468, 340)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_019")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_019")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape019"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-10, -0.5, 10, -13.5, 2, 13.5)
+metadata/_edit_lock_ = true
+
+[node name="BackShape020" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.45)
+position = Vector2(1117.5, 190)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_020")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_020")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape020"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-7.5, 1.5, 7.5, -13.5, 2.5, 13.5)
+metadata/_edit_lock_ = true
+
+[node name="BackShape021" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.45)
+position = Vector2(1202.5, 448.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_021")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_021")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape021"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-12.5, 1, 12.5, -17, 2.5, 17)
+metadata/_edit_lock_ = true
+
+[node name="BackShape022" type="Node2D" parent="CaveBackLayer/CaveBackSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.45)
+position = Vector2(1522, 209)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Back_022")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Back_022")
+
+[node name="Fill" type="Polygon2D" parent="CaveBackLayer/CaveBackSvg/BackShape022"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-8, 2.5, 8, -12.5, 4, 12.5)
+metadata/_edit_lock_ = true
+
+[node name="CaveMidLayer" type="ParallaxLayer" parent="."]
+position = Vector2(548, 753)
+motion_scale = Vector2(0.3, 1)
+motion_mirroring = Vector2(2000, 0)
+
+[node name="CaveMidSvg" type="Node2D" parent="CaveMidLayer"]
+position = Vector2(-40, 359)
+metadata/svg_root = true
+
+[node name="MidShape001" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.92)
+position = Vector2(145, 520)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_023")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_023")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape001"]
+color = Color(0.105882, 0.152941, 0.152941, 1)
+polygon = PackedVector2Array(-145, 200, -145, -120, -60, -120, -60, -200, 25, -200, 65, -120, 145, -120, 145, 200)
+metadata/_edit_lock_ = true
+
+[node name="MidShape002" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.92)
+position = Vector2(517.5, 485)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_024")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_024")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape002"]
+color = Color(0.105882, 0.152941, 0.152941, 1)
+polygon = PackedVector2Array(-192.5, 235, -192.5, -155, -137.5, -155, -137.5, -235, -42.5, -235, 57.5, -140, 192.5, -140, 192.5, 235)
+metadata/_edit_lock_ = true
+
+[node name="MidShape003" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.92)
+position = Vector2(915, 485)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_025")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_025")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape003"]
+color = Color(0.105882, 0.152941, 0.152941, 1)
+polygon = PackedVector2Array(-155, 235, -155, -140, -95, -140, -95, -235, -15, -235, 45, -145, 155, -145, 155, 235)
+metadata/_edit_lock_ = true
+
+[node name="MidShape004" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.92)
+position = Vector2(1365, 472.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_026")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_026")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape004"]
+color = Color(0.105882, 0.152941, 0.152941, 1)
+polygon = PackedVector2Array(-185, 247.5, -185, -157.5, -115, -157.5, -115, -247.5, -20, -247.5, 45, -157.5, 185, -157.5, 185, 247.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape005" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.92)
+position = Vector2(1802.5, 420)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_027")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_027")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape005"]
+color = Color(0.105882, 0.152941, 0.152941, 1)
+polygon = PackedVector2Array(-197.5, 300, -197.5, -190, -122.5, -190, -122.5, -300, -37.5, -300, 17.5, -190, 197.5, -190, 197.5, 300)
+metadata/_edit_lock_ = true
+
+[node name="MidShape006" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(200, 380)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_028")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_028")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape006"]
+color = Color(0.152941, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-120, -25, 120, -25, 120, 2, 50, 25, -80, 25, -120, 2)
+metadata/_edit_lock_ = true
+
+[node name="MidShape007" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(560, 330)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_029")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_029")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape007"]
+color = Color(0.152941, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-170, -30, 170, -30, 170, 2, 90, 30, -110, 30, -170, 2)
+metadata/_edit_lock_ = true
+
+[node name="MidShape008" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(940, 385)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_030")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_030")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape008"]
+color = Color(0.152941, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-140, -25, 140, -25, 140, 3, 80, 25, -100, 25, -140, 3)
+metadata/_edit_lock_ = true
+
+[node name="MidShape009" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1415, 317.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_031")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_031")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape009"]
+color = Color(0.152941, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-165, -32.5, 165, -32.5, 165, 2.5, 85, 32.5, -115, 32.5, -165, 2.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape010" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1810, 230)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_032")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_032")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape010"]
+color = Color(0.152941, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-130, -30, 130, -30, 130, 5, 75, 30, -90, 30, -130, 5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape011" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(245, 210)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_033")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_033")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape011"]
+color = Color(0.078431, 0.129412, 0.129412, 1)
+polygon = PackedVector2Array(-95, 130, -95, -80, -45, -80, -45, 10, -5, 10, -5, -130, 55, -130, 55, -50, 95, -50, 95, 130)
+metadata/_edit_lock_ = true
+
+[node name="MidShape012" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(590, 197.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_034")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_034")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape012"]
+color = Color(0.078431, 0.129412, 0.129412, 1)
+polygon = PackedVector2Array(-90, 102.5, -90, -57.5, -30, -57.5, -30, -2.5, 30, -2.5, 30, -102.5, 90, -102.5, 90, 102.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape013" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(970, 215)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_035")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_035")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape013"]
+color = Color(0.078431, 0.129412, 0.129412, 1)
+polygon = PackedVector2Array(-80, 145, -80, -110, -30, -110, -30, -20, 25, -20, 25, -145, 80, -145, 80, 145)
+metadata/_edit_lock_ = true
+
+[node name="MidShape014" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1435, 157.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_036")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_036")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape014"]
+color = Color(0.078431, 0.129412, 0.129412, 1)
+polygon = PackedVector2Array(-90, 127.5, -90, -82.5, -35, -82.5, -35, 2.5, 15, 2.5, 15, -127.5, 90, -127.5, 90, 127.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape015" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1790, 100)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_037")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_037")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape015"]
+color = Color(0.078431, 0.129412, 0.129412, 1)
+polygon = PackedVector2Array(-60, 100, -60, -100, 10, -100, 10, -10, 60, -10, 60, 100)
+metadata/_edit_lock_ = true
+
+[node name="MidShape016" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.72)
+position = Vector2(187, 219)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_038")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_038")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape016"]
+color = Color(0.560784, 0.541176, 0.470588, 1)
+polygon = PackedVector2Array(12, -34, -12, -34, -12, 34, 12, 34)
+metadata/_edit_lock_ = true
+
+[node name="MidShape017" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.72)
+position = Vector2(945.5, 213)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_039")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_039")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape017"]
+color = Color(0.560784, 0.541176, 0.470588, 1)
+polygon = PackedVector2Array(17.5, -8, -17.5, -8, -17.5, 8, 17.5, 8)
+metadata/_edit_lock_ = true
+
+[node name="MidShape018" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.72)
+position = Vector2(997.5, 213)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_040")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_040")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape018"]
+color = Color(0.560784, 0.541176, 0.470588, 1)
+polygon = PackedVector2Array(17.5, -8, -17.5, -8, -17.5, 8, 17.5, 8)
+metadata/_edit_lock_ = true
+
+[node name="MidShape019" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.72)
+position = Vector2(1393, 179)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_041")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_041")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape019"]
+color = Color(0.560784, 0.541176, 0.470588, 1)
+polygon = PackedVector2Array(13, -39, -13, -39, -13, 39, 13, 39)
+metadata/_edit_lock_ = true
+
+[node name="MidShape020" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.72)
+position = Vector2(1463.5, 160)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_042")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_042")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape020"]
+color = Color(0.560784, 0.541176, 0.470588, 1)
+polygon = PackedVector2Array(13.5, -45, -13.5, -45, -13.5, 45, 13.5, 45)
+metadata/_edit_lock_ = true
+
+[node name="MidShape021" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.72)
+position = Vector2(1791.5, 97.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_043")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_043")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape021"]
+color = Color(0.560784, 0.541176, 0.470588, 1)
+polygon = PackedVector2Array(11.5, -37.5, -11.5, -37.5, -11.5, 37.5, 11.5, 37.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape022" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(272, 378)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_044")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_044")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape022"]
+color = Color(0.713725, 0.364706, 0.094118, 1)
+polygon = PackedVector2Array(10, -3, -10, -3, -10, 3, 10, 3)
+metadata/_edit_lock_ = true
+
+[node name="MidShape023" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(662, 276)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_045")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_045")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape023"]
+color = Color(0.713725, 0.364706, 0.094118, 1)
+polygon = PackedVector2Array(14, -4, -14, -4, -14, 4, 14, 4)
+metadata/_edit_lock_ = true
+
+[node name="MidShape024" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(1094, 384.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_046")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_046")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape024"]
+color = Color(0.713725, 0.364706, 0.094118, 1)
+polygon = PackedVector2Array(9, -4.5, -9, -4.5, -9, 4.5, 9, 4.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape025" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(1496, 246)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_047")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_047")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape025"]
+color = Color(0.713725, 0.364706, 0.094118, 1)
+polygon = PackedVector2Array(11, -4, -11, -4, -11, 4, 11, 4)
+metadata/_edit_lock_ = true
+
+[node name="MidShape026" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(1805, 180)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_048")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_048")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape026"]
+color = Color(0.713725, 0.364706, 0.094118, 1)
+polygon = PackedVector2Array(0, -28, 20, 0, 0, 28, -20, 0)
+metadata/_edit_lock_ = true
+
+[node name="MidShape027" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(500, 327.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_049")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_049")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape027"]
+color = Color(0.054902, 0.082353, 0.082353, 1)
+polygon = PackedVector2Array(-70, 47.5, 0, -47.5, 70, 47.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape028" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1040, 397.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_050")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_050")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape028"]
+color = Color(0.054902, 0.082353, 0.082353, 1)
+polygon = PackedVector2Array(-80, 52.5, -10, -52.5, 80, 52.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape029" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1377.5, 372.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_051")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_051")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape029"]
+color = Color(0.054902, 0.082353, 0.082353, 1)
+polygon = PackedVector2Array(-72.5, 47.5, -2.5, -47.5, 72.5, 47.5)
+metadata/_edit_lock_ = true
+
+[node name="MidShape030" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1805, 372.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_052")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_052")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape030"]
+color = Color(0.054902, 0.082353, 0.082353, 1)
+polygon = PackedVector2Array(-35, -47.5, 35, -47.5, 35, 47.5, -35, 47.5)
+metadata/_edit_lock_ = true
+
+[node name="MidLine031" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("line")]
+position = Vector2(144.62965, 490)
+script = ExtResource("1_shape")
+stroke_color = Color(0.14902, 0.219608, 0.160784, 1)
+stroke_width = 5.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Mid_053")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_053")
+
+[node name="Stroke" type="Line2D" parent="CaveMidLayer/CaveMidSvg/MidLine031"]
+points = PackedVector2Array(-19.629652, 230, -6.719496, 193.4082, 2.0890977, 158.51563, 6.9133167, 125.146484, 7.870348, 93.125, 5.07738, 62.27539, -1.348402, 32.421875, -11.289808, 3.3886719, -24.629652, -25, -32.19311, -40.760498, -38.02806, -56.16211, -42.16379, -71.19751, -44.62961, -85.859375, -45.4548, -100.14038, -44.66867, -114.0332, -42.300514, -127.53052, -38.379616, -140.625, -32.935284, -153.30933, -25.996813, -165.57617, -17.593498, -177.41821, -7.754637, -188.82813, 3.4904747, -199.79858, 16.112541, -210.32227, 45.37035, -230)
+width = 5.0
+default_color = Color(0.14902, 0.219608, 0.160784, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="MidLine032" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("line")]
+position = Vector2(610.37036, 530)
+script = ExtResource("1_shape")
+stroke_color = Color(0.14902, 0.219608, 0.160784, 1)
+stroke_width = 5.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Mid_054")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_054")
+
+[node name="Stroke" type="Line2D" parent="CaveMidLayer/CaveMidSvg/MidLine032"]
+points = PackedVector2Array(-50.37037, 190, -58.813976, 173.41553, -65.4192, 157.40234, -70.22266, 141.9458, -73.261, 127.03125, -74.57081, 112.64404, -74.18873, 98.76953, -72.151375, 85.39307, -68.49537, 72.5, -63.25733, 60.075684, -56.47389, 48.10547, -48.18165, 36.574707, -38.417244, 25.46875, -27.217293, 14.772949, -14.618418, 4.4726563, 14.62963, -15, 27.871819, -23.721924, 39.47338, -32.978516, 49.43432, -42.718506, 57.754627, -52.890625, 64.43432, -63.443604, 69.47337, -74.32617, 71.37768, -79.87503, 72.87182, -85.48706, 73.955795, -91.15585, 74.62963, -96.875, 74.893295, -102.63809, 74.74682, -108.43872, 73.22337, -120.12695, 70.05932, -131.88843, 65.25463, -143.67188, 58.80932, -155.42603, 50.72338, -167.09961, 40.99682, -178.64136, 29.62963, -190)
+width = 5.0
+default_color = Color(0.14902, 0.219608, 0.160784, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="MidLine033" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("line")]
+position = Vector2(1106.2992, 505)
+script = ExtResource("1_shape")
+stroke_color = Color(0.14902, 0.219608, 0.160784, 1)
+stroke_width = 5.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Mid_055")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_055")
+
+[node name="Stroke" type="Line2D" parent="CaveMidLayer/CaveMidSvg/MidLine033"]
+points = PackedVector2Array(23.70081, 215, 37.57776, 178.4375, 42.32263, 160.85938, 45.65394, 143.75, 47.60828, 127.109375, 48.222294, 110.9375, 47.532593, 95.234375, 45.575806, 80, 42.388554, 65.234375, 38.00745, 50.9375, 32.46912, 37.109375, 25.810184, 23.75, 18.067265, 10.859375, 9.276981, -1.5625, -11.29919, -25, -21.672724, -36.417236, -30.303095, -48.134766, -37.20495, -60.10132, -42.392937, -72.265625, -45.88171, -84.576416, -47.685905, -96.98242, -47.820183, -109.43237, -46.299187, -121.875, -43.13757, -134.25903, -38.349968, -146.5332, -31.951042, -158.64624, -23.955437, -170.54688, -14.377804, -182.18384, -3.2327852, -193.50586, 9.464971, -204.46167, 23.70081, -215)
+width = 5.0
+default_color = Color(0.14902, 0.219608, 0.160784, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="MidLine034" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("line")]
+position = Vector2(1576.5278, 505)
+script = ExtResource("1_shape")
+stroke_color = Color(0.14902, 0.219608, 0.160784, 1)
+stroke_width = 5.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Mid_056")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_056")
+
+[node name="Stroke" type="Line2D" parent="CaveMidLayer/CaveMidSvg/MidLine034"]
+points = PackedVector2Array(-26.527779, 215, -35.111763, 200.06104, -42.137154, 185.2539, -47.639107, 170.59326, -51.65278, 156.09375, -54.213318, 141.77002, -55.355904, 127.63672, -55.11567, 113.708496, -53.52778, 100, -50.627388, 86.52588, -46.449654, 73.30078, -41.029728, 60.339355, -34.40278, 47.65625, -26.603952, 35.266113, -17.668404, 23.183594, 3.472222, 0, 15.775689, -13.236084, 26.431208, -26.669922, 35.43145, -40.264893, 42.769096, -53.984375, 48.43683, -67.79175, 52.4273, -81.65039, 54.733208, -95.52368, 55.34722, -109.375, 54.262016, -123.167725, 51.47027, -136.86523, 46.964657, -150.43091, 40.737846, -163.82813, 32.782524, -177.02026, 23.091362, -189.9707, 11.657037, -202.64282, -1.527778, -215)
+width = 5.0
+default_color = Color(0.14902, 0.219608, 0.160784, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="MidShape035" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(127, 462)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_057")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_057")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape035"]
+color = Color(0.184314, 0.27451, 0.223529, 1)
+polygon = PackedVector2Array(-15, 3, 15, -20, 6, 20)
+metadata/_edit_lock_ = true
+
+[node name="MidShape036" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(200, 261)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_058")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_058")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape036"]
+color = Color(0.184314, 0.27451, 0.223529, 1)
+polygon = PackedVector2Array(-15, 4, 15, -19, 4, 19)
+metadata/_edit_lock_ = true
+
+[node name="MidShape037" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(630, 515)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_059")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_059")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape037"]
+color = Color(0.184314, 0.27451, 0.223529, 1)
+polygon = PackedVector2Array(-15, 3, 15, -20, 5, 20)
+metadata/_edit_lock_ = true
+
+[node name="MidShape038" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1114, 480)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_060")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_060")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape038"]
+color = Color(0.184314, 0.27451, 0.223529, 1)
+polygon = PackedVector2Array(-16, 0, 16, -20, 3, 20)
+metadata/_edit_lock_ = true
+
+[node name="MidShape039" type="Node2D" parent="CaveMidLayer/CaveMidSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1601.5, 505.5)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Mid_061")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Mid_061")
+
+[node name="Fill" type="Polygon2D" parent="CaveMidLayer/CaveMidSvg/MidShape039"]
+color = Color(0.184314, 0.27451, 0.223529, 1)
+polygon = PackedVector2Array(-16.5, -1.5, 16.5, -20.5, 3.5, 20.5)
+metadata/_edit_lock_ = true
+
+[node name="CaveFrontLayer" type="ParallaxLayer" parent="."]
+position = Vector2(0, -12)
+motion_scale = Vector2(0.5, 1)
+motion_mirroring = Vector2(3840, 0)
+
+[node name="CaveFrontSvg" type="Node2D" parent="CaveFrontLayer"]
+position = Vector2(0, -2)
+scale = Vector2(2, 2)
+metadata/svg_root = true
+
+[node name="FrontShape001" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(960, 134.00099)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_062")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_062")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape001"]
+color = Color(0.039216, 0.05098, 0.047059, 1)
+polygon = PackedVector2Array(-960, -130.00002, 960, -130.00002, 960, 115.00001, 880, 90.00001, 800, 130.00002, 700, 80.00001, 580, 120.00001, 490, 40.00001, 360, 90.00001, 270, 15.00001, 140, 90.00001, 40, 30.00001, -60, 115.00001, -180, 50.00001, -300, 90.00001, -440, 1e-05, -570, 80.00001, -680, 20.00001, -775, 100.00001, -880, 60.00001, -960, 110.00001)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape002" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(960, 911.5005)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_063")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_063")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape002"]
+color = Color(0.039216, 0.05098, 0.047059, 1)
+polygon = PackedVector2Array(-960, 172.4995, -960, -57.4995, -890, -172.4995, -815, -47.4995, -740, -162.4995, -645, -22.4995, -545, -147.4995, -430, -2.4995, -310, -117.4995, -210, 22.5005, -105, -107.4995, 5, 12.5005, 120, -127.4995, 245, 22.5005, 360, -107.4995, 480, 17.5005, 615, -147.4995, 720, -7.4995, 840, -157.4995, 960, -37.4995, 960, 172.4995)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape003" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.95)
+position = Vector2(170, 854.0005)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_064")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_064")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape003"]
+color = Color(0.05098, 0.07451, 0.07451, 1)
+polygon = PackedVector2Array(-170, 229.9995, -170, -184.9995, -60, -184.9995, -60, -114.9995, 10, -114.9995, 10, -229.9995, 90, -229.9995, 90, -124.9995, 170, -124.9995, 170, 229.9995)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape004" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.94)
+position = Vector2(1625, 834.0005)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_065")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_065")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape004"]
+color = Color(0.05098, 0.07451, 0.07451, 1)
+polygon = PackedVector2Array(-155, 249.9995, -155, -164.9995, -85, -164.9995, -85, -104.9995, -10, -104.9995, -10, -249.9995, 65, -249.9995, 65, -149.9995, 155, -149.9995, 155, 249.9995)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape005" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.96)
+position = Vector2(1835, 794.0005)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_066")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_066")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape005"]
+color = Color(0.05098, 0.07451, 0.07451, 1)
+polygon = PackedVector2Array(-85, 289.9995, -85, -269.9995, -25, -269.9995, -25, -179.9995, 25, -179.9995, 25, -289.9995, 85, -289.9995, 85, 289.9995)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape006" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(180, 726.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_067")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_067")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape006"]
+color = Color(0.070588, 0.113725, 0.113725, 1)
+polygon = PackedVector2Array(-180, -32.5, 180, -32.5, 180, 2.5, 110, 32.5, -125, 32.5, -180, 2.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape007" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1715, 691.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_068")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_068")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape007"]
+color = Color(0.070588, 0.113725, 0.113725, 1)
+polygon = PackedVector2Array(-205, -37.5, 205, -37.5, 205, 2.5, 125, 37.5, -135, 37.5, -205, 2.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape008" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(632.5, 876.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_069")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_069")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape008"]
+color = Color(0.070588, 0.113725, 0.113725, 1)
+polygon = PackedVector2Array(-137.5, -27.5, 137.5, -27.5, 137.5, 2.5, 72.5, 27.5, -87.5, 27.5, -137.5, 2.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape009" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(207.5, 700.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_070")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_070")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape009"]
+color = Color(0.14902, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-132.5, -21.5, 132.5, -21.5, 132.5, 3.5, 62.5, 21.5, -87.5, 21.5, -132.5, 3.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape010" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(1722.5, 659.001)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_071")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_071")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape010"]
+color = Color(0.14902, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-172.5, -25, 172.5, -25, 172.5, 0, 87.5, 25, -122.5, 25, -172.5, 0)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape011" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.9)
+position = Vector2(640, 850.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_072")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_072")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape011"]
+color = Color(0.14902, 0.231373, 0.192157, 1)
+polygon = PackedVector2Array(-120, -21.5, 120, -21.5, 120, 3.5, 60, 21.5, -85, 21.5, -120, 3.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontLine012" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("line")]
+position = Vector2(180.06947, 319.00098)
+script = ExtResource("1_shape")
+stroke_color = Color(0.062745, 0.12549, 0.141176, 1)
+stroke_width = 8.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Front_073")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_073")
+
+[node name="Stroke" type="Line2D" parent="CaveFrontLayer/CaveFrontSvg/FrontLine012"]
+points = PackedVector2Array(-60.06948, -315, -62.930813, -273.1543, -61.397606, -233.35936, -51.94448, -156.87498, -45.303856, -79.4531, -47.286278, -38.486313, -55.06948, 5.00001, -60.533314, 29.794933, -63.85849, 53.593765, -65.13288, 76.45509, -64.4444, 98.437515, -61.880917, 119.599625, -57.530334, 140.00002, -51.48053, 159.69727, -43.81941, 178.75, -34.63485, 197.2168, -24.014744, 215.15625, 1.1805477, 249.6875, 31.06334, 282.8125, 64.93052, 315)
+width = 8.0
+default_color = Color(0.062745, 0.12549, 0.141176, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="FrontLine013" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("line")]
+position = Vector2(561.1719, 334.00098)
+script = ExtResource("1_shape")
+stroke_color = Color(0.062745, 0.12549, 0.141176, 1)
+stroke_width = 8.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Front_074")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_074")
+
+[node name="Stroke" type="Line2D" parent="CaveFrontLayer/CaveFrontSvg/FrontLine013"]
+points = PackedVector2Array(43.828125, -330, 46.708984, -289.36523, 45.3125, -249.60936, 36.953125, -170.62498, 33.623047, -130.34178, 33.28125, -88.8281, 37.74414, -45.556625, 42.34497, -23.096914, 48.828125, 1e-05, 55.17334, 23.206797, 59.277344, 45.96681, 61.242676, 68.30202, 61.171875, 90.23439, 59.16748, 111.785904, 55.33203, 132.97853, 49.768066, 153.83423, 42.578125, 174.375, 23.730469, 214.59961, -0.390625, 253.82813, -61.171875, 330)
+width = 8.0
+default_color = Color(0.062745, 0.12549, 0.141176, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="FrontLine014" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("line")]
+position = Vector2(1132.3843, 331.50098)
+script = ExtResource("1_shape")
+stroke_color = Color(0.062745, 0.12549, 0.141176, 1)
+stroke_width = 8.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Front_075")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_075")
+
+[node name="Stroke" type="Line2D" parent="CaveFrontLayer/CaveFrontSvg/FrontLine014"]
+points = PackedVector2Array(-52.38426, -327.5, -56.99852, -305.3357, -59.767075, -283.7793, -60.82176, -242.10936, -43.946762, -80.7031, -45.001446, -37.861313, -47.77, -15.543203, -52.38426, 7.50001, -57.90428, 33.12135, -61.38817, 57.548843, -62.909164, 80.8777, -62.54051, 103.20314, -60.35545, 124.62037, -56.427223, 145.22462, -50.829082, 165.11108, -43.634254, 184.375, -34.915997, 203.11157, -24.747541, 221.41602, -0.35300827, 257.10938, 62.61574, 327.5)
+width = 8.0
+default_color = Color(0.062745, 0.12549, 0.141176, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="FrontLine015" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("line")]
+position = Vector2(1568.5547, 326.50098)
+script = ExtResource("1_shape")
+stroke_color = Color(0.062745, 0.12549, 0.141176, 1)
+stroke_width = 8.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_Front_076")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_076")
+
+[node name="Stroke" type="Line2D" parent="CaveFrontLayer/CaveFrontSvg/FrontLine015"]
+points = PackedVector2Array(36.445313, -322.5, 39.765625, -277.91992, 39.570313, -233.98436, 35.195313, -146.87497, 36.445313, -58.828106, 43.28125, -13.720688, 56.445313, 32.50001, 62.786865, 52.895523, 66.865234, 72.85158, 68.76099, 92.39748, 68.55469, 111.562515, 66.326904, 130.37599, 62.158203, 148.8672, 56.12915, 167.06543, 48.320313, 185, 38.812256, 202.7002, 27.685547, 220.19531, 0.8984375, 254.6875, -31.396484, 288.71094, -68.55469, 322.5)
+width = 8.0
+default_color = Color(0.062745, 0.12549, 0.141176, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="FrontShape016" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(130.5, 319.001)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_077")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_077")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape016"]
+color = Color(0.12549, 0.207843, 0.168627, 1)
+polygon = PackedVector2Array(-14.5, 5, 14.5, -25, 4.5, 25)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape017" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(242.5, 611.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_078")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_078")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape017"]
+color = Color(0.12549, 0.207843, 0.168627, 1)
+polygon = PackedVector2Array(-17.5, 2.5, 17.5, -27.5, 2.5, 27.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape018" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(624, 331.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_079")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_079")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape018"]
+color = Color(0.12549, 0.207843, 0.168627, 1)
+polygon = PackedVector2Array(-16, -2.5, 16, -27.5, 4, 27.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape019" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1095, 336.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_080")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_080")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape019"]
+color = Color(0.12549, 0.207843, 0.168627, 1)
+polygon = PackedVector2Array(-17, 2.5, 17, -27.5, 5, 27.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape020" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1518.5, 641.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_081")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_081")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape020"]
+color = Color(0.12549, 0.207843, 0.168627, 1)
+polygon = PackedVector2Array(-16.5, 7.5, 16.5, -27.5, 1.5, 27.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape021" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+position = Vector2(1635, 353.001)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_082")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_082")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape021"]
+color = Color(0.12549, 0.207843, 0.168627, 1)
+polygon = PackedVector2Array(-15, 6, 15, -29, 5, 29)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape022" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.75)
+position = Vector2(130, 711.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_083")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_083")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape022"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-35, -7.5, 15, -47.5, 35, 22.5, -15, 47.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape023" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.75)
+position = Vector2(286.5, 756.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_084")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_084")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape023"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-31.5, -4.5, 18.5, -37.5, 31.5, 27.5, -16.5, 37.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape024" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.75)
+position = Vector2(587.5, 834.001)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_085")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_085")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape024"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-37.5, -5, 12.5, -40, 37.5, 20, -17.5, 40)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape025" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.75)
+position = Vector2(1640, 649.001)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_086")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_086")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape025"]
+color = Color(0.184314, 0.270588, 0.223529, 1)
+polygon = PackedVector2Array(-40, -15, 15, -45, 40, 20, -15, 45)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape026" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.82)
+position = Vector2(262, 712.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_087")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_087")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape026"]
+color = Color(0.721569, 0.368627, 0.094118, 1)
+polygon = PackedVector2Array(12, -3.5, -12, -3.5, -12, 3.5, 12, 3.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape027" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.82)
+position = Vector2(628, 852.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_088")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_088")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape027"]
+color = Color(0.721569, 0.368627, 0.094118, 1)
+polygon = PackedVector2Array(13, -3.5, -13, -3.5, -13, 3.5, 13, 3.5)
+metadata/_edit_lock_ = true
+
+[node name="FrontShape028" type="Node2D" parent="CaveFrontLayer/CaveFrontSvg" node_paths=PackedStringArray("polygon")]
+modulate = Color(1, 1, 1, 0.82)
+position = Vector2(1782, 657.501)
+script = ExtResource("1_shape")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_Front_089")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_Front_089")
+
+[node name="Fill" type="Polygon2D" parent="CaveFrontLayer/CaveFrontSvg/FrontShape028"]
+color = Color(0.721569, 0.368627, 0.094118, 1)
+polygon = PackedVector2Array(12, -3.5, -12, -3.5, -12, 3.5, 12, 3.5)
+metadata/_edit_lock_ = true
