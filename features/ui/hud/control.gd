@@ -16,6 +16,7 @@ var last_bullet_profile_path: String = ""
 var _web_hydration_payload: Dictionary = {}
 var _emis_client: Node = null
 var _emis_conversation_id: String = ""
+var _emis_api_key: String = ""
 var _last_loaded_html: String = ""
 var _overlay_template_path: String = "res://features/ui/hud/web_overlay_editor.html"
 
@@ -479,6 +480,8 @@ func _load_editor_html() -> void:
 		_web_hydration_payload["show_solar_pillar_tutorial"] = should_show_solar_tutorial
 		_web_hydration_payload["first_solar_pillar_opened"] = not should_show_solar_tutorial
 		_web_hydration_payload["solar_pillar_tutorial_version"] = SOLAR_PILLAR_TUTORIAL_VERSION
+	if _overlay_template_path.ends_with("web_overlay_emis_chat.html"):
+		_web_hydration_payload["emis_api_key_configured"] = _emis_api_key != ""
 	var html := _read_editor_html_template()
 	if html == "":
 		html = "<!doctype html><html><body style='margin:0;background:#111;color:#fff'>Editor no disponible</body></html>"
@@ -579,8 +582,21 @@ func _on_web_ipc_message(msg: String) -> void:
 				_mark_first_solar_pillar_opened(false)
 			"solar_pillar_tutorial_done":
 				_mark_first_solar_pillar_opened(true)
+			"emis_api_key_submit":
+				_set_emis_api_key(String(data.get("api_key", "")))
 			"chat_request":
 				_handle_chat_request(data)
+
+func _set_emis_api_key(value: String) -> void:
+	_emis_api_key = value.strip_edges()
+	if has_node("/root/EmisGameContext"):
+		EmisGameContext.set_api_key(_emis_api_key)
+	var client := _get_emis_client()
+	if client != null and client.has_method("set_player_api_key"):
+		client.call("set_player_api_key", _emis_api_key)
+	var configured := _emis_api_key != ""
+	print("[Emis] API key de jugador configurada=%s" % configured)
+	_send_emis_api_key_status_to_web(configured)
 
 func _handle_chat_request(data: Dictionary) -> void:
 	var raw_message := String(data.get("message", ""))
@@ -645,6 +661,7 @@ func _build_emis_payload_for_backend(data: Dictionary, context: Dictionary, mess
 	var payload := {
 		"message": normalized_message,
 		"intent_mode": intent_mode,
+		"chat_surface": _resolve_chat_surface(data, context),
 		"player_context": player_context,
 		"css_snapshot_fragment": css_snapshot_fragment
 	}
@@ -656,19 +673,31 @@ func _build_emis_payload_for_backend(data: Dictionary, context: Dictionary, mess
 
 	return payload
 
+func _resolve_chat_surface(data: Dictionary, context: Dictionary) -> String:
+	var surface := String(data.get("chat_surface", context.get("chat_surface", ""))).strip_edges().to_lower()
+	if surface == "general_chat":
+		return "general_chat"
+	return "bullet_creator"
+
 func _build_player_context_for_emis(data: Dictionary, context: Dictionary) -> Dictionary:
+	var game_context := _get_emis_game_context_snapshot()
 	var snapshot: Dictionary = {}
 	var raw_snapshot: Variant = context.get("snapshot", {})
 	if typeof(raw_snapshot) == TYPE_DICTIONARY:
 		snapshot = raw_snapshot
 
 	var player_context: Dictionary = {}
-	player_context["screen"] = String(data.get("screen", context.get("screen", "bullet_creator"))).strip_edges()
-	player_context["level"] = String(data.get("level", context.get("level", ""))).strip_edges()
-	player_context["objective"] = String(data.get("objective", context.get("objective", ""))).strip_edges()
-	player_context["zone_id"] = String(data.get("zone_id", context.get("zone_id", ""))).strip_edges()
-	player_context["quest_id"] = String(data.get("quest_id", context.get("quest_id", ""))).strip_edges()
-	player_context["quest_step"] = String(data.get("quest_step", context.get("quest_step", ""))).strip_edges()
+	var chat_surface := _resolve_chat_surface(data, context)
+	var default_screen := "bullet_creator" if chat_surface == "bullet_creator" else "world"
+	player_context["screen"] = String(data.get("screen", context.get("screen", game_context.get("screen", default_screen)))).strip_edges()
+	player_context["level"] = String(data.get("level", context.get("level", game_context.get("level", "")))).strip_edges()
+	player_context["objective"] = String(data.get("objective", context.get("objective", game_context.get("objective", "")))).strip_edges()
+	player_context["zone_id"] = String(data.get("zone_id", context.get("zone_id", game_context.get("zone_id", "")))).strip_edges()
+	player_context["quest_id"] = String(data.get("quest_id", context.get("quest_id", game_context.get("quest_id", "")))).strip_edges()
+	player_context["quest_step"] = String(data.get("quest_step", context.get("quest_step", game_context.get("quest_step", "")))).strip_edges()
+	player_context["current_area_description"] = String(game_context.get("current_area_description", "")).strip_edges()
+	player_context["current_dialog_context"] = String(game_context.get("current_dialog_context", "")).strip_edges()
+	player_context["recent_event"] = String(game_context.get("recent_event", "")).strip_edges()
 
 	var unlocked_css_raw: Variant = data.get("unlocked_css", context.get("unlocked_css", snapshot.get("detected_properties", [])))
 	player_context["unlocked_css"] = _to_packed_string_array(unlocked_css_raw)
@@ -676,7 +705,20 @@ func _build_player_context_for_emis(data: Dictionary, context: Dictionary) -> Di
 	player_context["available_portals"] = _to_packed_string_array(data.get("available_portals", context.get("available_portals", [])))
 	player_context["inventory_tags"] = _to_packed_string_array(data.get("inventory_tags", context.get("inventory_tags", [])))
 	player_context["failed_attempts_css"] = _to_packed_string_array(data.get("failed_attempts_css", context.get("failed_attempts_css", [])))
+	var active_bullet: Variant = game_context.get("active_bullet", {})
+	if typeof(active_bullet) == TYPE_DICTIONARY:
+		player_context["active_bullet"] = active_bullet
+	var movement_unlocks: Variant = game_context.get("movement_unlocks", {})
+	if typeof(movement_unlocks) == TYPE_DICTIONARY:
+		player_context["movement_unlocks"] = movement_unlocks
 	return player_context
+
+func _get_emis_game_context_snapshot() -> Dictionary:
+	if has_node("/root/EmisGameContext") and EmisGameContext.has_method("get_context"):
+		var raw: Variant = EmisGameContext.call("get_context")
+		if typeof(raw) == TYPE_DICTIONARY:
+			return raw
+	return {}
 
 func _create_conversation_id() -> String:
 	return "conv_%s_%s" % [int(Time.get_unix_time_from_system()), Time.get_ticks_msec()]
@@ -789,6 +831,8 @@ func _ensure_emis_client() -> void:
 	_emis_client = EmisClientScript.new()
 	_emis_client.name = "EmisClient"
 	add_child(_emis_client)
+	if _emis_api_key != "" and _emis_client.has_method("set_player_api_key"):
+		_emis_client.call("set_player_api_key", _emis_api_key)
 	if _emis_client.has_method("add_to_group"):
 		_emis_client.call("add_to_group", "emis_client")
 	print("[Emis] Cliente local inicializado")
@@ -813,6 +857,12 @@ func _send_emis_reply_to_web(payload: Dictionary) -> void:
 	if safe_payload.is_empty():
 		safe_payload = {"error": "Respuesta vacía del backend Emis"}
 	var js := "window.onEmisReply(%s);" % JSON.stringify(safe_payload)
+	_eval_overlay_js(js)
+
+func _send_emis_api_key_status_to_web(configured: bool) -> void:
+	var js := "if(window.onEmisApiKeyStatus){window.onEmisApiKeyStatus(%s);}" % JSON.stringify({
+		"configured": configured
+	})
 	_eval_overlay_js(js)
 
 func _save_css_draft(data: Dictionary) -> void:

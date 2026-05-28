@@ -501,6 +501,13 @@ function normalizeEmisReplyText(payload){
         if(extracted) return extracted;
       }
     }
+    try{
+      const parsed = JSON.parse(normalized);
+      if(parsed && typeof parsed === 'object'){
+        if(typeof parsed.reply === 'string' && parsed.reply.trim()) return parsed.reply.trim();
+        if(typeof parsed.message === 'string' && parsed.message.trim()) return parsed.message.trim();
+      }
+    }catch(_err){}
   }
 
   // Fallback: si no existe Rippledai, mostrar texto legible de reply/message
@@ -593,6 +600,7 @@ function sendChatMessage(){
   });
   const context = {
     contract_version: EMIS_CHAT_CONTRACT_VERSION,
+    chat_surface: 'bullet_creator',
     history: chatMessages,
     snapshot
   };
@@ -601,6 +609,8 @@ function sendChatMessage(){
     ipc.postMessage(JSON.stringify({
       type: 'chat_request',
       contract_version: EMIS_CHAT_CONTRACT_VERSION,
+      chat_surface: 'bullet_creator',
+      intent_mode: 'tutor_css',
       message,
       context
     }));

@@ -102,6 +102,7 @@ func _process(delta: float) -> void:
 	else:
 		_emis_bounce_t = 0.0
 		emis_button.scale = _emis_base_scale
+	_update_emis_activation_visual()
 
 func set_emis_alert(active: bool, message: String = "") -> void:
 	emis_alert_active = active
@@ -115,6 +116,11 @@ func _on_emis_button_pressed() -> void:
 	if _dialog_active:
 		advance_emis_dialog()
 		return
+	if not _is_emis_available():
+		start_emis_tutorial_dialog(PackedStringArray([
+			"Emis esta inactivo. Vuelve al menu principal y usa Activar Emis para ingresar tu API key de Gemini."
+		]), false)
+		return
 	var overlay := get_tree().get_first_node_in_group("web_overlay")
 	if emis_alert_active:
 		start_emis_tutorial_dialog(PackedStringArray([emis_alert_message]), false)
@@ -124,6 +130,25 @@ func _on_emis_button_pressed() -> void:
 		overlay.call("open_chat_overlay")
 	elif overlay and overlay.has_method("open"):
 		overlay.call("open")
+
+func _is_emis_available() -> bool:
+	if _is_web_runtime():
+		return true
+	if has_node("/root/EmisGameContext") and EmisGameContext.has_method("has_api_key"):
+		return bool(EmisGameContext.call("has_api_key"))
+	return false
+
+func _is_web_runtime() -> bool:
+	if has_node("/root/RuntimeEnvironment") and RuntimeEnvironment.has_method("is_web"):
+		return bool(RuntimeEnvironment.call("is_web"))
+	if has_node("/root/EmisGameContext") and EmisGameContext.has_method("is_web_runtime"):
+		return bool(EmisGameContext.call("is_web_runtime"))
+	return OS.has_feature("web")
+
+func _update_emis_activation_visual() -> void:
+	if emis_button == null:
+		return
+	emis_button.modulate = Color(1, 1, 1, 1) if _is_emis_available() else Color(0.34, 0.38, 0.42, 0.58)
 
 func restore_all() -> void:
 	current_health_slots = max_health_slots

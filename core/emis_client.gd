@@ -5,6 +5,7 @@ class_name EmisClient
 @export var chat_endpoint: String = "/api/emis/chat"
 @export var timeout_seconds: float = 20.0
 @export var auto_discover_endpoint: bool = true
+@export var api_key_header: String = "X-Emis-Api-Key"
 @export var candidate_endpoints: PackedStringArray = PackedStringArray([
 	"/api/emis/chat",
 	"/chat",
@@ -15,10 +16,23 @@ class_name EmisClient
 ])
 
 var _resolved_endpoint: String = ""
+var _player_api_key: String = ""
+
+func set_player_api_key(value: String) -> void:
+	_player_api_key = value.strip_edges()
+
+func clear_player_api_key() -> void:
+	_player_api_key = ""
+
+func has_player_api_key() -> bool:
+	return _resolve_player_api_key() != ""
 
 func request_chat(payload: Dictionary) -> Dictionary:
 	if payload.is_empty():
 		return _error_result("Mensaje vacío para Emis.", "invalid_response")
+
+	if not has_player_api_key():
+		return _error_result("Emis no configurado: agrega tu API key de Gemini.", "missing_api_key")
 
 	var endpoint_result := await _resolve_chat_endpoint(payload)
 	if not bool(endpoint_result.get("ok", false)):
@@ -39,7 +53,14 @@ func request_chat(payload: Dictionary) -> Dictionary:
 	var status_code := int(response.get("status_code", 0))
 	if status_code < 200 or status_code >= 300:
 		push_warning("[Emis] HTTP no exitoso: %s (endpoint=%s)" % [status_code, endpoint])
-		return _error_result("Emis respondió con un error del servidor.", "http_error")
+		var error_body: Variant = JSON.parse_string(String(response.get("body_text", "")))
+		if typeof(error_body) == TYPE_DICTIONARY:
+			var error_dict: Dictionary = error_body
+			var backend_error := String(error_dict.get("error", "")).strip_edges()
+			var backend_code := String(error_dict.get("code", "http_error")).strip_edges()
+			if backend_error != "":
+				return _error_result(backend_error, backend_code)
+		return _error_result("Emis respondio con un error del servidor.", "http_error")
 
 	var parsed: Variant = JSON.parse_string(String(response.get("body_text", "")))
 	if typeof(parsed) != TYPE_DICTIONARY:
@@ -178,7 +199,45 @@ func _resolve_base_url() -> String:
 	var env_base := OS.get_environment("EMIS_BASE_URL").strip_edges()
 	if env_base != "":
 		return env_base
+	var web_base := _read_web_backend_url()
+	if web_base != "":
+		return web_base
 	return base_url.strip_edges()
+
+func _resolve_player_api_key() -> String:
+	if _player_api_key != "":
+		return _player_api_key
+	var context := get_node_or_null("/root/EmisGameContext")
+	if context != null and context.has_method("get_api_key"):
+		var from_context := String(context.call("get_api_key")).strip_edges()
+		if from_context != "":
+			return from_context
+	var web_key := _read_web_api_key()
+	if web_key != "":
+		return web_key
+	return ""
+
+func _read_web_api_key() -> String:
+	if not OS.has_feature("web"):
+		return ""
+	if not Engine.has_singleton("JavaScriptBridge"):
+		return ""
+	var bridge := Engine.get_singleton("JavaScriptBridge")
+	if bridge == null:
+		return ""
+	var value: Variant = bridge.call("eval", "String(window.EMIS_PLAYER_API_KEY || '')", true)
+	return String(value).strip_edges()
+
+func _read_web_backend_url() -> String:
+	if not OS.has_feature("web"):
+		return ""
+	if not Engine.has_singleton("JavaScriptBridge"):
+		return ""
+	var bridge := Engine.get_singleton("JavaScriptBridge")
+	if bridge == null:
+		return ""
+	var value: Variant = bridge.call("eval", "String(window.EMIS_BACKEND_URL || '')", true)
+	return String(value).strip_edges()
 
 func _create_http_request() -> HTTPRequest:
 	var http := HTTPRequest.new()
@@ -186,10 +245,13 @@ func _create_http_request() -> HTTPRequest:
 	return http
 
 func _post_json(endpoint: String, payload: Dictionary) -> Dictionary:
-	return await _request_json(endpoint, HTTPClient.METHOD_POST, JSON.stringify(payload), PackedStringArray([
+	var api_key := _resolve_player_api_key()
+	var headers := PackedStringArray([
 		"Content-Type: application/json",
-		"Accept: application/json"
-	]))
+		"Accept: application/json",
+		"%s: %s" % [api_key_header, api_key]
+	])
+	return await _request_json(endpoint, HTTPClient.METHOD_POST, JSON.stringify(payload), headers)
 
 func _get_json(endpoint: String) -> Dictionary:
 	return await _request_json(endpoint, HTTPClient.METHOD_GET, "", PackedStringArray([
