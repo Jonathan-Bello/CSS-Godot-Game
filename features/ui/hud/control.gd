@@ -3,6 +3,7 @@ extends Control
 const EmisClientScript = preload("res://core/emis_client.gd")
 const TUTORIAL_FLAGS_PATH := "user://progress/tutorial_flags.json"
 const SOLAR_PILLAR_TUTORIAL_VERSION := 1
+const WRY_EXTENSION_PATH := "res://addons/godot_wry/WRY.gdextension"
 @onready var panel: PanelContainer = $PanelContainer
 @onready var web: Control = $PanelContainer/WebView
 
@@ -61,6 +62,7 @@ func _ensure_runtime_webview() -> void:
 		return
 	if web != null and web.has_method("load_html"):
 		return
+	_ensure_wry_extension_loaded()
 	if not ClassDB.can_instantiate("WebView"):
 		return
 	var parent := web.get_parent()
@@ -82,6 +84,18 @@ func _ensure_runtime_webview() -> void:
 	parent.add_child(native_web)
 	parent.move_child(native_web, index)
 	web = native_web
+
+func _ensure_wry_extension_loaded() -> void:
+	if OS.has_feature("web") or ClassDB.can_instantiate("WebView"):
+		return
+	if not FileAccess.file_exists(WRY_EXTENSION_PATH):
+		push_warning("[WebOverlay] No se encontro WRY.gdextension en %s" % WRY_EXTENSION_PATH)
+		return
+	var load_status := GDExtensionManager.load_extension(WRY_EXTENSION_PATH)
+	if ClassDB.can_instantiate("WebView"):
+		print("[WebOverlay] WRY cargado para overlay de escritorio. status=", load_status)
+	else:
+		push_warning("[WebOverlay] WRY no registro WebView. status=%s; reinicia Godot si la extension fue restaurada durante esta sesion." % load_status)
 
 func _should_use_dom_overlay() -> bool:
 	return OS.has_feature("web")
