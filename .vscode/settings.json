@@ -1,3 +1,23 @@
 {
-    "godotTools.editorPath.godot4": "d:\\Godot\\godot.exe"
+    "godotTools.editorPath.godot4": "d:\\Godot\\godot.exe",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#95e2eb",
+        "activityBar.background": "#95e2eb",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#e15ed3",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#95e2eb",
+        "statusBar.background": "#6ad6e3",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#3fcadb",
+        "statusBarItem.remoteBackground": "#6ad6e3",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#6ad6e3",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#6ad6e399",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#6AD6E3"
 }
