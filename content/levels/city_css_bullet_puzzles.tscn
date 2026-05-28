@@ -253,10 +253,8 @@ max_health = 1
 [node name="ComboBlueTogglePlatform1" parent="Puzzle3" instance=ExtResource("6_toggle")]
 position = Vector2(6960, 455)
 scale = Vector2(2.25, 0.45)
-css_metadata = {
-"properties": {
+css_properties = {
 "color": "blue"
-}
 }
 inactive_color = Color(0.35, 0.6, 1, 0.18)
 active_color = Color(0.16, 0.5, 1, 1)
@@ -264,10 +262,8 @@ active_color = Color(0.16, 0.5, 1, 1)
 [node name="ComboBlueTogglePlatform2" parent="Puzzle3" instance=ExtResource("6_toggle")]
 position = Vector2(7350, 385)
 scale = Vector2(2.25, 0.45)
-css_metadata = {
-"properties": {
+css_properties = {
 "color": "blue"
-}
 }
 inactive_color = Color(0.35, 0.6, 1, 0.18)
 active_color = Color(0.16, 0.5, 1, 1)

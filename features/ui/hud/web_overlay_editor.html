@@ -96,8 +96,14 @@
 	  <div class="workbench">
 		<div class="editor">
 		  <div class="code-wrap" id="codePanel">
-		    <textarea id="css" spellcheck="false" autocomplete="off" autocapitalize="off">svg{width:180px;height:180px}
-#shape{fill:#5cf;stroke:#036;stroke-width:8px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+		    <textarea id="css" spellcheck="false" autocomplete="off" autocapitalize="off">svg{
+width:50px;
+height:50px
+}
+#shape{
+fill:white;
+stroke:#036;
+}
 </textarea>
 		  </div>
 		  <p class="code-hint">Las propiedades bloqueadas se muestran en rojo y no activan mecanismos ni daño por afinidad.</p>
@@ -112,7 +118,7 @@
 		<div class="preview" id="bulletPanel">
 		  <svg id="svg" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
 			<defs><style id="styleEl"></style></defs>
-			<rect id="shape" x="28" y="28" width="200" height="200" rx="24" ry="24"/>
+			<rect id="shape" x="28" y="28" width="200" height="200"/>
           </svg>
         </div>
       </div>
@@ -224,6 +230,7 @@
 <script>
 const css = document.getElementById('css');
 const svg = document.getElementById('svg');
+const tplSelect = document.getElementById('tpl');
 const equipIndicator = document.getElementById('equipIndicator');
 const updateIndicator = document.getElementById('updateIndicator');
 const countIndicator = document.getElementById('countIndicator');
@@ -241,8 +248,14 @@ const tutorialTextEl = document.getElementById('tutorialText');
 const tutorialProgressEl = document.getElementById('tutorialProgress');
 const tutorialNextEl = document.getElementById('tutorialNext');
 const tutorialSkipEl = document.getElementById('tutorialSkip');
-const DEFAULT_CSS = `svg{width:180px;height:180px}
-#shape{fill:#5cf;stroke:#036;stroke-width:8px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}`;
+const DEFAULT_CSS = `svg{
+width:50px;
+height:50px
+}
+#shape{
+fill:white;
+stroke:#036;
+}`;
 let unlockState = {};
 let allProperties = [];
 let bulletEquipped = false;
@@ -305,7 +318,7 @@ function setCssText(value){
 }
 
 function getUnlockedCssPropertyNames(){
-  const preferred = ['background-color', 'fill', 'width', 'height'];
+  const preferred = ['fill', 'width', 'height'];
   const source = Array.isArray(allProperties) && allProperties.length ? allProperties : preferred;
   return source
     .map(function(prop){ return String(prop || '').trim(); })
@@ -389,7 +402,7 @@ function readBulletSizeFromCss(rawCss){
     return Number(digits);
   }
   const parsedWidth = parsePxValue('width');
-  const width = clampBulletSize(parsedWidth == null ? 180 : parsedWidth);
+  const width = clampBulletSize(parsedWidth == null ? 50 : parsedWidth);
   const parsedHeight = parsePxValue('height');
   const height = clampBulletSize(parsedHeight == null ? width : parsedHeight);
   return {width, height};
@@ -669,11 +682,14 @@ function getDetectedProperties(text){
   const seen = new Set();
   const cleaned = String(text || '').replace(/\/\*[\s\S]*?\*\//g, '');
   const blocks = cleaned.match(/[^{}]+\{[^{}]*\}/g) || [];
-  for(const block of blocks){
+  const sources = blocks.length ? blocks.map(function(block){
     const openIdx = block.indexOf('{');
     const closeIdx = block.lastIndexOf('}');
-    if(openIdx === -1 || closeIdx === -1 || closeIdx <= openIdx) continue;
-    const body = block.slice(openIdx + 1, closeIdx);
+    if(openIdx === -1 || closeIdx === -1 || closeIdx <= openIdx) return '';
+    return block.slice(openIdx + 1, closeIdx);
+  }) : [cleaned];
+  for(const body of sources){
+    if(!body) continue;
     const declarations = body.split(';');
     for(const rawDecl of declarations){
       const chunk = String(rawDecl || '').trim();
@@ -853,6 +869,7 @@ function hydrateFromGodot(payload){
   if(!payload || typeof payload !== 'object') return;
   const nextCss = typeof payload.css_text === 'string' ? payload.css_text : '';
   const nextSvgText = typeof payload.svg_text === 'string' ? payload.svg_text : '';
+  let nextShapeKind = typeof payload.shape_kind === 'string' ? payload.shape_kind : '';
   unlockState = (payload.unlock_state && typeof payload.unlock_state === 'object') ? payload.unlock_state : unlockState;
   allProperties = Array.isArray(payload.all_properties) ? payload.all_properties : allProperties;
   bulletEquipped = Boolean(payload.bullet_equipped);
@@ -868,6 +885,9 @@ function hydrateFromGodot(payload){
     const nextSvg = parsed.documentElement;
     const nextShape = _extractShapeNode(nextSvg);
     if(nextShape){
+      if(!nextShapeKind){
+        nextShapeKind = inferShapeKind(nextShape);
+      }
       while(svg.firstChild) svg.removeChild(svg.firstChild);
       const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
       const styleNode = document.createElementNS('http://www.w3.org/2000/svg', 'style');
@@ -876,6 +896,9 @@ function hydrateFromGodot(payload){
       svg.appendChild(defs);
       svg.appendChild(document.importNode(nextShape, true));
     }
+  }
+  if(nextShapeKind && tplSelect){
+    tplSelect.value = normalizeShapeKind(nextShapeKind);
   }
 
   applyCssToPreview();
@@ -888,7 +911,8 @@ function hydrateFromGodot(payload){
 function exportState(){
   return {
     css_text: getCssText(),
-    svg_text: new XMLSerializer().serializeToString(svg)
+    svg_text: new XMLSerializer().serializeToString(svg),
+    shape_kind: getCurrentShapeKind()
   };
 }
 
@@ -927,21 +951,45 @@ setChatWaitingState(false);
 updateIndicators();
 
 function setTpl(kind){
+  kind = normalizeShapeKind(kind);
   let inner = '';
   if(kind==='box'){
-	inner = '<rect id="shape" x="28" y="28" width="200" height="200" rx="24" ry="24"/>';
+	inner = '<rect id="shape" x="28" y="28" width="200" height="200"/>';
   }else if(kind==='circle'){
 	inner = '<circle id="shape" cx="128" cy="128" r="96"/>';
   }else{
 	inner = '<polygon id="shape" points="128,24 156,100 236,100 172,148 196,228 128,180 60,228 84,148 20,100 100,100"/>';
   }
+  if(tplSelect){
+    tplSelect.value = kind;
+  }
   svg.innerHTML = '<defs><style id="styleEl"></style></defs>' + inner;
   applyCssToPreview();
 }
 
+function normalizeShapeKind(kind){
+  kind = String(kind || '').trim().toLowerCase();
+  return (kind === 'circle' || kind === 'star') ? kind : 'box';
+}
+
+function getCurrentShapeKind(){
+  if(tplSelect){
+    return normalizeShapeKind(tplSelect.value);
+  }
+  return inferShapeKind(_extractShapeNode(svg));
+}
+
+function inferShapeKind(node){
+  if(!node) return 'box';
+  const tag = String(node.tagName || '').toLowerCase();
+  if(tag === 'circle' || tag === 'ellipse') return 'circle';
+  if(tag === 'polygon' || tag === 'path' || tag === 'polyline') return 'star';
+  return 'box';
+}
+
 function saveDraft(){
   const tpl = new XMLSerializer().serializeToString(svg);
-  ipc.postMessage(JSON.stringify({type:'save_css', css: getCssText(), svg: tpl}));
+  ipc.postMessage(JSON.stringify({type:'save_css', css: getCssText(), svg: tpl, shape_kind: getCurrentShapeKind()}));
   bulletUpdatedAt = new Date().toISOString();
   updateIndicators();
 }
@@ -973,7 +1021,7 @@ function equipBullet(){
     c.getContext('2d').drawImage(img,0,0,c.width,c.height);
     const png = c.toDataURL('image/png');
     URL.revokeObjectURL(url);
-    ipc.postMessage(JSON.stringify({type:'equip_bullet', data_url: png, css: getCssText(), svg: txt, meta:{w:outW,h:outH,source_w:sourceW,source_h:sourceH}}));
+    ipc.postMessage(JSON.stringify({type:'equip_bullet', data_url: png, css: getCssText(), svg: txt, shape_kind: getCurrentShapeKind(), meta:{w:outW,h:outH,source_w:sourceW,source_h:sourceH}}));
     bulletEquipped = true;
     bulletUpdatedAt = new Date().toISOString();
     updateIndicators();
@@ -983,7 +1031,9 @@ function equipBullet(){
 }
 
 function newBullet(){
-  document.getElementById('tpl').value = 'box';
+  if(tplSelect){
+    tplSelect.value = 'box';
+  }
   setCssText(DEFAULT_CSS);
   setTpl('box');
   bulletEquipped = false;

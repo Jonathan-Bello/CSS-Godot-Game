@@ -13,6 +13,7 @@ var _context: Dictionary = {
 	"current_area_description": "",
 	"current_dialog_context": "",
 	"recent_event": "",
+	"level_context_document": "",
 	"runtime_environment": ""
 }
 
@@ -70,6 +71,25 @@ func update_level(level_id: String, objective: String = "") -> void:
 	if objective.strip_edges() != "":
 		_context["objective"] = objective.strip_edges()
 	_context["screen"] = "world"
+
+func set_level_context_document(text: String) -> void:
+	_context["level_context_document"] = text.strip_edges().left(8000)
+
+func set_level_context_document_from_file(path: String) -> void:
+	var clean_path := path.strip_edges()
+	if clean_path == "":
+		set_level_context_document("")
+		return
+	if not FileAccess.file_exists(clean_path):
+		push_warning("[EmisGameContext] No existe documento de contexto: %s" % clean_path)
+		set_level_context_document("")
+		return
+	var file := FileAccess.open(clean_path, FileAccess.READ)
+	if file == null:
+		push_warning("[EmisGameContext] No se pudo leer documento de contexto: %s" % clean_path)
+		set_level_context_document("")
+		return
+	set_level_context_document(file.get_as_text())
 
 func update_from_trigger(data: Dictionary) -> void:
 	for key in data.keys():

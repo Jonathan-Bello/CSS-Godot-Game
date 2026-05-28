@@ -30,7 +30,7 @@ func _ready() -> void:
 	if css_properties.is_empty() and css_text != "":
 		css_properties = CssAffinity.parse_relevant_properties(css_text)
 	# Guardar metadata para debug, inspección y sistemas externos.
-	_set_css_metadata()
+	_set_css_debug_metadata()
 	# Si hay sprite externo se usa; si no, se genera sprite procedural con CSS.
 	if not _try_apply_texture_from_path(texture_path):
 		_update_visual_from_css(css_text)
@@ -55,7 +55,7 @@ func setup_from_css(new_css_text: String, facing: int, new_speed: float, new_dam
 	css_rules = _extract_rules(css_text)
 	css_properties = CssAffinity.parse_relevant_properties(css_text)
 	texture_path = ""
-	_set_css_metadata()
+	_set_css_debug_metadata()
 
 # Configura bala desde profile serializado (JSON) enviado por el editor web.
 func setup_from_profile(profile: Dictionary, facing: int, new_speed: float, new_damage: int, aim_direction: Vector2 = Vector2.ZERO) -> void:
@@ -83,10 +83,10 @@ func setup_from_profile(profile: Dictionary, facing: int, new_speed: float, new_
 		float(meta.get("w", 28)),
 		float(meta.get("h", 16))
 	)
-	_set_css_metadata()
+	_set_css_debug_metadata()
 
 # Expone metadata útil de combate/depuración directamente en el nodo.
-func _set_css_metadata() -> void:
+func _set_css_debug_metadata() -> void:
 	set_meta("css_rules", css_rules)
 	set_meta("css_properties", css_properties)
 	set_meta("bullet_profile", {
@@ -99,19 +99,20 @@ func _set_css_metadata() -> void:
 # Extrae solo keys CSS para compatibilidad con lógica legacy/UI.
 func _extract_rules(text: String) -> PackedStringArray:
 	var rules := PackedStringArray()
-	for chunk in text.split(";"):
-		var pair := chunk.strip_edges()
-		if pair == "":
-			continue
-		var idx := pair.find(":")
-		if idx == -1:
-			continue
-		var key := pair.substr(0, idx).strip_edges().to_lower()
-		if key != "":
-			rules.append(key)
+	for source in _extract_declaration_sources(text):
+		for chunk in source.split(";"):
+			var pair := chunk.strip_edges()
+			if pair == "":
+				continue
+			var idx := pair.find(":")
+			if idx == -1:
+				continue
+			var key := pair.substr(0, idx).strip_edges().to_lower()
+			if key != "":
+				rules.append(key)
 	return rules
 
-# Construye una textura simple según width/height/radius/background-color.
+# Construye una textura simple según width/height/radius/fill.
 func _update_visual_from_css(text: String) -> void:
 	var rule_map := _extract_rule_map(text)
 	var w := int(clamp(rule_map.get("width", 28), 6, 256))
@@ -179,17 +180,46 @@ func _apply_collision_size(size: Vector2) -> void:
 # Parser CSS básico para visual procedural.
 func _extract_rule_map(text: String) -> Dictionary:
 	var out := {}
-	for chunk in text.split(";"):
-		var pair := chunk.strip_edges()
-		if pair == "":
-			continue
-		var idx := pair.find(":")
-		if idx == -1:
-			continue
-		var key := pair.substr(0, idx).strip_edges().to_lower()
-		var raw_value := pair.substr(idx + 1).strip_edges()
-		out[key] = _parse_css_value(key, raw_value)
+	for source in _extract_declaration_sources(text):
+		for chunk in source.split(";"):
+			var pair := chunk.strip_edges()
+			if pair == "":
+				continue
+			var idx := pair.find(":")
+			if idx == -1:
+				continue
+			var key := pair.substr(0, idx).strip_edges().to_lower()
+			var raw_value := pair.substr(idx + 1).strip_edges()
+			out[key] = _parse_css_value(key, raw_value)
 	return out
+
+func _extract_declaration_sources(source_css: String) -> PackedStringArray:
+	var text := source_css.strip_edges()
+	var sources := PackedStringArray()
+	var current := ""
+	var depth := 0
+	var found_block := false
+	for i in range(text.length()):
+		var ch := text.substr(i, 1)
+		if ch == "{":
+			depth += 1
+			if depth == 1:
+				current = ""
+				found_block = true
+				continue
+		if ch == "}":
+			if depth == 1 and current.strip_edges() != "":
+				sources.append(current)
+			depth = max(0, depth - 1)
+			current = ""
+			continue
+		if depth > 0:
+			current += ch
+	if found_block and not sources.is_empty():
+		return sources
+	if not found_block:
+		sources.append(text)
+	return sources
 
 # Convierte valores numéricos/color para render procedural.
 func _parse_css_value(key: String, raw_value: String) -> Variant:
@@ -202,7 +232,7 @@ func _parse_css_value(key: String, raw_value: String) -> Variant:
 	return raw_value
 
 func _resolve_visual_color(rule_map: Dictionary) -> Color:
-	for key in ["background-color", "fill", "color"]:
+	for key in ["fill", "color", "background-color"]:
 		var raw_value: Variant = rule_map.get(key)
 		if raw_value is Color:
 			return raw_value

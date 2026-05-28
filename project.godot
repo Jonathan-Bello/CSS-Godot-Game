@@ -33,7 +33,9 @@ RuntimeEnvironment="*res://core/runtime_environment.gd"
 EmisGameContext="*res://core/emis_game_context.gd"
 MovementUnlocks="*res://core/movement_unlocks.gd"
 AudioManager="*res://core/audio_manager.gd"
+GameSave="*res://core/game_save.gd"
 SceneTransition="*res://core/scene_transition.gd"
+PauseMenu="*res://core/pause_menu.gd"
 
 [display]
 

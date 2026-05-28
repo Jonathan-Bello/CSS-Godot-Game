@@ -24,6 +24,11 @@ var _shake_time_left := 0.0
 
 
 func _ready() -> void:
+	if has_node("/root/GameSave") and GameSave.has_method("is_loading_saved_game") and bool(GameSave.call("is_loading_saved_game")):
+		_impact_triggered = true
+		set_physics_process(false)
+		set_process(false)
+		return
 	call_deferred("_bind_runtime_nodes")
 
 

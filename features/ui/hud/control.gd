@@ -698,6 +698,7 @@ func _build_player_context_for_emis(data: Dictionary, context: Dictionary) -> Di
 	player_context["current_area_description"] = String(game_context.get("current_area_description", "")).strip_edges()
 	player_context["current_dialog_context"] = String(game_context.get("current_dialog_context", "")).strip_edges()
 	player_context["recent_event"] = String(game_context.get("recent_event", "")).strip_edges()
+	player_context["level_context_document"] = String(game_context.get("level_context_document", "")).strip_edges()
 
 	var unlocked_css_raw: Variant = data.get("unlocked_css", context.get("unlocked_css", snapshot.get("detected_properties", [])))
 	player_context["unlocked_css"] = _to_packed_string_array(unlocked_css_raw)
@@ -868,6 +869,7 @@ func _send_emis_api_key_status_to_web(configured: bool) -> void:
 func _save_css_draft(data: Dictionary) -> void:
 	last_css = String(data.get("css", ""))
 	last_svg = String(data.get("svg", ""))
+	var shape_kind := _normalize_shape_kind(String(data.get("shape_kind", "box")))
 	var dir_path := "user://bullets"
 	var mkdir_err := DirAccess.make_dir_recursive_absolute(dir_path)
 	if mkdir_err != OK and mkdir_err != ERR_ALREADY_EXISTS:
@@ -879,6 +881,7 @@ func _save_css_draft(data: Dictionary) -> void:
 	var draft := {
 		"css_text": last_css,
 		"svg_text": last_svg,
+		"shape_kind": shape_kind,
 		"updated_at": now_iso
 	}
 	var draft_file := FileAccess.open(draft_path, FileAccess.WRITE)
@@ -892,6 +895,7 @@ func _save_css_draft(data: Dictionary) -> void:
 func _save_and_equip_bullet(data: Dictionary) -> void:
 	last_css = String(data.get("css", ""))
 	last_svg = String(data.get("svg", ""))
+	var shape_kind := _normalize_shape_kind(String(data.get("shape_kind", "box")))
 	_save_css_draft(data)
 
 	var data_url := String(data.get("data_url", ""))
@@ -935,6 +939,7 @@ func _save_and_equip_bullet(data: Dictionary) -> void:
 
 	var normalized_properties: Dictionary = _parse_relevant_properties_from_singleton(last_css)
 	var locked_properties: PackedStringArray = _get_locked_properties_from_singleton(last_css)
+	normalized_properties = _filter_unlocked_css_properties(normalized_properties, locked_properties)
 	var profile := {
 		"sprite_path": image_path,
 		"image_path": image_path,
@@ -947,6 +952,7 @@ func _save_and_equip_bullet(data: Dictionary) -> void:
 		"css_properties": normalized_properties,
 		"css_locked_properties": locked_properties,
 		"css_properties_used": _extract_css_rules(last_css),
+		"shape_kind": shape_kind,
 		"damage_base": 1,
 		"svg_text": last_svg,
 		"created_at": existing_created_at,
@@ -1002,6 +1008,7 @@ func _read_bullet_hydration_payload() -> Dictionary:
 	var profile_path := "user://bullets/bullet_current.json"
 	var css_text := ""
 	var svg_text := ""
+	var shape_kind := ""
 	var updated_at := ""
 	var bullet_equipped := false
 
@@ -1011,6 +1018,7 @@ func _read_bullet_hydration_payload() -> Dictionary:
 			var draft_data: Dictionary = draft_raw
 			css_text = String(draft_data.get("css_text", ""))
 			svg_text = String(draft_data.get("svg_text", ""))
+			shape_kind = String(draft_data.get("shape_kind", shape_kind))
 			updated_at = String(draft_data.get("updated_at", ""))
 
 	if FileAccess.file_exists(profile_path):
@@ -1024,6 +1032,8 @@ func _read_bullet_hydration_payload() -> Dictionary:
 				css_text = String(profile_data.get("css_text", ""))
 			if svg_text == "":
 				svg_text = String(profile_data.get("svg_text", ""))
+			if shape_kind == "":
+				shape_kind = String(profile_data.get("shape_kind", ""))
 
 	base_payload["bullet_equipped"] = bullet_equipped
 	base_payload["updated_at"] = updated_at
@@ -1031,7 +1041,15 @@ func _read_bullet_hydration_payload() -> Dictionary:
 		base_payload["css_text"] = css_text
 	if svg_text != "":
 		base_payload["svg_text"] = svg_text
+	if shape_kind != "":
+		base_payload["shape_kind"] = _normalize_shape_kind(shape_kind)
 	return base_payload
+
+func _normalize_shape_kind(raw: String) -> String:
+	var value := raw.strip_edges().to_lower()
+	if value == "circle" or value == "star":
+		return value
+	return "box"
 
 func _read_tutorial_flags() -> Dictionary:
 	if not FileAccess.file_exists(TUTORIAL_FLAGS_PATH):
@@ -1084,17 +1102,56 @@ func _hydrate_web_editor(payload: Dictionary) -> void:
 
 func _extract_css_rules(text: String) -> PackedStringArray:
 	var rules := PackedStringArray()
-	for chunk in text.split(";"):
-		var pair := chunk.strip_edges()
-		if pair == "":
-			continue
-		var idx := pair.find(":")
-		if idx == -1:
-			continue
-		var key := pair.substr(0, idx).strip_edges().to_lower()
-		if key != "":
-			rules.append(key)
+	for source in _extract_css_declaration_sources(text):
+		for chunk in source.split(";"):
+			var pair := chunk.strip_edges()
+			if pair == "":
+				continue
+			var idx := pair.find(":")
+			if idx == -1:
+				continue
+			var key := pair.substr(0, idx).strip_edges().to_lower()
+			if key != "":
+				rules.append(key)
 	return rules
+
+func _extract_css_declaration_sources(css_text: String) -> PackedStringArray:
+	var text := css_text.strip_edges()
+	var sources := PackedStringArray()
+	var current := ""
+	var depth := 0
+	var found_block := false
+	for i in range(text.length()):
+		var ch := text.substr(i, 1)
+		if ch == "{":
+			depth += 1
+			if depth == 1:
+				current = ""
+				found_block = true
+				continue
+		if ch == "}":
+			if depth == 1 and current.strip_edges() != "":
+				sources.append(current)
+			depth = max(0, depth - 1)
+			current = ""
+			continue
+		if depth > 0:
+			current += ch
+	if found_block:
+		return sources
+
+	var block_start := -1
+	for i in range(text.length()):
+		var ch := text.substr(i, 1)
+		if ch == "{":
+			block_start = i + 1
+		elif ch == "}" and block_start >= 0:
+			if i > block_start:
+				sources.append(text.substr(block_start, i - block_start))
+			block_start = -1
+	if sources.is_empty():
+		sources.append(text)
+	return sources
 
 func _get_css_affinity_singleton() -> Node:
 	return get_tree().root.get_node_or_null("CssAffinity")
@@ -1109,6 +1166,21 @@ func _parse_relevant_properties_from_singleton(css_text: String) -> Dictionary:
 		if typeof(parsed) == TYPE_DICTIONARY:
 			return parsed
 	return {}
+
+func _filter_unlocked_css_properties(properties: Dictionary, locked_properties: PackedStringArray) -> Dictionary:
+	if properties.is_empty() or locked_properties.is_empty():
+		return properties
+	var locked := {}
+	for raw_prop in locked_properties:
+		var prop := String(raw_prop).strip_edges().to_lower()
+		if prop != "":
+			locked[prop] = true
+	var filtered := {}
+	for raw_key in properties.keys():
+		var key := String(raw_key).strip_edges().to_lower()
+		if key != "" and not locked.has(key):
+			filtered[key] = properties[raw_key]
+	return filtered
 
 func _get_locked_properties_from_singleton(css_text: String) -> PackedStringArray:
 	var singleton := _get_css_unlocks_singleton()

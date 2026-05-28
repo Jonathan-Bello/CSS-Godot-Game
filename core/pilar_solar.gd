@@ -34,6 +34,8 @@ func _ready() -> void:
 	if not is_connected("body_exited", Callable(self, "_on_body_exited")):
 		connect("body_exited", Callable(self, "_on_body_exited"))
 
+	if _is_persistent_pillar_activated():
+		_is_activated = true
 	_apply_pillar_state(_is_activated)
 
 func _find_overlay_node(start: Node) -> Node:
@@ -56,8 +58,10 @@ func _activate_checkpoint() -> void:
 		overlay.call("open")
 	_is_activated = true
 	_apply_pillar_state(true)
+	_mark_persistent_pillar_activated()
 	_register_respawn_checkpoint()
 	_restore_player_and_hub()
+	_save_checkpoint()
 
 func _register_respawn_checkpoint() -> void:
 	if current_player == null:
@@ -71,6 +75,10 @@ func _restore_player_and_hub() -> void:
 	var main_hud := get_tree().get_first_node_in_group("main_hud")
 	if main_hud and main_hud.has_method("restore_all"):
 		main_hud.call("restore_all")
+
+func _save_checkpoint() -> void:
+	if has_node("/root/GameSave") and GameSave.has_method("save_current_game"):
+		GameSave.call("save_current_game", current_player)
 
 func _apply_pillar_state(is_on: bool) -> void:
 	if pillar_sprite == null:
@@ -104,3 +112,19 @@ func _play_terminal_sfx() -> void:
 	player.finished.connect(player.queue_free)
 	add_child(player)
 	player.play()
+
+func _is_persistent_pillar_activated() -> bool:
+	if not has_node("/root/GameSave") or not GameSave.has_method("is_solar_pillar_activated"):
+		return false
+	return bool(GameSave.call("is_solar_pillar_activated", _get_persistent_pillar_id()))
+
+func _mark_persistent_pillar_activated() -> void:
+	if not has_node("/root/GameSave") or not GameSave.has_method("mark_solar_pillar_activated"):
+		return
+	GameSave.call("mark_solar_pillar_activated", _get_persistent_pillar_id())
+
+func _get_persistent_pillar_id() -> String:
+	var scene_path := ""
+	if get_tree().current_scene != null:
+		scene_path = get_tree().current_scene.scene_file_path
+	return "%s::%s" % [scene_path, str(get_path())]

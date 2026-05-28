@@ -219,10 +219,8 @@ scale = Vector2(2.4913106, 1.673611)
 [node name="CssTogglePlatform" parent="." instance=ExtResource("8_l6f8y")]
 position = Vector2(1575, 113.999985)
 scale = Vector2(2.4913106, 1.673611)
-css_metadata = {
-"properties": {
+css_properties = {
 "background-color": "red"
-}
 }
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]

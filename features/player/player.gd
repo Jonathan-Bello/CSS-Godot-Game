@@ -146,7 +146,7 @@ extends CharacterBody2D
 
 var bullet_profile_path: String = ""
 var current_bullet_profile: Dictionary = {}
-const DEFAULT_BULLET_CSS_TEXT := "background-color: #ff3b3b; width: 28px; height: 16px; border-radius: 6px;"
+const DEFAULT_BULLET_CSS_TEXT := "svg{\nwidth:50px;\nheight:50px\n}\n#shape{\nfill:white;\nstroke:#036;\n}"
 var _warned_missing_bullet_profile: bool = true
 
 @export_group("Debug — Labels (opcional)")
@@ -251,6 +251,8 @@ var _damage_blink_timer := 0.0
 # ============================================================================
 func _ready() -> void:
 	add_to_group("player")
+	if has_node("/root/GameSave") and GameSave.has_method("apply_pending_player_position"):
+		GameSave.call("apply_pending_player_position", self)
 	set_respawn_checkpoint(global_position)
 	_active_footstep_sfx = footstep_sfx
 	_ensure_resurrection_sfx_player()
@@ -817,7 +819,7 @@ func _get_aim_direction() -> Vector2:
 func _unlock_controls_after_attack_pause() -> void:
 	lock_controls = false
 
-func equip_bullet_from_profile(profile: Dictionary) -> void:
+func equip_bullet_from_profile(profile: Dictionary, play_feedback: bool = true) -> void:
 	if profile.is_empty():
 		push_warning("[Player] Perfil de bullet vacío o inválido")
 		return
@@ -850,7 +852,38 @@ func equip_bullet_from_profile(profile: Dictionary) -> void:
 		bullet_profile_path,
 		image_path
 	])
-	_play_world_sfx(equip_ammo_sfx, -6.0)
+	if play_feedback:
+		_play_world_sfx(equip_ammo_sfx, -6.0)
+
+func get_equipped_bullet_save_data() -> Dictionary:
+	if current_bullet_profile.is_empty():
+		return {}
+	var profile := _make_bullet_profile_json_safe(current_bullet_profile)
+	profile["profile_path"] = bullet_profile_path
+	return {
+		"profile_path": bullet_profile_path,
+		"profile": profile
+	}
+
+func restore_equipped_bullet_from_save(data: Dictionary) -> bool:
+	if data.is_empty():
+		return false
+	var profile: Dictionary = {}
+	var raw_profile: Variant = data.get("profile", {})
+	if typeof(raw_profile) == TYPE_DICTIONARY:
+		profile = raw_profile
+	var restored_profile_path := String(data.get("profile_path", ""))
+	if restored_profile_path == "":
+		restored_profile_path = String(profile.get("profile_path", ""))
+	if profile.is_empty() and restored_profile_path != "":
+		var loaded := _load_json_dictionary(restored_profile_path)
+		if not loaded.is_empty():
+			profile = loaded
+	if profile.is_empty():
+		return false
+	profile["profile_path"] = restored_profile_path
+	equip_bullet_from_profile(profile, false)
+	return true
 	
 func _load_json_dictionary(path: String) -> Dictionary:
 	if not FileAccess.file_exists(path):
@@ -862,6 +895,28 @@ func _load_json_dictionary(path: String) -> Dictionary:
 	if typeof(parsed) != TYPE_DICTIONARY:
 		return {}
 	return parsed
+
+func _make_bullet_profile_json_safe(profile: Dictionary) -> Dictionary:
+	var out := profile.duplicate(true)
+	for key in ["css_rules", "css_properties_used", "css_locked_properties"]:
+		if out.has(key):
+			out[key] = _to_string_array(out[key])
+	return out
+
+func _to_string_array(source: Variant) -> Array:
+	var values: Array = []
+	if source is PackedStringArray:
+		values = Array(source)
+	elif source is Array:
+		values = source
+	else:
+		return []
+	var out: Array = []
+	for value in values:
+		var text := String(value)
+		if text != "":
+			out.append(text)
+	return out
 
 func _compute_bullet_stats_from_profile() -> Dictionary:
 	# Lee tamaño objetivo del profile. El área define el "peso" de la bala.

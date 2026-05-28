@@ -21,6 +21,10 @@ func _ready() -> void:
 	collision_layer = 0
 	collision_mask = 2
 	monitorable = false
+	if one_shot and _is_persistent_trigger_heard():
+		_triggered = true
+		monitoring = false
+		return
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
@@ -52,6 +56,7 @@ func _fire_trigger() -> void:
 	hud.call("start_emis_tutorial_dialog", dialog_lines, stop_player_during_dialog)
 	if one_shot:
 		_triggered = true
+		_mark_persistent_trigger_heard()
 		set_deferred("monitoring", false)
 
 func _update_emis_context() -> void:
@@ -73,3 +78,16 @@ func _update_emis_context() -> void:
 		"current_dialog_context": first_line,
 		"recent_event": recent_event if recent_event.strip_edges() != "" else "Emis acaba de hablar con el jugador en %s." % name
 	})
+
+func _get_persistent_trigger_id() -> String:
+	var scene_path := get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
+	return "%s::%s" % [scene_path, str(get_path())]
+
+func _is_persistent_trigger_heard() -> bool:
+	if not has_node("/root/GameSave") or not GameSave.has_method("is_dialog_trigger_heard"):
+		return false
+	return bool(GameSave.call("is_dialog_trigger_heard", _get_persistent_trigger_id()))
+
+func _mark_persistent_trigger_heard() -> void:
+	if has_node("/root/GameSave") and GameSave.has_method("mark_dialog_trigger_heard"):
+		GameSave.call("mark_dialog_trigger_heard", _get_persistent_trigger_id())

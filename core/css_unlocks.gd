@@ -6,11 +6,12 @@ extends Node
 # - El estado se persiste en user://progress/css_unlocks.json
 
 const SAVE_PATH := "user://progress/css_unlocks.json"
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 var MAIN_PROPERTIES: PackedStringArray = PackedStringArray([
 	"background",
 	"background-color",
 	"fill",
+	"stroke",
 	"color",
 	"border",
 	"border-color",
@@ -27,7 +28,6 @@ var MAIN_PROPERTIES: PackedStringArray = PackedStringArray([
 
 # Propiedades mínimas desbloqueadas al iniciar una partida nueva.
 const DEFAULT_UNLOCKED := {
-	"background-color": true,
 	"fill": true,
 	"width": true,
 	"height": true
@@ -61,6 +61,13 @@ func set_many_unlocks(changes: Dictionary) -> void:
 		if key == "":
 			continue
 		_unlock_state[key] = bool(changes[raw_key])
+	_save_state()
+
+func reset_unlocks() -> void:
+	_unlock_state.clear()
+	for prop in MAIN_PROPERTIES:
+		var normalized := _normalize_property(prop)
+		_unlock_state[normalized] = bool(DEFAULT_UNLOCKED.get(normalized, false))
 	_save_state()
 
 func filter_unlocked_properties(css_properties: Dictionary) -> Dictionary:
@@ -131,14 +138,53 @@ func _save_state() -> void:
 
 func _extract_keys(css_text: String) -> PackedStringArray:
 	var keys := PackedStringArray()
-	for chunk in css_text.split(";"):
-		var pair := chunk.strip_edges()
-		if pair == "":
-			continue
-		var idx := pair.find(":")
-		if idx == -1:
-			continue
-		var key := _normalize_property(pair.substr(0, idx).strip_edges().to_lower())
-		if key != "":
-			keys.append(key)
+	for source in _extract_declaration_sources(css_text):
+		for chunk in source.split(";"):
+			var pair := chunk.strip_edges()
+			if pair == "":
+				continue
+			var idx := pair.find(":")
+			if idx == -1:
+				continue
+			var key := _normalize_property(pair.substr(0, idx).strip_edges().to_lower())
+			if key != "":
+				keys.append(key)
 	return keys
+
+func _extract_declaration_sources(css_text: String) -> PackedStringArray:
+	var text := css_text.strip_edges()
+	var sources := PackedStringArray()
+	var current := ""
+	var depth := 0
+	var found_block := false
+	for i in range(text.length()):
+		var ch := text.substr(i, 1)
+		if ch == "{":
+			depth += 1
+			if depth == 1:
+				current = ""
+				found_block = true
+				continue
+		if ch == "}":
+			if depth == 1 and current.strip_edges() != "":
+				sources.append(current)
+			depth = max(0, depth - 1)
+			current = ""
+			continue
+		if depth > 0:
+			current += ch
+	if found_block:
+		return sources
+
+	var block_start := -1
+	for i in range(text.length()):
+		var ch := text.substr(i, 1)
+		if ch == "{":
+			block_start = i + 1
+		elif ch == "}" and block_start >= 0:
+			if i > block_start:
+				sources.append(text.substr(block_start, i - block_start))
+			block_start = -1
+	if sources.is_empty():
+		sources.append(text)
+	return sources

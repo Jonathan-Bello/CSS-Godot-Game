@@ -33,6 +33,7 @@ const RELEVANT_PROPERTIES := {
 	"background": true,
 	"background-color": true,
 	"fill": true,
+	"stroke": true,
 	"color": true,
 	"border": true,
 	"border-color": true,
@@ -45,18 +46,19 @@ const RELEVANT_PROPERTIES := {
 # las propiedades que el combate entiende (RELEVANT_PROPERTIES).
 func parse_relevant_properties(css_text: String) -> Dictionary:
 	var parsed := {}
-	for chunk in css_text.split(";"):
-		var pair := chunk.strip_edges()
-		if pair == "":
-			continue
-		var idx := pair.find(":")
-		if idx == -1:
-			continue
-		var key := _normalize_property_name(pair.substr(0, idx).strip_edges().to_lower())
-		if not RELEVANT_PROPERTIES.has(key):
-			continue
-		var value := pair.substr(idx + 1).strip_edges()
-		parsed[key] = normalize_property_value(key, value)
+	for source in _extract_declaration_sources(css_text):
+		for chunk in source.split(";"):
+			var pair := chunk.strip_edges()
+			if pair == "":
+				continue
+			var idx := pair.find(":")
+			if idx == -1:
+				continue
+			var key := _normalize_property_name(pair.substr(0, idx).strip_edges().to_lower())
+			if not RELEVANT_PROPERTIES.has(key):
+				continue
+			var value := pair.substr(idx + 1).strip_edges()
+			parsed[key] = normalize_property_value(key, value)
 	return parsed
 
 # Normaliza el valor de una propiedad a formato comparable.
@@ -65,7 +67,7 @@ func parse_relevant_properties(css_text: String) -> Dictionary:
 # - "rgb(0, 0, 255)" -> "#0000ff"
 # - "border: 1px solid red" -> "#ff0000"
 func normalize_property_value(key: String, value: String) -> String:
-	if key in ["background", "background-color", "fill", "color", "border-color", "outline-color"]:
+	if key in ["background", "background-color", "fill", "stroke", "color", "border-color", "outline-color"]:
 		var maybe_color := normalize_color(value)
 		if maybe_color != "":
 			return maybe_color
@@ -164,6 +166,44 @@ func _normalize_property_name(raw_key: String) -> String:
 	if raw_key == "background":
 		return "background-color"
 	return raw_key
+
+func _extract_declaration_sources(css_text: String) -> PackedStringArray:
+	var text := css_text.strip_edges()
+	var sources := PackedStringArray()
+	var current := ""
+	var depth := 0
+	var found_block := false
+	for i in range(text.length()):
+		var ch := text.substr(i, 1)
+		if ch == "{":
+			depth += 1
+			if depth == 1:
+				current = ""
+				found_block = true
+				continue
+		if ch == "}":
+			if depth == 1 and current.strip_edges() != "":
+				sources.append(current)
+			depth = max(0, depth - 1)
+			current = ""
+			continue
+		if depth > 0:
+			current += ch
+	if found_block:
+		return sources
+
+	var block_start := -1
+	for i in range(text.length()):
+		var ch := text.substr(i, 1)
+		if ch == "{":
+			block_start = i + 1
+		elif ch == "}" and block_start >= 0:
+			if i > block_start:
+				sources.append(text.substr(block_start, i - block_start))
+			block_start = -1
+	if sources.is_empty():
+		sources.append(text)
+	return sources
 
 # Intenta extraer color dentro de la definición de borde.
 func _extract_border_color(value: String) -> String:

@@ -23,6 +23,7 @@ func _ready() -> void:
 		AudioManager.play_music(title_music, 0.6, -10.0)
 	new_button.pressed.connect(_on_new_pressed)
 	load_button.pressed.connect(_on_load_pressed)
+	_update_load_button_state()
 	_apply_runtime_menu_rules()
 	if not _is_web_runtime():
 		_create_emis_key_button()
@@ -56,6 +57,8 @@ func _on_new_pressed() -> void:
 	_start_new_game()
 
 func _start_new_game() -> void:
+	if has_node("/root/GameSave") and GameSave.has_method("reset_new_game_state"):
+		GameSave.call("reset_new_game_state")
 	if has_node("/root/AudioManager"):
 		AudioManager.stop_music(0.35)
 	if has_node("/root/SceneTransition"):
@@ -65,7 +68,16 @@ func _start_new_game() -> void:
 
 func _on_load_pressed() -> void:
 	_play_accept_sfx()
-	status_label.text = "No hay partida guardada."
+	if not has_node("/root/GameSave") or not GameSave.has_method("has_save") or not bool(GameSave.call("has_save")):
+		status_label.text = "No hay partida guardada."
+		_update_load_button_state()
+		return
+	if has_node("/root/AudioManager"):
+		AudioManager.stop_music(0.35)
+	var loaded := await GameSave.load_saved_game()
+	if not loaded:
+		status_label.text = "No se pudo cargar la partida."
+		_update_load_button_state()
 
 func _on_quit_pressed() -> void:
 	_play_accept_sfx()
@@ -242,6 +254,13 @@ func _get_focusable_buttons() -> Array[Button]:
 	if quit_button.visible and not quit_button.disabled:
 		buttons.append(quit_button)
 	return buttons
+
+func _update_load_button_state() -> void:
+	var can_load := has_node("/root/GameSave") and GameSave.has_method("has_save") and bool(GameSave.call("has_save"))
+	load_button.disabled = not can_load
+	load_button.focus_mode = Control.FOCUS_ALL if can_load else Control.FOCUS_NONE
+	if not can_load:
+		status_label.text = "No hay partida guardada."
 
 func _play_focus_sfx() -> void:
 	if has_node("/root/AudioManager"):
