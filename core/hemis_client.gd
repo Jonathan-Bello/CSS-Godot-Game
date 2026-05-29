@@ -1,18 +1,20 @@
 extends Node
-class_name EmisClient
+class_name HemisClient
 
 @export var base_url: String = "http://127.0.0.1:8080"
-@export var chat_endpoint: String = "/api/emis/chat"
+@export var chat_endpoint: String = "/api/hemis/chat"
 @export var timeout_seconds: float = 20.0
 @export var auto_discover_endpoint: bool = true
-@export var api_key_header: String = "X-Emis-Api-Key"
+@export var api_key_header: String = "X-Hemis-Api-Key"
 @export var candidate_endpoints: PackedStringArray = PackedStringArray([
+	"/api/hemis/chat",
 	"/api/emis/chat",
 	"/chat",
 	"/api/chat",
 	"/v1/chat",
+	"/hemis/chat",
 	"/emis/chat",
-	"/api/v1/emis/chat"
+	"/api/v1/hemis/chat"
 ])
 
 var _resolved_endpoint: String = ""
@@ -29,10 +31,10 @@ func has_player_api_key() -> bool:
 
 func request_chat(payload: Dictionary) -> Dictionary:
 	if payload.is_empty():
-		return _error_result("Mensaje vacío para Emis.", "invalid_response")
+		return _error_result("Mensaje vacío para Hemis.", "invalid_response")
 
 	if not has_player_api_key():
-		return _error_result("Emis no configurado: agrega tu API key de Gemini.", "missing_api_key")
+		return _error_result("Hemis no configurado: agrega tu API key de Gemini.", "missing_api_key")
 
 	var endpoint_result := await _resolve_chat_endpoint(payload)
 	if not bool(endpoint_result.get("ok", false)):
@@ -40,7 +42,7 @@ func request_chat(payload: Dictionary) -> Dictionary:
 
 	var endpoint := String(endpoint_result.get("endpoint", ""))
 	if endpoint == "":
-		return _error_result("No pude determinar el endpoint de chat de Emis.", "invalid_response")
+		return _error_result("No pude determinar el endpoint de chat de Hemis.", "invalid_response")
 
 	var response := await _post_json(endpoint, payload)
 	if not bool(response.get("ok", false)):
@@ -52,7 +54,7 @@ func request_chat(payload: Dictionary) -> Dictionary:
 
 	var status_code := int(response.get("status_code", 0))
 	if status_code < 200 or status_code >= 300:
-		push_warning("[Emis] HTTP no exitoso: %s (endpoint=%s)" % [status_code, endpoint])
+		push_warning("[Hemis] HTTP no exitoso: %s (endpoint=%s)" % [status_code, endpoint])
 		var error_body: Variant = JSON.parse_string(String(response.get("body_text", "")))
 		if typeof(error_body) == TYPE_DICTIONARY:
 			var error_dict: Dictionary = error_body
@@ -60,20 +62,20 @@ func request_chat(payload: Dictionary) -> Dictionary:
 			var backend_code := String(error_dict.get("code", "http_error")).strip_edges()
 			if backend_error != "":
 				return _error_result(backend_error, backend_code)
-		return _error_result("Emis respondio con un error del servidor.", "http_error")
+		return _error_result("Hemis respondio con un error del servidor.", "http_error")
 
 	var parsed: Variant = JSON.parse_string(String(response.get("body_text", "")))
 	if typeof(parsed) != TYPE_DICTIONARY:
-		push_warning("[Emis] JSON inválido o no es objeto")
-		return _error_result("La respuesta de Emis llegó en un formato inválido.", "invalid_response")
+		push_warning("[Hemis] JSON inválido o no es objeto")
+		return _error_result("La respuesta de Hemis llegó en un formato inválido.", "invalid_response")
 
 	var parsed_dict: Dictionary = parsed
 	var reply := _extract_reply(parsed_dict)
 	if reply == "":
-		push_warning("[Emis] Esquema inesperado: falta campo reply/message")
-		return _error_result("No entendí la respuesta de Emis.", "invalid_response")
+		push_warning("[Hemis] Esquema inesperado: falta campo reply/message")
+		return _error_result("No entendí la respuesta de Hemis.", "invalid_response")
 
-	print("[Emis] respuesta OK endpoint=%s" % endpoint)
+	print("[Hemis] respuesta OK endpoint=%s" % endpoint)
 	return {
 		"ok": true,
 		"reply": reply,
@@ -104,13 +106,15 @@ func _resolve_chat_endpoint(payload: Dictionary) -> Dictionary:
 		var status_code := int(probe.get("status_code", 0))
 		if status_code >= 200 and status_code < 300:
 			_resolved_endpoint = endpoint
-			print("[Emis] endpoint detectado automáticamente: %s" % endpoint)
+			print("[Hemis] endpoint detectado automáticamente: %s" % endpoint)
 			return {"ok": true, "endpoint": _resolved_endpoint}
 
-	return _error_result("No se encontró endpoint de chat válido en Emis.", "invalid_response")
+	return _error_result("No se encontró endpoint de chat válido en Hemis.", "invalid_response")
 
 func _read_explicit_endpoint() -> String:
-	var env_endpoint := OS.get_environment("EMIS_CHAT_ENDPOINT").strip_edges()
+	var env_endpoint := OS.get_environment("HEMIS_CHAT_ENDPOINT").strip_edges()
+	if env_endpoint == "":
+		env_endpoint = OS.get_environment("EMIS_CHAT_ENDPOINT").strip_edges()
 	if env_endpoint != "":
 		return _resolve_full_endpoint(env_endpoint)
 
@@ -141,7 +145,7 @@ func _discover_from_openapi() -> String:
 		var path := _extract_chat_path_from_openapi(parsed)
 		if path != "":
 			var resolved := _resolve_full_endpoint(path)
-			print("[Emis] endpoint encontrado en OpenAPI: %s" % resolved)
+			print("[Hemis] endpoint encontrado en OpenAPI: %s" % resolved)
 			return resolved
 
 	return ""
@@ -162,14 +166,16 @@ func _extract_chat_path_from_openapi(spec: Dictionary) -> String:
 			continue
 
 		var normalized := path.to_lower()
-		if normalized.contains("chat") or normalized.contains("emis"):
+		if normalized.contains("chat") or normalized.contains("hemis") or normalized.contains("emis"):
 			return path
 
 	return ""
 
 func _build_candidate_list() -> PackedStringArray:
 	var candidates := PackedStringArray()
-	var env_candidates := OS.get_environment("EMIS_CHAT_ENDPOINTS").strip_edges()
+	var env_candidates := OS.get_environment("HEMIS_CHAT_ENDPOINTS").strip_edges()
+	if env_candidates == "":
+		env_candidates = OS.get_environment("EMIS_CHAT_ENDPOINTS").strip_edges()
 	if env_candidates != "":
 		for part in env_candidates.split(","):
 			var candidate := String(part).strip_edges()
@@ -196,7 +202,9 @@ func _resolve_full_endpoint(endpoint: String) -> String:
 	return normalized_base + normalized_endpoint
 
 func _resolve_base_url() -> String:
-	var env_base := OS.get_environment("EMIS_BASE_URL").strip_edges()
+	var env_base := OS.get_environment("HEMIS_BASE_URL").strip_edges()
+	if env_base == "":
+		env_base = OS.get_environment("EMIS_BASE_URL").strip_edges()
 	if env_base != "":
 		return env_base
 	var web_base := _read_web_backend_url()
@@ -207,7 +215,7 @@ func _resolve_base_url() -> String:
 func _resolve_player_api_key() -> String:
 	if _player_api_key != "":
 		return _player_api_key
-	var context := get_node_or_null("/root/EmisGameContext")
+	var context := get_node_or_null("/root/HemisGameContext")
 	if context != null and context.has_method("get_api_key"):
 		var from_context := String(context.call("get_api_key")).strip_edges()
 		if from_context != "":
@@ -225,7 +233,7 @@ func _read_web_api_key() -> String:
 	var bridge := Engine.get_singleton("JavaScriptBridge")
 	if bridge == null:
 		return ""
-	var value: Variant = bridge.call("eval", "String(window.EMIS_PLAYER_API_KEY || '')", true)
+	var value: Variant = bridge.call("eval", "String(window.HEMIS_PLAYER_API_KEY || window.EMIS_PLAYER_API_KEY || '')", true)
 	return String(value).strip_edges()
 
 func _read_web_backend_url() -> String:
@@ -236,7 +244,7 @@ func _read_web_backend_url() -> String:
 	var bridge := Engine.get_singleton("JavaScriptBridge")
 	if bridge == null:
 		return ""
-	var value: Variant = bridge.call("eval", "String(window.EMIS_BACKEND_URL || '')", true)
+	var value: Variant = bridge.call("eval", "String(window.HEMIS_BACKEND_URL || window.EMIS_BACKEND_URL || '')", true)
 	return String(value).strip_edges()
 
 func _create_http_request() -> HTTPRequest:
@@ -265,30 +273,30 @@ func _request_json(endpoint: String, method: int, body: String, headers: PackedS
 	http.timeout = max(timeout_seconds, 0.1)
 
 	var request_started_msec := Time.get_ticks_msec()
-	print("[Emis] request -> %s (method=%s, payload=%s bytes, timeout=%ss)" % [endpoint, method, body.length(), timeout_seconds])
+	print("[Hemis] request -> %s (method=%s, payload=%s bytes, timeout=%ss)" % [endpoint, method, body.length(), timeout_seconds])
 	var request_error := http.request(endpoint, headers, method, body)
 	if request_error != OK:
 		http.queue_free()
-		push_warning("[Emis] Falló request() con código %s" % request_error)
-		return _error_result("No pude conectar con Emis en este momento.", "network")
+		push_warning("[Hemis] Falló request() con código %s" % request_error)
+		return _error_result("No pude conectar con Hemis en este momento.", "network")
 
 	var response := await _await_http_response(http, endpoint)
 	http.queue_free()
 	var elapsed_ms :Variant= max(0, Time.get_ticks_msec() - request_started_msec)
-	print("[Emis] request <- elapsed=%sms code=%s ok=%s" % [elapsed_ms, str(response.get("code", "")), str(response.get("ok", false))])
+	print("[Hemis] request <- elapsed=%sms code=%s ok=%s" % [elapsed_ms, str(response.get("code", "")), str(response.get("ok", false))])
 	return response
 
 func _await_http_response(http: HTTPRequest, endpoint: String) -> Dictionary:
 	var completed: Array = await http.request_completed
 	if completed.size() < 4:
-		push_warning("[Emis] respuesta incompleta del request endpoint=%s" % endpoint)
-		return _error_result("La respuesta de Emis llegó incompleta.", "invalid_response")
+		push_warning("[Hemis] respuesta incompleta del request endpoint=%s" % endpoint)
+		return _error_result("La respuesta de Hemis llegó incompleta.", "invalid_response")
 
 	var result := int(completed[0])
 	var response_code := int(completed[1])
 	var body := completed[3] as PackedByteArray
 	if result == HTTPRequest.RESULT_TIMEOUT:
-		push_warning("[Emis] timeout alcanzado (%ss) endpoint=%s" % [timeout_seconds, endpoint])
+		push_warning("[Hemis] timeout alcanzado (%ss) endpoint=%s" % [timeout_seconds, endpoint])
 	return _map_http_packet(result, response_code, body)
 
 func _map_http_packet(result: int, response_code: int, body: PackedByteArray) -> Dictionary:
@@ -307,14 +315,14 @@ func _map_http_packet(result: int, response_code: int, body: PackedByteArray) ->
 		HTTPRequest.RESULT_TLS_HANDSHAKE_ERROR
 	]
 	if network_codes.has(result):
-		push_warning("[Emis] backend caído o inaccesible. result=%s" % result)
-		return _error_result("No se pudo conectar al backend de Emis.", "network")
+		push_warning("[Hemis] backend caído o inaccesible. result=%s" % result)
+		return _error_result("No se pudo conectar al backend de Hemis.", "network")
 
 	if result == HTTPRequest.RESULT_TIMEOUT:
-		return _error_result("La conexión con Emis expiró.", "timeout")
+		return _error_result("La conexión con Hemis expiró.", "timeout")
 
-	push_warning("[Emis] error HTTPRequest result=%s response=%s" % [result, response_code])
-	return _error_result("No se pudo completar la solicitud a Emis.", "network")
+	push_warning("[Hemis] error HTTPRequest result=%s response=%s" % [result, response_code])
+	return _error_result("No se pudo completar la solicitud a Hemis.", "network")
 
 func _extract_reply(raw: Dictionary) -> String:
 	var direct := String(raw.get("reply", "")).strip_edges()

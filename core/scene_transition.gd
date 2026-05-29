@@ -58,6 +58,7 @@ func set_pending_spawn_position(position: Vector2) -> void:
 	pending_spawn_marker = ""
 
 func _transition_to_scene(scene_path: String, spawn_marker: String, fade_time: float, music_stream: AudioStream, music_volume_db: float, music_fade_time: float, use_static: bool, static_hold_time: float) -> void:
+	scene_path = _normalize_scene_path(scene_path)
 	if _is_transitioning or scene_path == "":
 		return
 	_is_transitioning = true
@@ -76,6 +77,13 @@ func _transition_to_scene(scene_path: String, spawn_marker: String, fade_time: f
 	await fade_in(fade_time)
 	await _set_static_visible(false)
 	_is_transitioning = false
+
+func _normalize_scene_path(scene_path: String) -> String:
+	match scene_path:
+		"res://content/levels/city_main.tscn":
+			return "res://content/levels/citadel_main.tscn"
+		_:
+			return scene_path
 
 func _set_static_visible(should_show: bool) -> void:
 	if _static_rect == null:

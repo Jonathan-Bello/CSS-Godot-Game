@@ -1,131 +1,103 @@
-# CSS-Game
+# CSS Godot Game
 
-Integración Godot + overlay web + backend Emis para chat contextual de CSS.
+Repositorio del prototipo en Godot de **Citadel of Solar Souls (CSS)**, videojuego educativo 2D donde las propiedades CSS se convierten en municion, puzzles y decisiones tacticas de combate. El asistente contextual del juego se llama **Hemis**.
 
-## 1) Submódulo backend (`backend/emis-backend`)
+## URLs oficiales
 
-> Ruta del submódulo en este repo: `backend/emis-backend`.
+- Sitio: https://css.jonathanbello.com/
+- GDD: https://css.jonathanbello.com/gdd/
+- Demo web: https://css.jonathanbello.com/demo/
 
-### Inicializar/actualizar
+## Repositorios relacionados
 
-```bash
-git submodule sync -- backend/emis-backend
-git submodule update --init --recursive backend/emis-backend
+- Juego Godot: https://github.com/Jonathan-Bello/CSS-Godot-Game
+- GDD web: https://github.com/Jonathan-Bello/GDD-CSS
+- Backend Hemis: https://github.com/Jonathan-Bello/CSS-Game-Emis
+
+## Estado del demo
+
+Estado documentado: **2026-05-29**.
+
+- `content/levels/tutorial_cave.tscn`: zona tutorial terminada para la vertical slice.
+- `content/levels/citadel_main.tscn`: Ciudadela/Citadel en avance visual y jugable parcial.
+- `content/levels/final_combat.tscn`: combate con jefe en avance parcial.
+- Las capturas de Ciudadela y jefe deben reportarse como avance, no como zonas finalizadas.
+
+## Logros tecnicos principales
+
+- Integracion de arte SVG nativo dentro del pipeline de Godot.
+- Parser CSS propio para convertir propiedades de estilo en configuraciones jugables de municion.
+- Editor CSS embebido en WebView con preview visual y comunicacion Godot-Web.
+- Sistema de Hemis como tutor contextual y evaluador de codigo CSS.
+- Export web con `hemis-config.js` y `hemis-bootstrap.js`.
+- Rutas y compatibilidad legacy para proyectos anteriores que usaban `Emis`.
+
+## Estructura relevante
+
+```text
+core/
+  hemis_client.gd
+  hemis_game_context.gd
+content/
+  levels/tutorial_cave.tscn
+  levels/citadel_main.tscn
+  levels/final_combat.tscn
+  lore/tutorial_cave_context.md
+features/ui/hud/
+  web_overlay_editor.html
+  web_overlay_hemis_chat.html
+features/world/
+  hemis_dialog_trigger.gd
+backend/emis-backend/
+  backend Express de Hemis
 ```
 
-Si tu entorno bloquea SSH con GitHub, este repo ya deja el submódulo en HTTPS dentro de `.gitmodules`.
+## Hemis
 
-## 2) Endpoint real de chat (cómo identificarlo sin asumir ruta)
+El nombre canonico del asistente es **Hemis**. Se mantienen alias legacy donde son utiles para no romper exportaciones o integraciones antiguas:
 
-El cliente Godot **ya no asume una ruta fija**. Resuelve endpoint en este orden:
+- Variables web canonicas: `window.HEMIS_BACKEND_URL`, `window.HEMIS_PLAYER_API_KEY`.
+- Variables web legacy: `window.EMIS_BACKEND_URL`, `window.EMIS_PLAYER_API_KEY`.
+- Funcion canonica: `window.setHemisPlayerApiKey`.
+- Funcion legacy: `window.setEmisPlayerApiKey`.
+- Contrato canonico: `hemis_chat_v1`.
 
-1. `EMIS_CHAT_ENDPOINT` (explícito)
-2. propiedad exportada `chat_endpoint` (si se configuró)
-3. auto-discovery vía OpenAPI (`/openapi.json`, `/docs/openapi.json`)
-4. fallback por candidatos (`EMIS_CHAT_ENDPOINTS` o lista local)
+## Backend
 
-Contrato actual del cliente:
+El backend publico se configura en:
 
-- Método HTTP: `POST`
-- `Content-Type: application/json`
-- Body (request):
-
-```json
-{
-  "contract_version": "emis_chat_v1",
-  "message": "¿Cómo mejoro el contraste del botón?",
-  "context": {
-    "contract_version": "emis_chat_v1",
-    "css_text": ".btn{color:#fff;background:#333}",
-    "svg_text": "<svg>...</svg>",
-    "bullet_equipped": true,
-    "updated_at": "2026-04-25T00:00:00Z",
-    "detected_properties": ["color", "background"],
-    "css_rules": ["color", "background"],
-    "locked_properties": ["position"],
-    "unlock_state": {},
-    "all_properties": ["color", "background", "border"]
-  }
-}
+```js
+window.HEMIS_BACKEND_URL = "https://css-game-emis.onrender.com";
+window.EMIS_BACKEND_URL = window.HEMIS_BACKEND_URL;
 ```
 
-Response aceptada por el cliente (200-299):
+El repositorio del backend conserva el nombre historico `CSS-Game-Emis`, pero la documentacion y producto usan **Hemis**.
 
-```json
-{ "reply": "Sube el contraste cambiando el fondo a #1f2937." }
+## Propiedades CSS del prototipo
+
+Las propiedades oficialmente documentadas para la evaluacion del prototipo son:
+
+- `fill`
+- `stroke`
+- `opacity`
+- `width`
+- `height`
+
+## Ejecutar en Godot
+
+Abrir `project.godot` con Godot 4.x. Para validacion headless:
+
+```sh
+D:\Godot\godot_console.exe --headless --path . --quit
 ```
 
-o también:
+## Export web
 
-```json
-{ "message": "Sube el contraste cambiando el fondo a #1f2937." }
+El export HTML debe incluir:
+
+```html
+<script src="hemis-config.js"></script>
+<script src="hemis-bootstrap.js"></script>
 ```
 
-## 3) Levantar backend en `127.0.0.1:8080`
-
-Desde el raíz del proyecto principal:
-
-```bash
-cd backend/emis-backend
-```
-
-Luego ejecuta el comando de arranque definido por el backend (por ejemplo `docker compose up`, `npm run dev`, `uvicorn ...`, etc.).
-
-El requisito para el cliente Godot es que el backend quede accesible en:
-
-- Base URL: `http://127.0.0.1:8080`
-- Endpoint: el detectado por auto-discovery o el indicado en variables de entorno.
-
-## 4) Variables de entorno necesarias
-
-Variables consumidas por `EmisClient`:
-
-- `EMIS_BASE_URL` (opcional): sobreescribe `base_url`.
-  - Ejemplo: `EMIS_BASE_URL=http://127.0.0.1:8080`
-- `EMIS_CHAT_ENDPOINT` (opcional): endpoint explícito de chat.
-  - Ejemplo: `EMIS_CHAT_ENDPOINT=/api/chat`
-- `EMIS_CHAT_ENDPOINTS` (opcional): candidatos separados por coma para auto-probing.
-  - Ejemplo: `EMIS_CHAT_ENDPOINTS=/api/chat,/chat,/v1/chat`
-
-Si defines `EMIS_CHAT_ENDPOINT`, esa ruta tiene prioridad.
-
-## 5) Guía de prueba manual (overlay chat)
-
-1. Levanta el backend Emis en `127.0.0.1:8080`.
-2. Ejecuta el proyecto Godot.
-3. Abre el overlay web donde aparece el panel **💬 Emis (chatbot)**.
-4. Envía un mensaje de prueba (ej. “¿qué propiedad CSS desbloqueo primero?”).
-5. Verifica en consola Godot:
-   - log de envío: `"[Emis] solicitud -> ..."`
-   - endpoint resuelto: `"[Emis] endpoint ..."`
-   - log de respuesta: `"[Emis] respuesta <- ..."`
-6. Valida en UI:
-   - aparece burbuja del usuario,
-   - aparece estado “Emis escribiendo…”,
-   - aparece burbuja de respuesta Emis,
-   - el input se vuelve a habilitar.
-7. Prueba manejo de error:
-   - apaga backend,
-   - envía otro mensaje,
-   - debe mostrarse mensaje de falla controlada en overlay.
-
-## 6) Comprobación rápida por cURL
-
-Con endpoint explícito:
-
-```bash
-curl -sS -X POST "http://127.0.0.1:8080/api/chat" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "contract_version":"emis_chat_v1",
-    "message":"hola emis",
-    "context":{"css_text":".btn{color:#fff}","svg_text":"<svg></svg>"}
-  }'
-```
-
-Si no conoces la ruta, revisa OpenAPI:
-
-```bash
-curl -sS http://127.0.0.1:8080/openapi.json
-curl -sS http://127.0.0.1:8080/docs/openapi.json
-```
+`export_presets.cfg` ya referencia esos archivos en `html/head_include`.

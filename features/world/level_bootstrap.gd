@@ -7,16 +7,16 @@ class_name LevelBootstrap
 @export var default_spawn_marker: StringName = &"PlayerStart"
 @export var level_id: String = ""
 @export_multiline var level_objective: String = ""
-@export_file("*.md") var emis_context_document: String = ""
+@export_file("*.md") var hemis_context_document: String = ""
 
 func _ready() -> void:
-	if has_node("/root/EmisGameContext"):
+	if has_node("/root/HemisGameContext"):
 		var resolved_level := level_id.strip_edges()
 		if resolved_level == "":
 			resolved_level = get_tree().current_scene.scene_file_path.get_file().get_basename()
-		EmisGameContext.update_level(resolved_level, level_objective)
-		if EmisGameContext.has_method("set_level_context_document_from_file"):
-			EmisGameContext.call("set_level_context_document_from_file", emis_context_document)
+		HemisGameContext.update_level(resolved_level, level_objective)
+		if HemisGameContext.has_method("set_level_context_document_from_file"):
+			HemisGameContext.call("set_level_context_document_from_file", hemis_context_document)
 	if has_node("/root/AudioManager") and start_music != null:
 		AudioManager.play_music(start_music, music_fade_time, music_volume_db)
 	if has_node("/root/SceneTransition"):

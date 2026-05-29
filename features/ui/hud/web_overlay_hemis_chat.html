@@ -18,7 +18,7 @@
   .chat-messages{display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0;padding-right:2px}
   .chat-bubble{width:fit-content;max-width:min(92%,760px);padding:8px 10px;border-radius:10px;font-size:12px;line-height:1.4;word-break:break-word;white-space:pre-wrap;border:1px solid transparent}
   .chat-bubble.user{margin-left:auto;background:#23406f;color:#e6f1ff;border-color:#36578f}
-  .chat-bubble.emis{margin-right:auto;background:#191f34;color:#ffe8b6;border-color:#424f7a}
+  .chat-bubble.hemis{margin-right:auto;background:#191f34;color:#ffe8b6;border-color:#424f7a}
   .chat-input-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
   .chat-input-row input{background:#0b1222;color:#fff;border:1px solid #345;border-radius:8px;padding:8px}
   .chat-typing{font-size:11px;color:#ffde9f;min-height:16px}
@@ -37,16 +37,16 @@
         </svg>
       </div>
       <aside class="chat-shell">
-        <h3>Emis</h3>
+        <h3>Hemis</h3>
         <div id="keyPanel" class="key-panel">
           <input id="apiKeyInput" type="password" autocomplete="off" spellcheck="false" placeholder="API key de Gemini"/>
           <button id="apiKeySave">Usar key</button>
-          <div id="keyStatus" class="key-status">Emis no configurado. La key se conserva solo mientras la pestana siga abierta.</div>
+          <div id="keyStatus" class="key-status">Hemis no configurado. La key se conserva solo mientras la pestana siga abierta.</div>
         </div>
         <div id="chatMessages" class="chat-messages"></div>
-        <div id="chatTyping" class="chat-typing hidden">Emis escribiendo...</div>
+        <div id="chatTyping" class="chat-typing hidden">Hemis escribiendo...</div>
         <div class="chat-input-row">
-          <input id="chatInput" type="text" maxlength="240" placeholder="Preguntale a Emis"/>
+          <input id="chatInput" type="text" maxlength="240" placeholder="Preguntale a Hemis"/>
           <button id="chatSend">Enviar</button>
         </div>
       </aside>
@@ -63,24 +63,24 @@ const chatMessagesEl=document.getElementById('chatMessages');
 const chatInputEl=document.getElementById('chatInput');
 const chatSendEl=document.getElementById('chatSend');
 const chatTypingEl=document.getElementById('chatTyping');
-let chatMessages=[{role:'emis',text:'Hola. Soy Emis. Agrega tu API key de Gemini para activar el chat.'}];
+let chatMessages=[{role:'hemis',text:'Hola. Soy Hemis. Agrega tu API key de Gemini para activar el chat.'}];
 let chatWaitingReply=false;
 let apiKeyConfigured=false;
-const EMIS_CHAT_CONTRACT_VERSION='emis_chat_v1';
+const HEMIS_CHAT_CONTRACT_VERSION='hemis_chat_v1';
 let lastCss='';
 
 function closeOverlay(){try{ipc.postMessage('close');ipc.postMessage(JSON.stringify({type:'close'}));}catch(_e){}}
 function escapeHtml(raw){return String(raw||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function setChatWaitingState(w){chatWaitingReply=!!w;if(chatInputEl)chatInputEl.disabled=chatWaitingReply||!apiKeyConfigured;if(chatSendEl)chatSendEl.disabled=chatWaitingReply||!apiKeyConfigured;if(chatTypingEl)chatTypingEl.classList.toggle('hidden',!chatWaitingReply);}
-function setApiKeyConfigured(configured){apiKeyConfigured=!!configured;if(keyPanelEl)keyPanelEl.classList.toggle('hidden',apiKeyConfigured);if(keyStatusEl)keyStatusEl.textContent=apiKeyConfigured?'Emis configurado para esta sesion.':'Emis no configurado. La key se conserva solo mientras la pestana siga abierta.';setChatWaitingState(chatWaitingReply);}
-function renderChatMessages(){if(!chatMessagesEl)return;chatMessagesEl.innerHTML=chatMessages.map(m=>'<div class="chat-bubble '+(m.role==='user'?'user':'emis')+'">'+escapeHtml(m.text||'')+'</div>').join('');chatMessagesEl.scrollTop=chatMessagesEl.scrollHeight;}
-function pushChatMessage(role,text){const t=String(text||'').trim();if(!t)return;chatMessages.push({role:role==='user'?'user':'emis',text:t});renderChatMessages();}
-function normalizeEmisReplyText(payload){if(!payload||typeof payload!=='object')return '';const candidates=[payload.reply,payload.message];for(const candidate of candidates){if(typeof candidate!=='string')continue;const normalized=candidate.trim();if(!normalized)continue;if(normalized.startsWith('{')){try{const parsed=JSON.parse(normalized);if(parsed&&typeof parsed==='object'){if(typeof parsed.reply==='string'&&parsed.reply.trim())return parsed.reply.trim();if(typeof parsed.message==='string'&&parsed.message.trim())return parsed.message.trim();if(typeof parsed.Rippledai==='string'&&parsed.Rippledai.trim())return parsed.Rippledai.trim();if(typeof parsed.rippledai==='string'&&parsed.rippledai.trim())return parsed.rippledai.trim();}}catch(_e){}}return normalized;}if(typeof payload.error==='string'&&payload.error.trim())return payload.error.trim();return '';}
-function submitApiKey(){if(!apiKeyInputEl)return;const apiKey=String(apiKeyInputEl.value||'').trim();if(!apiKey){if(keyStatusEl)keyStatusEl.textContent='Pega una API key de Gemini para activar Emis.';return;}try{ipc.postMessage(JSON.stringify({type:'emis_api_key_submit',api_key:apiKey}));apiKeyInputEl.value='';setApiKeyConfigured(true);pushChatMessage('emis','Emis configurado para esta sesion.');if(chatInputEl)chatInputEl.focus();}catch(_e){if(keyStatusEl)keyStatusEl.textContent='No pude configurar la API key.';}}
-function sendChatMessage(){if(!chatInputEl||chatWaitingReply)return;if(!apiKeyConfigured){pushChatMessage('emis','Emis no configurado: agrega tu API key de Gemini.');return;}const message=String(chatInputEl.value||'').trim();if(!message)return;pushChatMessage('user',message);chatInputEl.value='';setChatWaitingState(true);try{ipc.postMessage(JSON.stringify({type:'chat_request',contract_version:EMIS_CHAT_CONTRACT_VERSION,chat_surface:'general_chat',intent_mode:'auto',message,context:{contract_version:EMIS_CHAT_CONTRACT_VERSION,chat_surface:'general_chat',history:chatMessages,snapshot:{css_text:lastCss}}}));}catch(_e){pushChatMessage('emis','No pude enviar tu mensaje.');setChatWaitingState(false);}}
-window.onEmisApiKeyStatus=function(payload){setApiKeyConfigured(!!(payload&&payload.configured));};
-window.onEmisReply=function(payload){try{const r=normalizeEmisReplyText(payload);if(!r){pushChatMessage('emis','No pude entender la respuesta de Emis.');return;}pushChatMessage('emis',r);if(payload&&payload.code==='missing_api_key')setApiKeyConfigured(false);}finally{setChatWaitingState(false);if(chatInputEl)chatInputEl.focus();}};
-function hydrateFromGodot(payload){if(!payload||typeof payload!=='object')return;lastCss=typeof payload.css_text==='string'?payload.css_text:lastCss;setApiKeyConfigured(!!payload.emis_api_key_configured);const txt=typeof payload.svg_text==='string'?payload.svg_text:'';if(styleEl&&lastCss)styleEl.textContent=lastCss;if(txt){const parsed=new DOMParser().parseFromString(txt,'image/svg+xml');const next=parsed.documentElement;if(next&&next.nodeName.toLowerCase()==='svg'){while(svg.firstChild)svg.removeChild(svg.firstChild);for(const child of Array.from(next.children)){svg.appendChild(document.importNode(child,true));}}}}
+function setApiKeyConfigured(configured){apiKeyConfigured=!!configured;if(keyPanelEl)keyPanelEl.classList.toggle('hidden',apiKeyConfigured);if(keyStatusEl)keyStatusEl.textContent=apiKeyConfigured?'Hemis configurado para esta sesion.':'Hemis no configurado. La key se conserva solo mientras la pestana siga abierta.';setChatWaitingState(chatWaitingReply);}
+function renderChatMessages(){if(!chatMessagesEl)return;chatMessagesEl.innerHTML=chatMessages.map(m=>'<div class="chat-bubble '+(m.role==='user'?'user':'hemis')+'">'+escapeHtml(m.text||'')+'</div>').join('');chatMessagesEl.scrollTop=chatMessagesEl.scrollHeight;}
+function pushChatMessage(role,text){const t=String(text||'').trim();if(!t)return;chatMessages.push({role:role==='user'?'user':'hemis',text:t});renderChatMessages();}
+function normalizeHemisReplyText(payload){if(!payload||typeof payload!=='object')return '';const candidates=[payload.reply,payload.message];for(const candidate of candidates){if(typeof candidate!=='string')continue;const normalized=candidate.trim();if(!normalized)continue;if(normalized.startsWith('{')){try{const parsed=JSON.parse(normalized);if(parsed&&typeof parsed==='object'){if(typeof parsed.reply==='string'&&parsed.reply.trim())return parsed.reply.trim();if(typeof parsed.message==='string'&&parsed.message.trim())return parsed.message.trim();if(typeof parsed.Rippledai==='string'&&parsed.Rippledai.trim())return parsed.Rippledai.trim();if(typeof parsed.rippledai==='string'&&parsed.rippledai.trim())return parsed.rippledai.trim();}}catch(_e){}}return normalized;}if(typeof payload.error==='string'&&payload.error.trim())return payload.error.trim();return '';}
+function submitApiKey(){if(!apiKeyInputEl)return;const apiKey=String(apiKeyInputEl.value||'').trim();if(!apiKey){if(keyStatusEl)keyStatusEl.textContent='Pega una API key de Gemini para activar Hemis.';return;}try{ipc.postMessage(JSON.stringify({type:'hemis_api_key_submit',api_key:apiKey}));apiKeyInputEl.value='';setApiKeyConfigured(true);pushChatMessage('hemis','Hemis configurado para esta sesion.');if(chatInputEl)chatInputEl.focus();}catch(_e){if(keyStatusEl)keyStatusEl.textContent='No pude configurar la API key.';}}
+function sendChatMessage(){if(!chatInputEl||chatWaitingReply)return;if(!apiKeyConfigured){pushChatMessage('hemis','Hemis no configurado: agrega tu API key de Gemini.');return;}const message=String(chatInputEl.value||'').trim();if(!message)return;pushChatMessage('user',message);chatInputEl.value='';setChatWaitingState(true);try{ipc.postMessage(JSON.stringify({type:'chat_request',contract_version:HEMIS_CHAT_CONTRACT_VERSION,chat_surface:'general_chat',intent_mode:'auto',message,context:{contract_version:HEMIS_CHAT_CONTRACT_VERSION,chat_surface:'general_chat',history:chatMessages,snapshot:{css_text:lastCss}}}));}catch(_e){pushChatMessage('hemis','No pude enviar tu mensaje.');setChatWaitingState(false);}}
+window.onHemisApiKeyStatus=function(payload){setApiKeyConfigured(!!(payload&&payload.configured));};
+window.onHemisReply=function(payload){try{const r=normalizeHemisReplyText(payload);if(!r){pushChatMessage('hemis','No pude entender la respuesta de Hemis.');return;}pushChatMessage('hemis',r);if(payload&&payload.code==='missing_api_key')setApiKeyConfigured(false);}finally{setChatWaitingState(false);if(chatInputEl)chatInputEl.focus();}};
+function hydrateFromGodot(payload){if(!payload||typeof payload!=='object')return;lastCss=typeof payload.css_text==='string'?payload.css_text:lastCss;setApiKeyConfigured(!!payload.hemis_api_key_configured);const txt=typeof payload.svg_text==='string'?payload.svg_text:'';if(styleEl&&lastCss)styleEl.textContent=lastCss;if(txt){const parsed=new DOMParser().parseFromString(txt,'image/svg+xml');const next=parsed.documentElement;if(next&&next.nodeName.toLowerCase()==='svg'){while(svg.firstChild)svg.removeChild(svg.firstChild);for(const child of Array.from(next.children)){svg.appendChild(document.importNode(child,true));}}}}
 window.hydrateFromGodot=hydrateFromGodot;
 renderChatMessages();
 if(apiKeySaveEl)apiKeySaveEl.addEventListener('click',submitApiKey);

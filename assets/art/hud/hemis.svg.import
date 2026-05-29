@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6r3pmeaffncq"
-path="res://.godot/imported/emis.svg-6623a6e4d405f487276606a063e99e5c.ctex"
+path="res://.godot/imported/hemis.svg-bd45a0ccdecd3f78f70c5a4615d88ffc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/hud/emis.svg"
-dest_files=["res://.godot/imported/emis.svg-6623a6e4d405f487276606a063e99e5c.ctex"]
+source_file="res://assets/art/hud/hemis.svg"
+dest_files=["res://.godot/imported/hemis.svg-bd45a0ccdecd3f78f70c5a4615d88ffc.ctex"]
 
 [params]
 

@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://01hx4wpcphus" path="res://features/ui/hud/main_hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" uid="uid://d4bd58fueck4y" path="res://features/world/pilar_solar.tscn" id="6_pilar"]
 [ext_resource type="PackedScene" path="res://features/world/respawn_zone.tscn" id="9_respawn"]
-[ext_resource type="PackedScene" uid="uid://b8y4a82c2x8a5" path="res://features/world/emis_dialog_trigger.tscn" id="10_emis"]
+[ext_resource type="PackedScene" path="res://features/world/hemis_dialog_trigger.tscn" id="10_hemis"]
 [ext_resource type="Script" uid="uid://rjxipc088xcd" path="res://features/world/footstep_audio_trigger.gd" id="11_surface"]
 [ext_resource type="Script" uid="uid://b1bortys85ulv" path="res://features/world/route_gate.gd" id="12_gate"]
 [ext_resource type="AudioStream" uid="uid://dnmla1lehhfpg" path="res://assets/music/cave themeb4.ogg" id="14_music_cave"]
@@ -187,7 +187,7 @@ size = Vector2(960, 620)
 [sub_resource type="RectangleShape2D" id="Shape_gate"]
 size = Vector2(170, 330)
 
-[node name="CityMain" type="Node2D"]
+[node name="CitadelMain" type="Node2D"]
 
 [node name="Bootstrap" type="Node" parent="."]
 script = ExtResource("1_bootstrap")
@@ -217,7 +217,7 @@ position = Vector2(165, 430)
 [node name="HubSpawn" type="Marker2D" parent="Markers"]
 position = Vector2(8650, 430)
 
-[node name="CityStartReturn" type="Marker2D" parent="Markers"]
+[node name="CitadelStartReturn" type="Marker2D" parent="Markers"]
 position = Vector2(165, 430)
 
 [node name="Player" parent="." instance=ExtResource("3_player")]
@@ -250,8 +250,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="WebView" type="Control" parent="Player/Camera2D/Control/PanelContainer"]
-transparent = true
-focused_when_created = false
 layout_mode = 2
 
 [node name="MainHUD" parent="Player/Camera2D" instance=ExtResource("5_hud")]
@@ -374,38 +372,38 @@ position = Vector2(6200, 1010)
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Geometry/FallRespawnZone"]
 shape = SubResource("Shape_respawn")
 
-[node name="CityFootstepTrigger" type="Area2D" parent="."]
+[node name="CitadelFootstepTrigger" type="Area2D" parent="."]
 position = Vector2(6200, 200)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("11_surface")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CityFootstepTrigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CitadelFootstepTrigger"]
 shape = SubResource("Shape_zone")
 
 [node name="Narrative" type="Node2D" parent="."]
 
-[node name="CityIntro" parent="Narrative" instance=ExtResource("10_emis")]
+[node name="CitadelIntro" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(300, 470)
 scale = Vector2(2.5, 2)
 dialog_lines = PackedStringArray("Distrito de combate: aqui se prueba lectura de enemigos y afinidades CSS.", "Los enemigos azules reaccionan mejor a balas azules. Los rojos reaccionan mejor a balas rojas.")
 
-[node name="FlyingPairHint" parent="Narrative" instance=ExtResource("10_emis")]
+[node name="FlyingPairHint" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(2380, 470)
 scale = Vector2(2.4, 2)
 dialog_lines = PackedStringArray("Los drones vuelan hacia ti cuando entras en su rango.", "Mantente en movimiento y usa background-color: blue; con fill: blue; para eliminarlos mas rapido.")
 
-[node name="ChargerHint" parent="Narrative" instance=ExtResource("10_emis")]
+[node name="ChargerHint" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(4120, 470)
 scale = Vector2(2.4, 2)
 dialog_lines = PackedStringArray("El enemigo rojo carga en linea recta despues de prepararse.", "Dale espacio, salta sobre su avance y castigalo con background-color: red; y fill: red;.")
 
-[node name="MixedArenaHint" parent="Narrative" instance=ExtResource("10_emis")]
+[node name="MixedArenaHint" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(6120, 470)
 scale = Vector2(2.5, 2)
-dialog_lines = PackedStringArray("Ahora combina prioridades: primero controla al que te encierra el espacio.", "La ciudad queda armada como una ruta de combate conectada hacia la arena del jefe.")
+dialog_lines = PackedStringArray("Ahora combina prioridades: primero controla al que te encierra el espacio.", "La Ciudadela queda armada como una ruta de combate conectada hacia la arena del jefe.")
 
-[node name="BossArenaHint" parent="Narrative" instance=ExtResource("10_emis")]
+[node name="BossArenaHint" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(10540, 470)
 scale = Vector2(2.5, 2)
 dialog_lines = PackedStringArray("Esta es la estructura base de la arena del jefe.", "Cuando cruces el centro, las paredes se cerraran. La IA del jefe queda para la siguiente fase.")
@@ -559,26 +557,26 @@ offset_bottom = -160.0
 text = "TUTORIAL"
 horizontal_alignment = 1
 
-[node name="HubCityGate" type="Area2D" parent="RouteGates"]
+[node name="HubCitadelGate" type="Area2D" parent="RouteGates"]
 position = Vector2(8800, 410)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("12_gate")
-target_path = NodePath("../../Markers/CityStartReturn")
+target_path = NodePath("../../Markers/CitadelStartReturn")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RouteGates/HubCityGate"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RouteGates/HubCitadelGate"]
 shape = SubResource("Shape_gate")
 
-[node name="PortalVisual" type="Polygon2D" parent="RouteGates/HubCityGate"]
+[node name="PortalVisual" type="Polygon2D" parent="RouteGates/HubCitadelGate"]
 color = Color(0.3, 0.68, 1, 0.45)
 polygon = PackedVector2Array(-70, -150, 70, -150, 70, 150, -70, 150)
 
-[node name="Label" type="Label" parent="RouteGates/HubCityGate"]
-offset_left = -82.0
+[node name="Label" type="Label" parent="RouteGates/HubCitadelGate"]
+offset_left = -102.0
 offset_top = -190.0
-offset_right = 82.0
+offset_right = 102.0
 offset_bottom = -160.0
-text = "CIUDAD"
+text = "CIUDADELA"
 horizontal_alignment = 1
 
 [node name="HubCombatGate" type="Area2D" parent="RouteGates"]

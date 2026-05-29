@@ -26,10 +26,11 @@ func _on_body_entered(body: Node) -> void:
 	if has_node("/root/AudioManager"):
 		AudioManager.play_sfx_at(gate_sfx, global_position, -7.0)
 	if target_scene != "":
+		var resolved_target_scene := _normalize_scene_path(target_scene)
 		if has_node("/root/SceneTransition"):
-			await SceneTransition.transition_to_scene(target_scene, String(target_spawn_marker), scene_fade_time, target_music, music_volume_db, music_fade_time)
+			await SceneTransition.transition_to_scene(resolved_target_scene, String(target_spawn_marker), scene_fade_time, target_music, music_volume_db, music_fade_time)
 		else:
-			get_tree().change_scene_to_file(target_scene)
+			get_tree().change_scene_to_file(resolved_target_scene)
 		_cooldown = false
 		return
 
@@ -46,3 +47,10 @@ func _on_body_entered(body: Node) -> void:
 		body.call("set_respawn_checkpoint", target.global_position)
 	await get_tree().create_timer(0.35).timeout
 	_cooldown = false
+
+func _normalize_scene_path(scene_path: String) -> String:
+	match scene_path:
+		"res://content/levels/city_main.tscn":
+			return "res://content/levels/citadel_main.tscn"
+		_:
+			return scene_path

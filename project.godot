@@ -8,6 +8,8 @@
 
 config_version=5
 
+"ï»¿config_version"=5
+
 [addons]
 
 curved_lines_2d/snap_to_pixel=false
@@ -30,7 +32,7 @@ CssAffinity="*res://core/css_affinity.gd"
 CssUnlocks="*res://core/css_unlocks.gd"
 FontBootstrap="*res://core/font_bootstrap.gd"
 RuntimeEnvironment="*res://core/runtime_environment.gd"
-EmisGameContext="*res://core/emis_game_context.gd"
+HemisGameContext="*res://core/hemis_game_context.gd"
 MovementUnlocks="*res://core/movement_unlocks.gd"
 AudioManager="*res://core/audio_manager.gd"
 GameSave="*res://core/game_save.gd"

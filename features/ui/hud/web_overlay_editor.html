@@ -55,7 +55,7 @@
   .chat-messages{display:flex;flex-direction:column;gap:8px;overflow:auto;min-height:0;padding-right:2px}
   .chat-bubble{width:fit-content;max-width:min(92%,760px);padding:8px 10px;border-radius:10px;font-size:12px;line-height:1.4;word-break:break-word;white-space:pre-wrap;border:1px solid transparent}
   .chat-bubble.user{margin-left:auto;background:#23406f;color:#e6f1ff;border-color:#36578f}
-  .chat-bubble.emis{margin-right:auto;background:#191f34;color:#ffe8b6;border-color:#424f7a}
+  .chat-bubble.hemis{margin-right:auto;background:#191f34;color:#ffe8b6;border-color:#424f7a}
   .chat-input-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
   .chat-input-row input{background:#0b1222;color:#fff;border:1px solid #345;border-radius:8px;padding:8px}
   .chat-typing{font-size:11px;color:#ffde9f;min-height:16px}
@@ -122,13 +122,13 @@ stroke:#036;
           </svg>
         </div>
       </div>
-	  <aside class="chat-shell" id="emisPanel">
-		<h3>💬 Emis (chatbot)</h3>
-		<p>Comparte ideas de estilo y daño. Emis responderá con sugerencias para tu bala actual.</p>
+	  <aside class="chat-shell" id="hemisPanel">
+		<h3>💬 Hemis (chatbot)</h3>
+		<p>Comparte ideas de estilo y daño. Hemis responderá con sugerencias para tu bala actual.</p>
 		<div id="chatMessages" class="chat-messages"></div>
-		<div id="chatTyping" class="chat-typing hidden">Emis escribiendo…</div>
+		<div id="chatTyping" class="chat-typing hidden">Hemis escribiendo…</div>
 		<div class="chat-input-row">
-		  <input id="chatInput" type="text" maxlength="240" placeholder="Pregúntale a Emis sobre este CSS"/>
+		  <input id="chatInput" type="text" maxlength="240" placeholder="Pregúntale a Hemis sobre este CSS"/>
 		  <button id="chatSend">Enviar</button>
 		</div>
 	  </aside>
@@ -260,13 +260,13 @@ let unlockState = {};
 let allProperties = [];
 let bulletEquipped = false;
 let bulletUpdatedAt = '';
-let chatMessages = [{role:'emis', text:'¡Hola! Soy Emis. ¿Qué mejora quieres probar en tu bala?'}];
+let chatMessages = [{role:'hemis', text:'¡Hola! Soy Hemis. ¿Qué mejora quieres probar en tu bala?'}];
 let chatWaitingReply = false;
 let cssEditor = null;
 let solarTutorialActive = false;
 let solarTutorialIndex = 0;
 let solarTutorialStarted = false;
-const EMIS_CHAT_CONTRACT_VERSION = 'emis_chat_v1';
+const HEMIS_CHAT_CONTRACT_VERSION = 'hemis_chat_v1';
 const SOLAR_TUTORIAL_STEPS = [
   {
     target: '#actionPanel',
@@ -281,7 +281,7 @@ const SOLAR_TUTORIAL_STEPS = [
   {
     target: '#codePanel',
     title: 'Código CSS',
-    text: 'Muy bien, aquí vas a colocar el código con el que podrás crear lo que aparece en el lienzo. Se llama CSS. En este mundo lo usamos para que yo, como Emis, pueda crear, modificar e interactuar con diferentes mecanismos del entorno. No te preocupes: te ayudaré a entender cada propiedad de esta tecnología tan bella como peligrosamente práctica.'
+    text: 'Muy bien, aquí vas a colocar el código con el que podrás crear lo que aparece en el lienzo. Se llama CSS. En este mundo lo usamos para que yo, como Hemis, pueda crear, modificar e interactuar con diferentes mecanismos del entorno. No te preocupes: te ayudaré a entender cada propiedad de esta tecnología tan bella como peligrosamente práctica.'
   },
   {
     target: '#propertiesPanel',
@@ -289,8 +289,8 @@ const SOLAR_TUTORIAL_STEPS = [
     text: 'Aquí registro las propiedades que tu munición usa y las que el pilar ya te permite estabilizar. Si una propiedad aparece bloqueada, puedes escribirla, pero todavía no tendrá suficiente resonancia para activar mecanismos o causar daño.'
   },
   {
-    target: '#emisPanel',
-    title: 'Chat con Emis',
+    target: '#hemisPanel',
+    title: 'Chat con Hemis',
     text: 'Por último, nota ese panel de chat ahí abajo. Cuando estés trabajando en el panel de código, puedes usarlo para hablar directamente conmigo. Mi núcleo de procesamiento se expande ahí dentro, permitiéndome analizar tu código y asistirte en tiempo real. Así que ya sabes, si te trabas con las propiedades de tu munición, solo pregúntame.'
   }
 ];
@@ -465,11 +465,11 @@ function setChatWaitingState(waiting){
 function renderChatMessages(){
   if(!chatMessagesEl) return;
   if(!chatMessages.length){
-	chatMessagesEl.innerHTML = '<div class="chat-bubble emis">Sin mensajes todavía.</div>';
+	chatMessagesEl.innerHTML = '<div class="chat-bubble hemis">Sin mensajes todavía.</div>';
     return;
   }
   chatMessagesEl.innerHTML = chatMessages.map(function(message){
-    const role = message && message.role === 'user' ? 'user' : 'emis';
+    const role = message && message.role === 'user' ? 'user' : 'hemis';
     const text = message && typeof message.text === 'string' ? message.text : '';
 	return '<div class="chat-bubble ' + role + '">' + escapeHtml(text) + '</div>';
   }).join('');
@@ -480,11 +480,11 @@ function pushChatMessage(role, text){
   if(typeof text !== 'string') return;
   const normalized = text.trim();
   if(!normalized) return;
-  chatMessages.push({role: role === 'user' ? 'user' : 'emis', text: normalized});
+  chatMessages.push({role: role === 'user' ? 'user' : 'hemis', text: normalized});
   renderChatMessages();
 }
 
-function normalizeEmisReplyText(payload){
+function normalizeHemisReplyText(payload){
   if(!payload || typeof payload !== 'object') return '';
 
   function pickRippledai(value){
@@ -570,7 +570,7 @@ function pushChatMessageTyping(role, text, onDone){
     if(typeof onDone === 'function') onDone();
     return;
   }
-  const safeRole = role === 'user' ? 'user' : 'emis';
+  const safeRole = role === 'user' ? 'user' : 'hemis';
   chatMessages.push({role: safeRole, text: ''});
   renderChatMessages();
 
@@ -598,7 +598,7 @@ function sendChatMessage(){
   if(!message) return;
   pushChatMessage('user', message);
   chatInputEl.value = '';
-  console.log('[Emis] envío:', message);
+  console.log('[Hemis] envío:', message);
   setChatWaitingState(true);
 
   const detectedProps = getDetectedProperties(getCssText());
@@ -612,7 +612,7 @@ function sendChatMessage(){
     updated_at: bulletUpdatedAt
   });
   const context = {
-    contract_version: EMIS_CHAT_CONTRACT_VERSION,
+    contract_version: HEMIS_CHAT_CONTRACT_VERSION,
     chat_surface: 'bullet_creator',
     history: chatMessages,
     snapshot
@@ -621,20 +621,20 @@ function sendChatMessage(){
   try{
     ipc.postMessage(JSON.stringify({
       type: 'chat_request',
-      contract_version: EMIS_CHAT_CONTRACT_VERSION,
+      contract_version: HEMIS_CHAT_CONTRACT_VERSION,
       chat_surface: 'bullet_creator',
       intent_mode: 'tutor_css',
       message,
       context
     }));
   }catch(err){
-    console.error('[Emis] error enviando prompt', err);
-    pushChatMessage('emis', 'No pude enviar tu mensaje. Inténtalo de nuevo.');
+    console.error('[Hemis] error enviando prompt', err);
+    pushChatMessage('hemis', 'No pude enviar tu mensaje. Inténtalo de nuevo.');
     setChatWaitingState(false);
   }
 }
 
-window.onEmisReply = function(payload){
+window.onHemisReply = function(payload){
   let finalizeOnExit = true;
   try{
     if(!payload || typeof payload !== 'object'){
@@ -642,27 +642,27 @@ window.onEmisReply = function(payload){
     }
 
     if(payload.error){
-      console.error('[Emis] respuesta con error:', payload.error);
-      pushChatMessage('emis', 'Tuvimos un problema al responder. Intenta en unos segundos.');
+      console.error('[Hemis] respuesta con error:', payload.error);
+      pushChatMessage('hemis', 'Tuvimos un problema al responder. Intenta en unos segundos.');
       return;
     }
 
-    const replyText = normalizeEmisReplyText(payload);
+    const replyText = normalizeHemisReplyText(payload);
 
     if(!replyText.trim()){
       throw new Error('respuesta vacía');
     }
 
-    console.log('[Emis] recepción:', replyText);
+    console.log('[Hemis] recepción:', replyText);
     finalizeOnExit = false;
-    pushChatMessageTyping('emis', replyText, function(){
+    pushChatMessageTyping('hemis', replyText, function(){
       setChatWaitingState(false);
       if(chatInputEl) chatInputEl.focus();
     });
     return;
   }catch(err){
-    console.error('[Emis] error procesando respuesta', err);
-    pushChatMessage('emis', 'No pude entender la respuesta de Emis. Vuelve a intentarlo.');
+    console.error('[Hemis] error procesando respuesta', err);
+    pushChatMessage('hemis', 'No pude entender la respuesta de Hemis. Vuelve a intentarlo.');
   }finally{
     if(finalizeOnExit){
       setChatWaitingState(false);

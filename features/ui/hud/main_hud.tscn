@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://1bsajhtwutlj" path="res://features/ui/hud/main_hud.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://cacinkgpsh44f" path="res://assets/art/hud/solar_charge.svg" id="2"]
-[ext_resource type="Texture2D" uid="uid://6r3pmeaffncq" path="res://assets/art/hud/emis.svg" id="3"]
+[ext_resource type="Texture2D" path="res://assets/art/hud/hemis.svg" id="3"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="3_8elgk"]
 [ext_resource type="Texture2D" uid="uid://1d3uxm4mejb3" path="res://assets/art/player/body/cabeza.svg" id="4"]
 [ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="4_s52bx"]
@@ -76,11 +76,11 @@ bg_color = Color(0.17, 0.88, 0.45, 1)
 [sub_resource type="StyleBoxFlat" id="2"]
 bg_color = Color(0.964706, 0.552941, 0.176471, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_emis_dialog"]
+[sub_resource type="LabelSettings" id="LabelSettings_hemis_dialog"]
 font = ExtResource("11_quantico")
 font_size = 30
 
-[sub_resource type="LabelSettings" id="LabelSettings_emis_hint"]
+[sub_resource type="LabelSettings" id="LabelSettings_hemis_hint"]
 font = ExtResource("11_quantico")
 font_size = 20
 
@@ -335,7 +335,7 @@ flip_h = true
 z_index = 2
 layout_mode = 2
 
-[node name="EmisButton" type="TextureButton" parent="BottomRight/Panel"]
+[node name="HemisButton" type="TextureButton" parent="BottomRight/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -354,7 +354,7 @@ texture_normal = ExtResource("3")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="EmisDialog" type="PanelContainer" parent="BottomRight/Panel"]
+[node name="HemisDialog" type="PanelContainer" parent="BottomRight/Panel"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -368,33 +368,33 @@ offset_top = -211.0
 offset_right = 20.5
 offset_bottom = -11.0
 
-[node name="Margin" type="MarginContainer" parent="BottomRight/Panel/EmisDialog"]
+[node name="Margin" type="MarginContainer" parent="BottomRight/Panel/HemisDialog"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 16
 
-[node name="DialogVBox" type="VBoxContainer" parent="BottomRight/Panel/EmisDialog/Margin"]
+[node name="DialogVBox" type="VBoxContainer" parent="BottomRight/Panel/HemisDialog/Margin"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="EmisDialogLabel" type="Label" parent="BottomRight/Panel/EmisDialog/Margin/DialogVBox"]
+[node name="HemisDialogLabel" type="Label" parent="BottomRight/Panel/HemisDialog/Margin/DialogVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 text = "¡Ey! Tengo una pista para ti."
-label_settings = SubResource("LabelSettings_emis_dialog")
+label_settings = SubResource("LabelSettings_hemis_dialog")
 autowrap_mode = 3
 
-[node name="EmisDialogHintLabel" type="Label" parent="BottomRight/Panel/EmisDialog/Margin/DialogVBox"]
+[node name="HemisDialogHintLabel" type="Label" parent="BottomRight/Panel/HemisDialog/Margin/DialogVBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Aprieta E para continuar"
-label_settings = SubResource("LabelSettings_emis_hint")
+label_settings = SubResource("LabelSettings_hemis_hint")
 horizontal_alignment = 2
 
-[node name="EmisBadge" type="Label" parent="BottomRight/Panel"]
+[node name="HemisBadge" type="Label" parent="BottomRight/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1

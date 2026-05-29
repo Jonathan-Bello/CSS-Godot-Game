@@ -12,9 +12,9 @@ extends Control
 @onready var status_label: Label = %StatusLabel
 @onready var buttons_container: VBoxContainer = $Layout/Content/Buttons
 
-var _emis_button: Button = null
-var _emis_key_dialog: ConfirmationDialog = null
-var _emis_key_input: LineEdit = null
+var _hemis_button: Button = null
+var _hemis_key_dialog: ConfirmationDialog = null
+var _hemis_key_input: LineEdit = null
 var _api_gate: Control = null
 var _api_gate_input: LineEdit = null
 
@@ -26,7 +26,7 @@ func _ready() -> void:
 	_update_load_button_state()
 	_apply_runtime_menu_rules()
 	if not _is_web_runtime():
-		_create_emis_key_button()
+		_create_hemis_key_button()
 	_create_api_gate()
 	for button in _get_focusable_buttons():
 		button.focus_entered.connect(_play_focus_sfx)
@@ -51,7 +51,7 @@ func _apply_runtime_menu_rules() -> void:
 
 func _on_new_pressed() -> void:
 	_play_accept_sfx()
-	if not _is_web_runtime() and not _has_emis_api_key():
+	if not _is_web_runtime() and not _has_hemis_api_key():
 		_show_api_gate()
 		return
 	_start_new_game()
@@ -83,27 +83,27 @@ func _on_quit_pressed() -> void:
 	_play_accept_sfx()
 	get_tree().quit()
 
-func _create_emis_key_button() -> void:
-	_emis_button = Button.new()
-	_emis_button.name = "EmisKeyButton"
-	_emis_button.custom_minimum_size = new_button.custom_minimum_size
-	_emis_button.text = "Activar Emis"
-	_emis_button.theme = new_button.theme
+func _create_hemis_key_button() -> void:
+	_hemis_button = Button.new()
+	_hemis_button.name = "HemisKeyButton"
+	_hemis_button.custom_minimum_size = new_button.custom_minimum_size
+	_hemis_button.text = "Activar Hemis"
+	_hemis_button.theme = new_button.theme
 	for style_name in ["normal", "pressed", "hover", "focus"]:
 		var style := new_button.get_theme_stylebox(style_name)
 		if style != null:
-			_emis_button.add_theme_stylebox_override(style_name, style)
-	_emis_button.add_theme_font_override("font", new_button.get_theme_font("font"))
-	_emis_button.add_theme_font_size_override("font_size", new_button.get_theme_font_size("font_size"))
-	_emis_button.pressed.connect(_on_emis_key_pressed)
-	buttons_container.add_child(_emis_button)
-	_create_emis_key_dialog()
+			_hemis_button.add_theme_stylebox_override(style_name, style)
+	_hemis_button.add_theme_font_override("font", new_button.get_theme_font("font"))
+	_hemis_button.add_theme_font_size_override("font_size", new_button.get_theme_font_size("font_size"))
+	_hemis_button.pressed.connect(_on_hemis_key_pressed)
+	buttons_container.add_child(_hemis_button)
+	_create_hemis_key_dialog()
 
-func _create_emis_key_dialog() -> void:
-	_emis_key_dialog = ConfirmationDialog.new()
-	_emis_key_dialog.title = "Activar Emis"
-	_emis_key_dialog.ok_button_text = "Guardar key"
-	_emis_key_dialog.cancel_button_text = "Cancelar"
+func _create_hemis_key_dialog() -> void:
+	_hemis_key_dialog = ConfirmationDialog.new()
+	_hemis_key_dialog.title = "Activar Hemis"
+	_hemis_key_dialog.ok_button_text = "Guardar key"
+	_hemis_key_dialog.cancel_button_text = "Cancelar"
 	var margin := MarginContainer.new()
 	margin.add_theme_constant_override("margin_left", 12)
 	margin.add_theme_constant_override("margin_top", 12)
@@ -114,49 +114,49 @@ func _create_emis_key_dialog() -> void:
 	var label := Label.new()
 	label.text = "Ingresa tu API key de Gemini. Se mantendra activa mientras esta sesion este abierta."
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_emis_key_input = LineEdit.new()
-	_emis_key_input.secret = true
-	_emis_key_input.placeholder_text = "API key de Gemini"
+	_hemis_key_input = LineEdit.new()
+	_hemis_key_input.secret = true
+	_hemis_key_input.placeholder_text = "API key de Gemini"
 	box.add_child(label)
-	box.add_child(_emis_key_input)
+	box.add_child(_hemis_key_input)
 	margin.add_child(box)
-	_emis_key_dialog.add_child(margin)
-	_emis_key_dialog.confirmed.connect(_save_emis_key_from_dialog)
-	add_child(_emis_key_dialog)
+	_hemis_key_dialog.add_child(margin)
+	_hemis_key_dialog.confirmed.connect(_save_hemis_key_from_dialog)
+	add_child(_hemis_key_dialog)
 
-func _on_emis_key_pressed() -> void:
+func _on_hemis_key_pressed() -> void:
 	_play_accept_sfx()
-	if _emis_key_input:
-		_emis_key_input.text = ""
-	if _emis_key_dialog:
-		_emis_key_dialog.popup_centered(Vector2i(560, 180))
+	if _hemis_key_input:
+		_hemis_key_input.text = ""
+	if _hemis_key_dialog:
+		_hemis_key_dialog.popup_centered(Vector2i(560, 180))
 
-func _save_emis_key_from_dialog() -> void:
-	var key := _emis_key_input.text.strip_edges() if _emis_key_input else ""
+func _save_hemis_key_from_dialog() -> void:
+	var key := _hemis_key_input.text.strip_edges() if _hemis_key_input else ""
 	if key == "":
-		status_label.text = "Emis sigue inactivo: no se ingreso API key."
+		status_label.text = "Hemis sigue inactivo: no se ingreso API key."
 		return
-	if has_node("/root/EmisGameContext"):
-		EmisGameContext.set_api_key(key)
-	status_label.text = "Emis activado para esta sesion."
-	if _emis_button:
-		_emis_button.text = "Emis activado"
+	if has_node("/root/HemisGameContext"):
+		HemisGameContext.set_api_key(key)
+	status_label.text = "Hemis activado para esta sesion."
+	if _hemis_button:
+		_hemis_button.text = "Hemis activado"
 
-func _has_emis_api_key() -> bool:
-	if has_node("/root/EmisGameContext") and EmisGameContext.has_method("has_api_key"):
-		return bool(EmisGameContext.call("has_api_key"))
+func _has_hemis_api_key() -> bool:
+	if has_node("/root/HemisGameContext") and HemisGameContext.has_method("has_api_key"):
+		return bool(HemisGameContext.call("has_api_key"))
 	return false
 
 func _is_web_runtime() -> bool:
 	if has_node("/root/RuntimeEnvironment") and RuntimeEnvironment.has_method("is_web"):
 		return bool(RuntimeEnvironment.call("is_web"))
-	if has_node("/root/EmisGameContext") and EmisGameContext.has_method("is_web_runtime"):
-		return bool(EmisGameContext.call("is_web_runtime"))
+	if has_node("/root/HemisGameContext") and HemisGameContext.has_method("is_web_runtime"):
+		return bool(HemisGameContext.call("is_web_runtime"))
 	return OS.has_feature("web")
 
 func _create_api_gate() -> void:
 	_api_gate = Control.new()
-	_api_gate.name = "EmisApiGate"
+	_api_gate.name = "HemisApiGate"
 	_api_gate.visible = false
 	_api_gate.process_mode = Node.PROCESS_MODE_ALWAYS
 	_api_gate.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -188,13 +188,13 @@ func _create_api_gate() -> void:
 	margin.add_child(box)
 
 	var title := Label.new()
-	title.text = "Activar Emis"
+	title.text = "Activar Hemis"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 28)
 	box.add_child(title)
 
 	var copy := Label.new()
-	copy.text = "Ingresa tu API key de Gemini para activar el chat de Emis. Se mantendra solo en memoria durante esta sesion."
+	copy.text = "Ingresa tu API key de Gemini para activar el chat de Hemis. Se mantendra solo en memoria durante esta sesion."
 	copy.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	copy.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(copy)
@@ -221,7 +221,7 @@ func _create_api_gate() -> void:
 	row.add_child(accept)
 
 func _show_api_gate() -> void:
-	status_label.text = "Emis necesita una API key antes de iniciar."
+	status_label.text = "Hemis necesita una API key antes de iniciar."
 	_api_gate.visible = true
 	if _api_gate_input:
 		_api_gate_input.text = ""
@@ -235,12 +235,12 @@ func _hide_api_gate() -> void:
 func _confirm_api_gate() -> void:
 	var key := _api_gate_input.text.strip_edges() if _api_gate_input else ""
 	if key == "":
-		status_label.text = "Ingresa una API key para activar Emis."
+		status_label.text = "Ingresa una API key para activar Hemis."
 		return
-	if has_node("/root/EmisGameContext"):
-		EmisGameContext.set_api_key(key)
-	if _emis_button:
-		_emis_button.text = "Emis activado"
+	if has_node("/root/HemisGameContext"):
+		HemisGameContext.set_api_key(key)
+	if _hemis_button:
+		_hemis_button.text = "Hemis activado"
 	_hide_api_gate()
 	_start_new_game()
 
@@ -249,8 +249,8 @@ func _on_api_gate_text_submitted(_text: String) -> void:
 
 func _get_focusable_buttons() -> Array[Button]:
 	var buttons: Array[Button] = [new_button, load_button]
-	if _emis_button != null:
-		buttons.append(_emis_button)
+	if _hemis_button != null:
+		buttons.append(_hemis_button)
 	if quit_button.visible and not quit_button.disabled:
 		buttons.append(quit_button)
 	return buttons

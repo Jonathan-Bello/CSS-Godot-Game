@@ -1,6 +1,6 @@
 extends Control
 
-const EmisClientScript = preload("res://core/emis_client.gd")
+const HemisClientScript = preload("res://core/hemis_client.gd")
 const TUTORIAL_FLAGS_PATH := "user://progress/tutorial_flags.json"
 const SOLAR_PILLAR_TUTORIAL_VERSION := 1
 const WRY_EXTENSION_PATH := "res://addons/godot_wry/WRY.gdextension"
@@ -14,9 +14,9 @@ var last_css: String = ""
 var last_svg: String = ""
 var last_bullet_profile_path: String = ""
 var _web_hydration_payload: Dictionary = {}
-var _emis_client: Node = null
-var _emis_conversation_id: String = ""
-var _emis_api_key: String = ""
+var _hemis_client: Node = null
+var _hemis_conversation_id: String = ""
+var _hemis_api_key: String = ""
 var _last_loaded_html: String = ""
 var _overlay_template_path: String = "res://features/ui/hud/web_overlay_editor.html"
 
@@ -40,7 +40,7 @@ func _ready() -> void:
 	if _use_dom_overlay:
 		_setup_dom_overlay_bridge()
 
-	_ensure_emis_client()
+	_ensure_hemis_client()
 	_ensure_loading_sfx_player()
 	_layout_and_sync()
 	print("[WebOverlay] READY")
@@ -212,7 +212,7 @@ func open() -> void:
 	_open_with_template("res://features/ui/hud/web_overlay_editor.html")
 
 func open_chat_overlay() -> void:
-	_open_with_template("res://features/ui/hud/web_overlay_emis_chat.html")
+	_open_with_template("res://features/ui/hud/web_overlay_hemis_chat.html")
 
 func _open_with_template(template_path: String) -> void:
 	_overlay_template_path = template_path
@@ -480,8 +480,8 @@ func _load_editor_html() -> void:
 		_web_hydration_payload["show_solar_pillar_tutorial"] = should_show_solar_tutorial
 		_web_hydration_payload["first_solar_pillar_opened"] = not should_show_solar_tutorial
 		_web_hydration_payload["solar_pillar_tutorial_version"] = SOLAR_PILLAR_TUTORIAL_VERSION
-	if _overlay_template_path.ends_with("web_overlay_emis_chat.html"):
-		_web_hydration_payload["emis_api_key_configured"] = _emis_api_key != ""
+	if _overlay_template_path.ends_with("web_overlay_hemis_chat.html"):
+		_web_hydration_payload["hemis_api_key_configured"] = _hemis_api_key != ""
 	var html := _read_editor_html_template()
 	if html == "":
 		html = "<!doctype html><html><body style='margin:0;background:#111;color:#fff'>Editor no disponible</body></html>"
@@ -582,28 +582,28 @@ func _on_web_ipc_message(msg: String) -> void:
 				_mark_first_solar_pillar_opened(false)
 			"solar_pillar_tutorial_done":
 				_mark_first_solar_pillar_opened(true)
-			"emis_api_key_submit":
-				_set_emis_api_key(String(data.get("api_key", "")))
+			"hemis_api_key_submit":
+				_set_hemis_api_key(String(data.get("api_key", "")))
 			"chat_request":
 				_handle_chat_request(data)
 
-func _set_emis_api_key(value: String) -> void:
-	_emis_api_key = value.strip_edges()
-	if has_node("/root/EmisGameContext"):
-		EmisGameContext.set_api_key(_emis_api_key)
-	var client := _get_emis_client()
+func _set_hemis_api_key(value: String) -> void:
+	_hemis_api_key = value.strip_edges()
+	if has_node("/root/HemisGameContext"):
+		HemisGameContext.set_api_key(_hemis_api_key)
+	var client := _get_hemis_client()
 	if client != null and client.has_method("set_player_api_key"):
-		client.call("set_player_api_key", _emis_api_key)
-	var configured := _emis_api_key != ""
-	print("[Emis] API key de jugador configurada=%s" % configured)
-	_send_emis_api_key_status_to_web(configured)
+		client.call("set_player_api_key", _hemis_api_key)
+	var configured := _hemis_api_key != ""
+	print("[Hemis] API key de jugador configurada=%s" % configured)
+	_send_hemis_api_key_status_to_web(configured)
 
 func _handle_chat_request(data: Dictionary) -> void:
 	var raw_message := String(data.get("message", ""))
 	var message := raw_message.strip_edges()
 	if message == "":
-		push_warning("[Emis] chat_request inválido: message vacío")
-		_send_emis_reply_to_web({
+		push_warning("[Hemis] chat_request inválido: message vacío")
+		_send_hemis_reply_to_web({
 			"ok": false,
 			"error": "message vacío",
 			"code": "invalid_response"
@@ -615,45 +615,45 @@ func _handle_chat_request(data: Dictionary) -> void:
 	if typeof(raw_context) == TYPE_DICTIONARY:
 		incoming_context = raw_context
 
-	var context := _build_emis_context(incoming_context)
-	var payload := _build_emis_payload_for_backend(data, context, message)
-	print("[Emis] solicitud -> %s" % JSON.stringify(payload))
+	var context := _build_hemis_context(incoming_context)
+	var payload := _build_hemis_payload_for_backend(data, context, message)
+	print("[Hemis] solicitud -> %s" % JSON.stringify(payload))
 
 	var response: Dictionary = {}
-	var client := _get_emis_client()
+	var client := _get_hemis_client()
 	if client == null:
-		var no_client_msg := "Cliente Emis no disponible"
-		push_warning("[Emis] " + no_client_msg)
+		var no_client_msg := "Cliente Hemis no disponible"
+		push_warning("[Hemis] " + no_client_msg)
 		response = {"ok": false, "error": no_client_msg, "code": "network"}
 	elif client.has_method("request_chat"):
 		var result: Variant = await client.call("request_chat", payload)
 		if typeof(result) == TYPE_DICTIONARY:
 			response = result
 		else:
-			response = {"ok": false, "error": "Respuesta inválida del cliente Emis", "code": "invalid_response"}
+			response = {"ok": false, "error": "Respuesta inválida del cliente Hemis", "code": "invalid_response"}
 	elif client.has_method("chat_request"):
 		var alt_result: Variant = await client.call("chat_request", payload)
 		if typeof(alt_result) == TYPE_DICTIONARY:
 			response = alt_result
 		else:
-			response = {"ok": false, "error": "Respuesta inválida del cliente Emis", "code": "invalid_response"}
+			response = {"ok": false, "error": "Respuesta inválida del cliente Hemis", "code": "invalid_response"}
 	else:
-		response = {"ok": false, "error": "Cliente Emis sin método de chat compatible", "code": "invalid_response"}
+		response = {"ok": false, "error": "Cliente Hemis sin método de chat compatible", "code": "invalid_response"}
 
 	if not bool(response.get("ok", false)):
-		push_warning("[Emis] error <- %s (%s)" % [String(response.get("error", "desconocido")), String(response.get("code", "unknown"))])
+		push_warning("[Hemis] error <- %s (%s)" % [String(response.get("error", "desconocido")), String(response.get("code", "unknown"))])
 	else:
-		_update_emis_conversation_id(response)
-		print("[Emis] respuesta <- %s" % JSON.stringify(response))
-	_send_emis_reply_to_web(response)
+		_update_hemis_conversation_id(response)
+		print("[Hemis] respuesta <- %s" % JSON.stringify(response))
+	_send_hemis_reply_to_web(response)
 
-func _build_emis_payload_for_backend(data: Dictionary, context: Dictionary, message: String) -> Dictionary:
+func _build_hemis_payload_for_backend(data: Dictionary, context: Dictionary, message: String) -> Dictionary:
 	var normalized_message := message.substr(0, min(message.length(), 1200))
 	var intent_mode := String(data.get("intent_mode", context.get("intent_mode", "auto"))).strip_edges().to_lower()
 	if intent_mode != "tutor_css" and intent_mode != "guia_juego":
 		intent_mode = "auto"
 
-	var player_context := _build_player_context_for_emis(data, context)
+	var player_context := _build_player_context_for_hemis(data, context)
 	var css_snapshot_fragment := String(context.get("css_text", last_css)).strip_edges()
 	if css_snapshot_fragment.length() > 10000:
 		css_snapshot_fragment = css_snapshot_fragment.substr(0, 10000)
@@ -666,10 +666,10 @@ func _build_emis_payload_for_backend(data: Dictionary, context: Dictionary, mess
 		"css_snapshot_fragment": css_snapshot_fragment
 	}
 
-	if _emis_conversation_id == "":
-		_emis_conversation_id = _create_conversation_id()
-	if _emis_conversation_id != "":
-		payload["conversation_id"] = _emis_conversation_id
+	if _hemis_conversation_id == "":
+		_hemis_conversation_id = _create_conversation_id()
+	if _hemis_conversation_id != "":
+		payload["conversation_id"] = _hemis_conversation_id
 
 	return payload
 
@@ -679,8 +679,8 @@ func _resolve_chat_surface(data: Dictionary, context: Dictionary) -> String:
 		return "general_chat"
 	return "bullet_creator"
 
-func _build_player_context_for_emis(data: Dictionary, context: Dictionary) -> Dictionary:
-	var game_context := _get_emis_game_context_snapshot()
+func _build_player_context_for_hemis(data: Dictionary, context: Dictionary) -> Dictionary:
+	var game_context := _get_hemis_game_context_snapshot()
 	var snapshot: Dictionary = {}
 	var raw_snapshot: Variant = context.get("snapshot", {})
 	if typeof(raw_snapshot) == TYPE_DICTIONARY:
@@ -714,9 +714,9 @@ func _build_player_context_for_emis(data: Dictionary, context: Dictionary) -> Di
 		player_context["movement_unlocks"] = movement_unlocks
 	return player_context
 
-func _get_emis_game_context_snapshot() -> Dictionary:
-	if has_node("/root/EmisGameContext") and EmisGameContext.has_method("get_context"):
-		var raw: Variant = EmisGameContext.call("get_context")
+func _get_hemis_game_context_snapshot() -> Dictionary:
+	if has_node("/root/HemisGameContext") and HemisGameContext.has_method("get_context"):
+		var raw: Variant = HemisGameContext.call("get_context")
 		if typeof(raw) == TYPE_DICTIONARY:
 			return raw
 	return {}
@@ -724,7 +724,7 @@ func _get_emis_game_context_snapshot() -> Dictionary:
 func _create_conversation_id() -> String:
 	return "conv_%s_%s" % [int(Time.get_unix_time_from_system()), Time.get_ticks_msec()]
 
-func _update_emis_conversation_id(response: Dictionary) -> void:
+func _update_hemis_conversation_id(response: Dictionary) -> void:
 	var raw: Dictionary = {}
 	var raw_response: Variant = response.get("raw", {})
 	if typeof(raw_response) == TYPE_DICTIONARY:
@@ -732,12 +732,12 @@ func _update_emis_conversation_id(response: Dictionary) -> void:
 
 	var from_raw := String(raw.get("conversation_id", "")).strip_edges()
 	if from_raw != "":
-		_emis_conversation_id = from_raw
+		_hemis_conversation_id = from_raw
 		return
 
 	var from_top_level := String(response.get("conversation_id", "")).strip_edges()
 	if from_top_level != "":
-		_emis_conversation_id = from_top_level
+		_hemis_conversation_id = from_top_level
 
 func _to_packed_string_array(raw: Variant) -> PackedStringArray:
 	if raw is PackedStringArray:
@@ -751,8 +751,8 @@ func _to_packed_string_array(raw: Variant) -> PackedStringArray:
 		return mapped
 	return PackedStringArray()
 
-func _build_emis_context(data_from_js: Dictionary) -> Dictionary:
-	# Contrato estable emis_chat_v1:
+func _build_hemis_context(data_from_js: Dictionary) -> Dictionary:
+	# Contrato estable hemis_chat_v1:
 	# {
 	#   contract_version: String,
 	#   css_text: String,
@@ -802,7 +802,7 @@ func _build_emis_context(data_from_js: Dictionary) -> Dictionary:
 	var bullet_equipped := bool(snapshot.get("bullet_equipped", context.get("bullet_equipped", hydration.get("bullet_equipped", false))))
 	var updated_at := String(snapshot.get("updated_at", context.get("updated_at", hydration.get("updated_at", ""))))
 
-	context["contract_version"] = String(context.get("contract_version", "emis_chat_v1"))
+	context["contract_version"] = String(context.get("contract_version", "hemis_chat_v1"))
 	context["css_text"] = css_text
 	context["svg_text"] = svg_text
 	context["css"] = css_text
@@ -826,42 +826,42 @@ func _build_emis_context(data_from_js: Dictionary) -> Dictionary:
 	}
 	return context
 
-func _ensure_emis_client() -> void:
-	if is_instance_valid(_emis_client):
+func _ensure_hemis_client() -> void:
+	if is_instance_valid(_hemis_client):
 		return
-	_emis_client = EmisClientScript.new()
-	_emis_client.name = "EmisClient"
-	add_child(_emis_client)
-	if _emis_api_key != "" and _emis_client.has_method("set_player_api_key"):
-		_emis_client.call("set_player_api_key", _emis_api_key)
-	if _emis_client.has_method("add_to_group"):
-		_emis_client.call("add_to_group", "emis_client")
-	print("[Emis] Cliente local inicializado")
+	_hemis_client = HemisClientScript.new()
+	_hemis_client.name = "HemisClient"
+	add_child(_hemis_client)
+	if _hemis_api_key != "" and _hemis_client.has_method("set_player_api_key"):
+		_hemis_client.call("set_player_api_key", _hemis_api_key)
+	if _hemis_client.has_method("add_to_group"):
+		_hemis_client.call("add_to_group", "hemis_client")
+	print("[Hemis] Cliente local inicializado")
 
-func _get_emis_client() -> Node:
-	if is_instance_valid(_emis_client):
-		return _emis_client
+func _get_hemis_client() -> Node:
+	if is_instance_valid(_hemis_client):
+		return _hemis_client
 
 	var root := get_tree().root
 	if root == null:
 		return null
-	var by_name := root.get_node_or_null("EmisClient")
+	var by_name := root.get_node_or_null("HemisClient")
 	if by_name != null:
 		return by_name
-	var by_group := get_tree().get_first_node_in_group("emis_client")
+	var by_group := get_tree().get_first_node_in_group("hemis_client")
 	if by_group != null:
 		return by_group
 	return null
 
-func _send_emis_reply_to_web(payload: Dictionary) -> void:
+func _send_hemis_reply_to_web(payload: Dictionary) -> void:
 	var safe_payload := payload
 	if safe_payload.is_empty():
-		safe_payload = {"error": "Respuesta vacía del backend Emis"}
-	var js := "window.onEmisReply(%s);" % JSON.stringify(safe_payload)
+		safe_payload = {"error": "Respuesta vacía del backend Hemis"}
+	var js := "window.onHemisReply(%s);" % JSON.stringify(safe_payload)
 	_eval_overlay_js(js)
 
-func _send_emis_api_key_status_to_web(configured: bool) -> void:
-	var js := "if(window.onEmisApiKeyStatus){window.onEmisApiKeyStatus(%s);}" % JSON.stringify({
+func _send_hemis_api_key_status_to_web(configured: bool) -> void:
+	var js := "if(window.onHemisApiKeyStatus){window.onHemisApiKeyStatus(%s);}" % JSON.stringify({
 		"configured": configured
 	})
 	_eval_overlay_js(js)

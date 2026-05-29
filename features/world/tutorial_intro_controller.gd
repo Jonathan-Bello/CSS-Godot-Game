@@ -5,7 +5,7 @@ class_name TutorialIntroController
 @export var camera_path: NodePath = ^"../Player/Camera2D"
 @export var intro_lines: PackedStringArray = PackedStringArray([
 	"Ey! Eso fue una caida fuerte. Me escuchas?",
-	"Soy Emis. Antes de avanzar: muevete con A y D, y salta con Espacio.",
+	"Soy Hemis. Antes de avanzar: muevete con A y D, y salta con Espacio.",
 	"Sube con calma hasta el pilar solar. Ahi te explico como usar CSS para alterar el mundo."
 ])
 @export_range(0.0, 2800.0, 25.0) var impact_velocity_threshold: float = 750.0
@@ -77,8 +77,8 @@ func _show_intro_dialog_after_delay() -> void:
 	if dialogue_delay > 0.0:
 		await get_tree().create_timer(dialogue_delay).timeout
 	var hud := get_tree().get_first_node_in_group("main_hud")
-	if hud != null and hud.has_method("start_emis_tutorial_dialog"):
-		hud.call("start_emis_tutorial_dialog", intro_lines, true)
+	if hud != null and hud.has_method("start_hemis_tutorial_dialog"):
+		hud.call("start_hemis_tutorial_dialog", intro_lines, true)
 
 
 func _play_impact_sfx() -> void:

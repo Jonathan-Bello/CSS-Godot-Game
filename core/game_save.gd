@@ -73,7 +73,7 @@ func save_current_game(player_override: Node2D = null) -> bool:
 
 func load_saved_game() -> bool:
 	var data := _read_save()
-	var scene_path := String(data.get("scene_path", ""))
+	var scene_path := _normalize_scene_path(String(data.get("scene_path", "")))
 	if scene_path == "" or not ResourceLoader.exists(scene_path):
 		return false
 	var position := _position_from_save(data.get("player_position", {}))
@@ -98,6 +98,13 @@ func load_saved_game() -> bool:
 	_pending_bullet_save_data.clear()
 	_loading_saved_game = false
 	return true
+
+func _normalize_scene_path(scene_path: String) -> String:
+	match scene_path:
+		"res://content/levels/city_main.tscn":
+			return "res://content/levels/citadel_main.tscn"
+		_:
+			return scene_path
 
 func is_dialog_trigger_heard(trigger_id: String) -> bool:
 	var key := trigger_id.strip_edges()

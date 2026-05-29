@@ -60,7 +60,7 @@ func _read_web_api_key() -> String:
 	var bridge := Engine.get_singleton("JavaScriptBridge")
 	if bridge == null:
 		return ""
-	var value: Variant = bridge.call("eval", "String(window.EMIS_PLAYER_API_KEY || '')", true)
+	var value: Variant = bridge.call("eval", "String(window.HEMIS_PLAYER_API_KEY || window.EMIS_PLAYER_API_KEY || '')", true)
 	return String(value).strip_edges()
 
 func update_level(level_id: String, objective: String = "") -> void:
@@ -81,12 +81,12 @@ func set_level_context_document_from_file(path: String) -> void:
 		set_level_context_document("")
 		return
 	if not FileAccess.file_exists(clean_path):
-		push_warning("[EmisGameContext] No existe documento de contexto: %s" % clean_path)
+		push_warning("[HemisGameContext] No existe documento de contexto: %s" % clean_path)
 		set_level_context_document("")
 		return
 	var file := FileAccess.open(clean_path, FileAccess.READ)
 	if file == null:
-		push_warning("[EmisGameContext] No se pudo leer documento de contexto: %s" % clean_path)
+		push_warning("[HemisGameContext] No se pudo leer documento de contexto: %s" % clean_path)
 		set_level_context_document("")
 		return
 	set_level_context_document(file.get_as_text())

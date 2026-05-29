@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d1r7i8x8fvl3j" path="res://features/obstacles/css_destructible_block.tscn" id="5_block"]
 [ext_resource type="PackedScene" uid="uid://c4e1e1ik2l6gt" path="res://features/obstacles/css_toggle_platform.tscn" id="6_toggle"]
 [ext_resource type="PackedScene" path="res://features/world/respawn_zone.tscn" id="7_respawn"]
-[ext_resource type="PackedScene" uid="uid://b8y4a82c2x8a5" path="res://features/world/emis_dialog_trigger.tscn" id="8_emis"]
+[ext_resource type="PackedScene" path="res://features/world/hemis_dialog_trigger.tscn" id="8_hemis"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_start"]
 size = Vector2(1200, 160)
@@ -170,24 +170,24 @@ shape = SubResource("RectangleShape2D_wall")
 position = Vector2(4600, 960)
 scale = Vector2(78, 2)
 
-[node name="EmisTutorialTriggers" type="Node2D" parent="."]
+[node name="HemisTutorialTriggers" type="Node2D" parent="."]
 
-[node name="IntroInstructions" parent="EmisTutorialTriggers" instance=ExtResource("8_emis")]
+[node name="IntroInstructions" parent="HemisTutorialTriggers" instance=ExtResource("8_hemis")]
 position = Vector2(300, 470)
 scale = Vector2(2.4, 2)
 dialog_lines = PackedStringArray("Estas entrando al distrito CSS. Los pilares solares te permiten crear y equipar balas con propiedades CSS.", "Activa el pilar cercano, escribe una bala roja con background-color: red; y dispara a los bloques para abrir el camino.")
 
-[node name="PlatformInstructions" parent="EmisTutorialTriggers" instance=ExtResource("8_emis")]
+[node name="PlatformInstructions" parent="HemisTutorialTriggers" instance=ExtResource("8_hemis")]
 position = Vector2(2850, 470)
 scale = Vector2(2.4, 2)
 dialog_lines = PackedStringArray("El siguiente tramo usa plataformas que aparecen cuando reciben la bala correcta.", "Vuelve al pilar solar y cambia la bala a background-color: blue;. Luego dispara a cada plataforma azul para activarla antes de saltar.")
 
-[node name="ComboInstructions" parent="EmisTutorialTriggers" instance=ExtResource("8_emis")]
+[node name="ComboInstructions" parent="HemisTutorialTriggers" instance=ExtResource("8_hemis")]
 position = Vector2(5650, 470)
 scale = Vector2(2.6, 2)
 dialog_lines = PackedStringArray("Ahora combina las dos mecanicas.", "Primero usa background-color: red; para romper los bloques. Despues equipa una bala con color: blue; para activar las plataformas del final.")
 
-[node name="GoalInstructions" parent="EmisTutorialTriggers" instance=ExtResource("8_emis")]
+[node name="GoalInstructions" parent="HemisTutorialTriggers" instance=ExtResource("8_hemis")]
 position = Vector2(7950, 470)
 scale = Vector2(2, 2)
 dialog_lines = PackedStringArray("Buen trabajo. Llegaste al final del circuito de balas CSS.")

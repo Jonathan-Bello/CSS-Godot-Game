@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://01hx4wpcphus" path="res://features/ui/hud/main_hud.tscn" id="6_hud"]
 [ext_resource type="PackedScene" uid="uid://d1r7i8x8fvl3j" path="res://features/obstacles/css_destructible_block.tscn" id="7_sedgv"]
 [ext_resource type="PackedScene" uid="uid://c4e1e1ik2l6gt" path="res://features/obstacles/css_toggle_platform.tscn" id="8_l6f8y"]
-[ext_resource type="PackedScene" uid="uid://b8y4a82c2x8a5" path="res://features/world/emis_dialog_trigger.tscn" id="11_u1ss0"]
+[ext_resource type="PackedScene" path="res://features/world/hemis_dialog_trigger.tscn" id="11_u1ss0"]
 [ext_resource type="PackedScene" path="res://features/world/music_trigger.tscn" id="12_2lhyl"]
 [ext_resource type="AudioStream" uid="uid://dnmla1lehhfpg" path="res://assets/music/cave themeb4.ogg" id="13_pf80l"]
 [ext_resource type="AudioStream" uid="uid://cugqhxdj6are8" path="res://assets/music/Verdant Circuit.mp3" id="14_upwmq"]
@@ -263,7 +263,7 @@ texture = ExtResource("15_57uqs")
 [node name="PilarSolar" parent="." instance=ExtResource("4_pilar")]
 position = Vector2(-1148, 1127)
 
-[node name="EmisDialogTrigger" parent="." instance=ExtResource("11_u1ss0")]
+[node name="HemisDialogTrigger" parent="." instance=ExtResource("11_u1ss0")]
 position = Vector2(161, 67)
 dialog_lines = PackedStringArray("Hola Guapote\n", "Cuando sales con el pan?")
 
