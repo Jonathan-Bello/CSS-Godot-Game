@@ -17,9 +17,9 @@ var ALL_ABILITIES: PackedStringArray = PackedStringArray([
 
 # En una partida nueva arrancan bloqueadas.
 const DEFAULT_UNLOCKED := {
-	ABILITY_DASH: false,
-	ABILITY_DOUBLE_JUMP: false,
-	ABILITY_WALL_CLIMB: false,
+	ABILITY_DASH: true,
+	ABILITY_DOUBLE_JUMP: true,
+	ABILITY_WALL_CLIMB: true,
 }
 
 var _unlock_state: Dictionary = {}

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://1bsajhtwutlj" path="res://features/ui/hud/main_hud.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://cacinkgpsh44f" path="res://assets/art/hud/solar_charge.svg" id="2"]
-[ext_resource type="Texture2D" path="res://assets/art/hud/hemis.svg" id="3"]
+[ext_resource type="Texture2D" uid="uid://6r3pmeaffncq" path="res://assets/art/hud/hemis.svg" id="3"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="3_8elgk"]
 [ext_resource type="Texture2D" uid="uid://1d3uxm4mejb3" path="res://assets/art/player/body/cabeza.svg" id="4"]
 [ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="4_s52bx"]

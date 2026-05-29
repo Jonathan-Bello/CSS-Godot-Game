@@ -889,9 +889,9 @@ script = ExtResource("3_t6f4j")
 [sub_resource type="Curve2D" id="Curve2D_ooeqd"]
 resource_local_to_scene = true
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -69.56545, 69.840904, 0, 0, 0, 0, -70.56555, -35.6587, 0, 0, 0, 0, -22.23925, -65.5292, 0, 0, 0, 0, 20.78955, -69.8409, 0, 0, 0, 0, 52.40055, -44.323498, 0, 0, 0, 0, 70.565544, 30.689903, 0, 0, 0, 0, 52.40055, 65.87591, 0, 0, 0, 0, 52.40055, -4.9981003, 0, 0, 0, 0, 7.5155487, -36.5328, 0, 0, 0, 0, -22.23925, -18.158699, 0, 0, 0, 0, -41.78725, 54.81791, 0, 0, 0, 0, -69.56545, 69.840904)
+"points": PackedVector2Array(0, 0, 0, 0, -69.56545, 69.840904, 0, 0, 0, 0, -70.56555, -35.6587, 0, 0, 0, 0, -22.23925, -65.5292, 0, 0, 0, 0, 20.78955, -69.8409, 0, 0, 0, 0, 52.40055, -44.323498, 0, 0, 0, 0, 70.565544, 30.689903, 0, 0, 0, 0, 52.40055, 65.87591, 0, 0, 0, 0, 52.40055, -4.9981003, 0, 0, 0, 0, 7.5155487, -36.5328, 0, 0, 0, 0, -22.23925, -18.158699, 0, 0, 0, 0, -41.78725, 54.81791, 0, 0, 0, 0, -48.825462, 58.62431, 0, 0, 0, 0, -69.56545, 69.840904)
 }
-point_count = 12
+point_count = 13
 
 [sub_resource type="Resource" id="Resource_xtu4r"]
 resource_local_to_scene = true
@@ -1173,10 +1173,12 @@ speed_scale = 1.4
 [node name="origen" type="Bone2D" parent="Skeleton2D"]
 position = Vector2(20, 32)
 rest = Transform2D(1, 0, 0, 1, 20, 32)
+editor_settings/show_bone_gizmo = false
 
 [node name="cintura" type="Bone2D" parent="Skeleton2D/origen"]
 position = Vector2(1, -5)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Skeleton2D/origen/cintura"]
 position = Vector2(-1, 5)
@@ -1185,6 +1187,7 @@ remote_path = NodePath("..")
 [node name="torso" type="Bone2D" parent="Skeleton2D/origen/cintura"]
 position = Vector2(-3.9999995, -66)
 rest = Transform2D(1, 0, 0, 1, -3.9999995, -66)
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/origen/cintura/torso"]
 remote_path = NodePath("../../../../sprites/Torso")
@@ -1192,6 +1195,7 @@ remote_path = NodePath("../../../../sprites/Torso")
 [node name="cabeza" type="Bone2D" parent="Skeleton2D/origen/cintura/torso"]
 position = Vector2(14, -164)
 rest = Transform2D(1, 0, 0, 1, 14, -164)
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/origen/cintura/torso/cabeza"]
 remote_path = NodePath("../../../../../sprites/Cabeza")
@@ -1202,6 +1206,7 @@ rest = Transform2D(1, 0, 0, 1, -5, -164)
 auto_calculate_length_and_angle = false
 length = 40.0
 bone_angle = -90.0
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/origen/cintura/torso/cabeza/hemis"]
 remote_path = NodePath("../../../../../../sprites/Hemis")
@@ -1213,6 +1218,7 @@ rest = Transform2D(1, 0, 0, 1, -75, -112)
 auto_calculate_length_and_angle = false
 length = 50.0
 bone_angle = 114.94498
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/origen/cintura/torso/brazoD"]
 remote_path = NodePath("../../../../../sprites/BrazoD")
@@ -1220,11 +1226,12 @@ remote_path = NodePath("../../../../../sprites/BrazoD")
 [node name="brazoI" type="Bone2D" parent="Skeleton2D/origen/cintura/torso"]
 position = Vector2(64, -110)
 rotation = -0.029809957
-scale = Vector2(0.9999882, 0.9999882)
+scale = Vector2(0.9999881, 0.9999881)
 rest = Transform2D(0.9995557, -0.029805543, 0.029805543, 0.9995557, 64, -110)
 auto_calculate_length_and_angle = false
 length = 50.0
 bone_angle = 73.80599
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/origen/cintura/torso/brazoI"]
 remote_path = NodePath("../../../../../sprites/BrazoI")
@@ -1239,6 +1246,7 @@ rest = Transform2D(0.9999995, 0, 0, 0.9999995, -89, 17)
 auto_calculate_length_and_angle = false
 length = 90.0
 bone_angle = 90.0
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/origen/piernaD"]
 remote_path = NodePath("../../../sprites/PiernaD")
@@ -1250,6 +1258,7 @@ rest = Transform2D(0.9999998, 0, 0, 0.9999998, 42, 14)
 auto_calculate_length_and_angle = false
 length = 90.0
 bone_angle = 90.0
+editor_settings/show_bone_gizmo = false
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/origen/piernaI"]
 remote_path = NodePath("../../../sprites/PiernaI")
@@ -1302,7 +1311,7 @@ arc_list = SubResource("Resource_xtu4r")
 
 [node name="Fill" type="Polygon2D" parent="Skeleton2D/sprites/Cabeza/Cabeza/Path3"]
 color = Color(0.85490197, 0.52156866, 0.21176471, 1)
-polygon = PackedVector2Array(-69.56545, 69.840904, -70.56555, -35.6587, -22.23925, -65.5292, 20.78955, -69.8409, 52.40055, -44.323498, 70.565544, 30.689903, 52.40055, 65.87591, 52.40055, -4.9981003, 7.5155487, -36.5328, -22.23925, -18.158699, -41.78725, 54.81791)
+polygon = PackedVector2Array(-69.56545, 69.840904, -70.56555, -35.6587, -22.23925, -65.5292, 20.78955, -69.8409, 52.40055, -44.323498, 70.565544, 30.689903, 52.40055, 65.87591, 52.40055, -4.9981003, 7.5155487, -36.5328, -22.23925, -18.158699, -41.78725, 54.81791, -48.825462, 58.62431)
 metadata/_edit_lock_ = true
 
 [node name="Rectangle" type="Node2D" parent="Skeleton2D/sprites/Cabeza/Cabeza" node_paths=PackedStringArray("polygon")]
@@ -1339,7 +1348,7 @@ metadata/_edit_lock_ = true
 visible = false
 position = Vector2(61, -181)
 rotation = -0.029809957
-scale = Vector2(0.9999882, 0.9999882)
+scale = Vector2(0.9999881, 0.9999881)
 offset = Vector2(-62, 184)
 
 [node name="BrazoI" type="Node2D" parent="Skeleton2D/sprites/BrazoI"]
