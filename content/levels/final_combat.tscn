@@ -181,8 +181,6 @@ start_music = ExtResource("12_music_boss")
 music_volume_db = -8.0
 
 [node name="fondoCiudad" parent="." instance=ExtResource("2_parallax")]
-offset = Vector2(0, -1000)
-transform = Transform2D(1, 0, 0, 1, 0, -1000)
 
 [node name="tileset" type="Node2D" parent="."]
 position = Vector2(-262, 534)

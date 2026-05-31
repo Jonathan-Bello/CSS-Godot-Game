@@ -2445,13 +2445,13 @@ point_count = 4
 resource_local_to_scene = true
 script = ExtResource("3_e6whx")
 
-[node name="CityParallaxBackground" type="ParallaxBackground"]
+[node name="CityParallaxBackground" type="CanvasLayer"]
+layer = -1
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
-position = Vector2(4, -538)
+[node name="ParallaxLayer" type="Parallax2D" parent="."]
 scale = Vector2(1.225225, 1.3582884)
-motion_scale = Vector2(0, 1)
-motion_mirroring = Vector2(1920, 0)
+repeat_size = Vector2(1920, 0)
+repeat_times = 20
 
 [node name="fondo" type="Node2D" parent="ParallaxLayer"]
 scale = Vector2(1.2286495, 1.2286495)
@@ -3133,10 +3133,10 @@ color = Color(0.9098039, 0.8039216, 0.7176471, 1)
 polygon = PackedVector2Array(-30, -20, 0, -20, 30, 20, 0, 20)
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
-position = Vector2(0, -470)
-motion_scale = Vector2(0.5, 1)
-motion_mirroring = Vector2(2789.6135, 0)
+[node name="ParallaxLayer2" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.5, 1)
+repeat_size = Vector2(2789.6135, 0)
+repeat_times = 20
 
 [node name="BgLayer2Mountains" type="Node2D" parent="ParallaxLayer2"]
 scale = Vector2(1.4529237, 1.610716)
@@ -4283,10 +4283,10 @@ color = Color(0.54509807, 0.65882355, 0.49019608, 1)
 polygon = PackedVector2Array(-10, 0, 10, -10, 0, 10)
 metadata/_edit_lock_ = true
 
-[node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
-position = Vector2(73, -221)
-motion_scale = Vector2(0.8, 1)
-motion_mirroring = Vector2(2409.8196, 0)
+[node name="ParallaxLayer3" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.2, 1)
+repeat_size = Vector2(2409.8196, 0)
+repeat_times = 20
 
 [node name="BgLayer3Trees" type="Node2D" parent="ParallaxLayer3"]
 scale = Vector2(1.2551143, 1.3914238)
