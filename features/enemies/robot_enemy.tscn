@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dlr7dytib1fkp"]
+[gd_scene load_steps=22 format=3 uid="uid://dlr7dytib1fkp"]
 
 [ext_resource type="Texture2D" uid="uid://cksyi3eyx3wtq" path="res://assets/art/robots/scout_front/scout_body_front.svg" id="1_hoebx"]
 [ext_resource type="Texture2D" uid="uid://bishagjqiu7w1" path="res://assets/art/robots/scout_front/scout_head_front.svg" id="2_wpkvm"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://bdx424ytukhc3" path="res://assets/art/robots/scout_front/scout_arm_right_front.svg" id="4_neqqd"]
 [ext_resource type="Texture2D" uid="uid://dd0s0f3fp82bw" path="res://assets/art/robots/scout_front/scout_leg_left_front.svg" id="5_1td7j"]
 [ext_resource type="Texture2D" uid="uid://coyqgvd545r87" path="res://assets/art/robots/scout_front/scout_leg_right_front.svg" id="6_whsju"]
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="7_ryqin"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="8_c3nfm"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="9_01a1a"]
 
 [sub_resource type="Animation" id="Animation_uw076"]
 length = 0.001
@@ -163,6 +166,53 @@ _data = {
 &"idle": SubResource("Animation_rbp8u")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5hry"]
+size = Vector2(365.5, 444.5)
+
+[sub_resource type="Curve2D" id="Curve2D_wwcuf"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -19, -7.5, 0, 0, 0, 0, 19, -7.5, 0, 0, 0, 0, 14, 7.5, 0, 0, 0, 0, -14, 7.5, 0, 0, 0, 0, -19, -7.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_h7sgb"]
+resource_local_to_scene = true
+script = ExtResource("9_01a1a")
+
+[sub_resource type="Curve2D" id="Curve2D_0as25"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -24, -7.5, 0, 0, 0, 0, 24, -7.5, 0, 0, 0, 0, 19, 7.5, 0, 0, 0, 0, -19, 7.5, 0, 0, 0, 0, -24, -7.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_3e48u"]
+resource_local_to_scene = true
+script = ExtResource("9_01a1a")
+
+[sub_resource type="Curve2D" id="Curve2D_1mnq0"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -14, -3.5, 0, 0, 0, 0, 14, -3.5, 0, 0, 0, 0, 10, 3.5, 0, 0, 0, 0, -10, 3.5, 0, 0, 0, 0, -14, -3.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_pijbc"]
+resource_local_to_scene = true
+script = ExtResource("9_01a1a")
+
+[sub_resource type="Curve2D" id="Curve2D_2of2p"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -9, -1.5, 0, 0, 0, 0, 9, -1.5, 0, 0, 0, 0, 6, 1.5, 0, 0, 0, 0, -6, 1.5, 0, 0, 0, 0, -9, -1.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_7gf0l"]
+resource_local_to_scene = true
+script = ExtResource("9_01a1a")
+
 [node name="RobotEnemy" type="CharacterBody2D"]
 
 [node name="Body" type="Node2D" parent="."]
@@ -177,7 +227,7 @@ position = Vector2(0, -75)
 
 [node name="Sprite2D" type="Sprite2D" parent="HeadPivot/Head"]
 z_index = 2
-position = Vector2(0, 60)
+position = Vector2(-15, 0)
 texture = ExtResource("2_wpkvm")
 
 [node name="ArmLeftPivot" type="Node2D" parent="."]
@@ -227,3 +277,69 @@ texture = ExtResource("6_whsju")
 libraries = {
 &"": SubResource("AnimationLibrary_75qje")
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-23, -21)
+shape = SubResource("RectangleShape2D_i5hry")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(685, -237)
+offset = Vector2(20, 45)
+
+[node name="HeavyHeadFront" type="Node2D" parent="Sprite2D"]
+metadata/svg_root = true
+
+[node name="heavy_head_front" type="Node2D" parent="Sprite2D/HeavyHeadFront"]
+metadata/svg_style = {}
+
+[node name="Polygon" type="Node2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 12.5)
+script = ExtResource("7_ryqin")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_wwcuf")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_h7sgb")
+
+[node name="Fill" type="Polygon2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front/Polygon"]
+color = Color(0.23137255, 0.24313726, 0.2627451, 1)
+polygon = PackedVector2Array(-19, -7.5, 19, -7.5, 14, 7.5, -14, 7.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2" type="Node2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 7.5)
+script = ExtResource("7_ryqin")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_0as25")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_3e48u")
+
+[node name="Fill" type="Polygon2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front/Polygon2"]
+color = Color(0.83137256, 0.80784315, 0.72156864, 1)
+polygon = PackedVector2Array(-24, -7.5, 24, -7.5, 19, 7.5, -19, 7.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon3" type="Node2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 11.5)
+script = ExtResource("7_ryqin")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_1mnq0")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_pijbc")
+
+[node name="Fill" type="Polygon2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front/Polygon3"]
+color = Color(0.13333334, 0.14509805, 0.16470589, 1)
+polygon = PackedVector2Array(-14, -3.5, 14, -3.5, 10, 3.5, -10, 3.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon4" type="Node2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 11.5)
+script = ExtResource("7_ryqin")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_2of2p")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_7gf0l")
+
+[node name="Fill" type="Polygon2D" parent="Sprite2D/HeavyHeadFront/heavy_head_front/Polygon4"]
+color = Color(0, 0.8980392, 0.45882353, 1)
+polygon = PackedVector2Array(-9, -1.5, 9, -1.5, 6, 1.5, -6, 1.5)
+metadata/_edit_lock_ = true

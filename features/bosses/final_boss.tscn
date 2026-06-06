@@ -1,0 +1,1088 @@
+[gd_scene load_steps=50 format=3 uid="uid://dikcl3va1x5wi"]
+
+[ext_resource type="Script" uid="uid://vqm4w1relq54" path="res://features/bosses/final_boss.gd" id="1_boss"]
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="2_6jlxj"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="3_ybdyn"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="4_hgqfp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_boss"]
+radius = 161.0
+height = 338.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hurtbox"]
+radius = 169.0
+height = 370.0
+
+[sub_resource type="Curve2D" id="Curve2D_vhfyd"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -7.5, -25, 0, 0, 0, 0, 12.5, -25, 0, 0, 0, 0, 7.5, 25, 0, 0, 0, 0, -12.5, 25, 0, 0, 0, 0, -7.5, -25)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_roqi5"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_vy8dj"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, -15, 0, 0, 0, 0, 15, -15, 0, 0, 0, 0, 10, 15, 0, 0, 0, 0, -10, 15, 0, 0, 0, 0, -15, -15)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_iu6hw"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_h755f"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -5, -17.5, 0, 0, 0, 0, 10, -17.5, 0, 0, 0, 0, 5, 17.5, 0, 0, 0, 0, -10, 17.5, 0, 0, 0, 0, -5, -17.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_3va00"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_xc3fe"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -12.5, -25, 0, 0, 0, 0, 7.5, -25, 0, 0, 0, 0, 12.5, 25, 0, 0, 0, 0, -7.5, 25, 0, 0, 0, 0, -12.5, -25)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_ts82y"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_jxjnh"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -15, -15, 0, 0, 0, 0, 15, -15, 0, 0, 0, 0, 10, 15, 0, 0, 0, 0, -10, 15, 0, 0, 0, 0, -15, -15)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_b4v04"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_3sdhf"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -10, -17.5, 0, 0, 0, 0, 5, -17.5, 0, 0, 0, 0, 10, 17.5, 0, 0, 0, 0, -5, 17.5, 0, 0, 0, 0, -10, -17.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_ai30w"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_1obh0"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -10, -17.5, 0, 0, 0, 0, 10, -17.5, 0, 0, 0, 0, 5, 17.5, 0, 0, 0, 0, -5, 17.5, 0, 0, 0, 0, -10, -17.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_q3svg"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_pxpth"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -6, -15, 0, 0, 0, 0, 6, -15, 0, 0, 0, 0, 2, 15, 0, 0, 0, 0, -2, 15, 0, 0, 0, 0, -6, -15)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_qih72"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_13djj"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -10, -17.5, 0, 0, 0, 0, 10, -17.5, 0, 0, 0, 0, 5, 17.5, 0, 0, 0, 0, -5, 17.5, 0, 0, 0, 0, -10, -17.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_lkjb8"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_oyo54"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -6, -15, 0, 0, 0, 0, 6, -15, 0, 0, 0, 0, 2, 15, 0, 0, 0, 0, -2, 15, 0, 0, 0, 0, -6, -15)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_08iox"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_eqbl4"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -19, -7.5, 0, 0, 0, 0, 19, -7.5, 0, 0, 0, 0, 14, 7.5, 0, 0, 0, 0, -14, 7.5, 0, 0, 0, 0, -19, -7.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_fdhlt"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_byu5u"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -24, -7.5, 0, 0, 0, 0, 24, -7.5, 0, 0, 0, 0, 19, 7.5, 0, 0, 0, 0, -19, 7.5, 0, 0, 0, 0, -24, -7.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_fdkic"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_xwv3t"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -14, -3.5, 0, 0, 0, 0, 14, -3.5, 0, 0, 0, 0, 10, 3.5, 0, 0, 0, 0, -10, 3.5, 0, 0, 0, 0, -14, -3.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_hwb1l"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_fat8f"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -9, -1.5, 0, 0, 0, 0, 9, -1.5, 0, 0, 0, 0, 6, 1.5, 0, 0, 0, 0, -6, 1.5, 0, 0, 0, 0, -9, -1.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_cbbml"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_5be1u"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -29, -27.5, 0, 0, 0, 0, 29, -27.5, 0, 0, 0, 0, 21, 27.5, 0, 0, 0, 0, -21, 27.5, 0, 0, 0, 0, -29, -27.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_83n6j"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_xws7m"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -39, -15, 0, 0, 0, 0, 39, -15, 0, 0, 0, 0, 26, 15, 0, 0, 0, 0, -26, 15, 0, 0, 0, 0, -39, -15)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_6vrfl"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_y88fx"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -14, -17.5, 0, 0, 0, 0, 14, -17.5, 0, 0, 0, 0, 6, 17.5, 0, 0, 0, 0, -6, 17.5, 0, 0, 0, 0, -14, -17.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_d7qf6"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Curve2D" id="Curve2D_dwe3y"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -6, -5, 0, 0, 0, 0, 6, -5, 0, 0, 0, 0, 2, 5, 0, 0, 0, 0, -2, 5, 0, 0, 0, 0, -6, -5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_bgl3y"]
+resource_local_to_scene = true
+script = ExtResource("4_hgqfp")
+
+[sub_resource type="Animation" id="Animation_6jlxj"]
+resource_name = "Idle"
+length = 3.0
+loop_mode = 1
+step = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D/torso/head:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1, -25.333334), Vector2(-1, -28.000002)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Bone2D/torso/head:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vhfyd"]
+resource_name = "Pre_Jump_2"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D/pataD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Bone2D/pataI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-13, 6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/Bone2D/torso:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.38),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, -13.333332), Vector2(1.667, -50)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-51, -18), Vector2(-60.333332, -13.333334)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.40073892),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(47, -18), Vector2(51.666332, -22)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/Bone2D/torso/head:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -25.333334)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:rotation")
+tracks/6/interp = 4
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -3.1415927]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.40073892),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -3.1415927]
+}
+
+[sub_resource type="Animation" id="Animation_hgqfp"]
+resource_name = "Pre_Jump"
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D/pataD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Bone2D/pataI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-13, 6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/Bone2D/torso:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, -36), Vector2(1, -13.333332)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-51, -18)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(47, -18)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/Bone2D/torso/head:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -25.333334)]
+}
+
+[sub_resource type="Animation" id="Animation_ybdyn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D/torso/head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -25.333334)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Bone2D/torso/head:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/Bone2D/pataD:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/Bone2D/pataI:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-13, 6)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-51, -18)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/Bone2D/torso:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, -36)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(47, -18)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vy8dj"]
+resource_name = "aterrizar"
+length = 0.3
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D/pataD:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.25035504),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Bone2D/pataI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.25035504),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-13, 6)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/Bone2D/torso:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(-0.00023204088, 0.25035504),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.667, -50), Vector2(1, -13.333332)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.01976797, 0.25035504),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-60.333332, -13.333334), Vector2(-51, -18)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.020506889, 0.25035504),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(51.666332, -22), Vector2(47, -18)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Skeleton2D/Bone2D/torso/head:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.25035504),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, -25.333334)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:rotation")
+tracks/6/interp = 0
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.01976797, 0.25035504),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-3.1415927, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:rotation")
+tracks/7/interp = 0
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.020506889, 0.25035504),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-3.1415927, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_roqi5"]
+resource_name = "fall"
+length = 0.5
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skeleton2D/Bone2D/torso:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.011730321),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.667, -50)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.03173033, 0.29649556),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-60.333332, -13.333334), Vector2(-60, -14)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.03246925, 0.2956411),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(51.666332, -22), Vector2(52, -22)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Skeleton2D/Bone2D/torso/brazoI:rotation")
+tracks/3/interp = 4
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.03173033),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.1415927]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Skeleton2D/Bone2D/torso/brazoD:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.03246925),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.1415927]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_roqi5"]
+_data = {
+&"Idle": SubResource("Animation_6jlxj"),
+&"Jump": SubResource("Animation_vhfyd"),
+&"Pre_Jump": SubResource("Animation_hgqfp"),
+&"RESET": SubResource("Animation_ybdyn"),
+&"aterrizar": SubResource("Animation_vy8dj"),
+&"fall": SubResource("Animation_roqi5")
+}
+
+[node name="FinalBoss" type="CharacterBody2D" groups=["boss"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_boss")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, -57)
+shape = SubResource("CapsuleShape2D_boss")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-3, -57)
+shape = SubResource("CapsuleShape2D_hurtbox")
+
+[node name="HeavyFullFront" type="Node2D" parent="."]
+position = Vector2(-140, -117)
+scale = Vector2(2.1869988, 2.1869988)
+metadata/svg_root = true
+
+[node name="brazoLeft" type="Sprite2D" parent="HeavyFullFront"]
+position = Vector2(129.85834, -20.576145)
+scale = Vector2(1.371743, 1.371743)
+offset = Vector2(-25.605873, 32.921814)
+
+[node name="heavy_arm_left_front" type="Node2D" parent="HeavyFullFront/brazoLeft"]
+position = Vector2(-95.10751, -25.60588)
+metadata/svg_style = {}
+
+[node name="Polygon" type="Node2D" parent="HeavyFullFront/brazoLeft/heavy_arm_left_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(92.5, 60)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_vhfyd")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_roqi5")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/brazoLeft/heavy_arm_left_front/Polygon"]
+color = Color(0.23137255, 0.24313726, 0.2627451, 1)
+polygon = PackedVector2Array(-7.5, -25, 12.5, -25, 7.5, 25, -12.5, 25)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2" type="Node2D" parent="HeavyFullFront/brazoLeft/heavy_arm_left_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(95, 40)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_vy8dj")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_iu6hw")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/brazoLeft/heavy_arm_left_front/Polygon2"]
+color = Color(0.83137256, 0.80784315, 0.72156864, 1)
+polygon = PackedVector2Array(-15, -15, 15, -15, 10, 15, -10, 15)
+metadata/_edit_lock_ = true
+
+[node name="Polygon3" type="Node2D" parent="HeavyFullFront/brazoLeft/heavy_arm_left_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(90, 47.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_h755f")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_3va00")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/brazoLeft/heavy_arm_left_front/Polygon3"]
+color = Color(0.13333334, 0.14509805, 0.16470589, 1)
+polygon = PackedVector2Array(-5, -17.5, 10, -17.5, 5, 17.5, -10, 17.5)
+metadata/_edit_lock_ = true
+
+[node name="brazoRight" type="Sprite2D" parent="HeavyFullFront"]
+position = Vector2(-4.5724716, -20.576145)
+scale = Vector2(1.371743, 1.371743)
+
+[node name="heavy_arm_right_front" type="Node2D" parent="HeavyFullFront/brazoRight"]
+position = Vector2(-32.92183, -25.14862)
+metadata/svg_style = {}
+
+[node name="Polygon" type="Node2D" parent="HeavyFullFront/brazoRight/heavy_arm_right_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(35.5, 60)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_xc3fe")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_ts82y")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/brazoRight/heavy_arm_right_front/Polygon"]
+color = Color(0.23137255, 0.24313726, 0.2627451, 1)
+polygon = PackedVector2Array(-12.5, -25, 7.5, -25, 12.5, 25, -7.5, 25)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2" type="Node2D" parent="HeavyFullFront/brazoRight/heavy_arm_right_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(33, 40)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_jxjnh")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_b4v04")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/brazoRight/heavy_arm_right_front/Polygon2"]
+color = Color(0.83137256, 0.80784315, 0.72156864, 1)
+polygon = PackedVector2Array(-15, -15, 15, -15, 10, 15, -10, 15)
+metadata/_edit_lock_ = true
+
+[node name="Polygon3" type="Node2D" parent="HeavyFullFront/brazoRight/heavy_arm_right_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(38, 47.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_3sdhf")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_ai30w")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/brazoRight/heavy_arm_right_front/Polygon3"]
+color = Color(0.13333334, 0.14509805, 0.16470589, 1)
+polygon = PackedVector2Array(-10, -17.5, 5, -17.5, 10, 17.5, -5, 17.5)
+metadata/_edit_lock_ = true
+
+[node name="pataLeft" type="Sprite2D" parent="HeavyFullFront"]
+position = Vector2(46.182014, 61.72843)
+scale = Vector2(1.371743, 1.371743)
+
+[node name="heavy_leg_left_front" type="Node2D" parent="HeavyFullFront/pataLeft"]
+position = Vector2(-74.98861, -86.87706)
+scale = Vector2(1.0000001, 1.0000001)
+metadata/svg_style = {}
+
+[node name="Polygon" type="Node2D" parent="HeavyFullFront/pataLeft/heavy_leg_left_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(76, 102.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_1obh0")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_q3svg")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/pataLeft/heavy_leg_left_front/Polygon"]
+color = Color(0.23137255, 0.24313726, 0.2627451, 1)
+polygon = PackedVector2Array(-10, -17.5, 10, -17.5, 5, 17.5, -5, 17.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2" type="Node2D" parent="HeavyFullFront/pataLeft/heavy_leg_left_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(76, 100)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_pxpth")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_qih72")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/pataLeft/heavy_leg_left_front/Polygon2"]
+color = Color(0.83137256, 0.80784315, 0.72156864, 1)
+polygon = PackedVector2Array(-6, -15, 6, -15, 2, 15, -2, 15)
+metadata/_edit_lock_ = true
+
+[node name="pataRight" type="Sprite2D" parent="HeavyFullFront"]
+position = Vector2(77.7321, 60.35669)
+scale = Vector2(1.371743, 1.371743)
+
+[node name="heavy_leg_right_front" type="Node2D" parent="HeavyFullFront/pataRight"]
+position = Vector2(-51.21173, -84.13356)
+scale = Vector2(1.0000001, 1.0000001)
+metadata/svg_style = {}
+
+[node name="Polygon" type="Node2D" parent="HeavyFullFront/pataRight/heavy_leg_right_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(52, 102.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_13djj")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_lkjb8")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/pataRight/heavy_leg_right_front/Polygon"]
+color = Color(0.23137255, 0.24313726, 0.2627451, 1)
+polygon = PackedVector2Array(-10, -17.5, 10, -17.5, 5, 17.5, -5, 17.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2" type="Node2D" parent="HeavyFullFront/pataRight/heavy_leg_right_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(52, 100)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_oyo54")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_08iox")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/pataRight/heavy_leg_right_front/Polygon2"]
+color = Color(0.83137256, 0.80784315, 0.72156864, 1)
+polygon = PackedVector2Array(-6, -15, 6, -15, 2, 15, -2, 15)
+metadata/_edit_lock_ = true
+
+[node name="cabeza" type="Sprite2D" parent="HeavyFullFront"]
+position = Vector2(64.01467, -30.635593)
+scale = Vector2(1.371743, 1.371743)
+
+[node name="heavy_head_front" type="Node2D" parent="HeavyFullFront/cabeza"]
+position = Vector2(-64.92917, -18.289906)
+metadata/svg_style = {}
+
+[node name="Polygon" type="Node2D" parent="HeavyFullFront/cabeza/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 12.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_eqbl4")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_fdhlt")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/cabeza/heavy_head_front/Polygon"]
+color = Color(0.23137255, 0.24313726, 0.2627451, 1)
+polygon = PackedVector2Array(-19, -7.5, 19, -7.5, 14, 7.5, -14, 7.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2" type="Node2D" parent="HeavyFullFront/cabeza/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 7.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_byu5u")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_fdkic")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/cabeza/heavy_head_front/Polygon2"]
+color = Color(0.83137256, 0.80784315, 0.72156864, 1)
+polygon = PackedVector2Array(-24, -7.5, 24, -7.5, 19, 7.5, -19, 7.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon3" type="Node2D" parent="HeavyFullFront/cabeza/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 11.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_xwv3t")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_hwb1l")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/cabeza/heavy_head_front/Polygon3"]
+color = Color(0.13333334, 0.14509805, 0.16470589, 1)
+polygon = PackedVector2Array(-14, -3.5, 14, -3.5, 10, 3.5, -10, 3.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon4" type="Node2D" parent="HeavyFullFront/cabeza/heavy_head_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 11.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_fat8f")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_cbbml")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/cabeza/heavy_head_front/Polygon4"]
+color = Color(0, 0.8980392, 0.45882353, 1)
+polygon = PackedVector2Array(-9, -1.5, 9, -1.5, 6, 1.5, -6, 1.5)
+metadata/_edit_lock_ = true
+
+[node name="torso" type="Sprite2D" parent="HeavyFullFront"]
+position = Vector2(65.38641, 4.1152306)
+scale = Vector2(1.371743, 1.371743)
+
+[node name="heavy_body_front" type="Node2D" parent="HeavyFullFront/torso"]
+position = Vector2(-65.84366, -42.524033)
+metadata/svg_style = {}
+
+[node name="Polygon" type="Node2D" parent="HeavyFullFront/torso/heavy_body_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 57.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_5be1u")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_83n6j")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/torso/heavy_body_front/Polygon"]
+color = Color(0.23137255, 0.24313726, 0.2627451, 1)
+polygon = PackedVector2Array(-29, -27.5, 29, -27.5, 21, 27.5, -21, 27.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon2" type="Node2D" parent="HeavyFullFront/torso/heavy_body_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 40)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_xws7m")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_6vrfl")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/torso/heavy_body_front/Polygon2"]
+color = Color(0.83137256, 0.80784315, 0.72156864, 1)
+polygon = PackedVector2Array(-39, -15, 39, -15, 26, 15, -26, 15)
+metadata/_edit_lock_ = true
+
+[node name="Polygon3" type="Node2D" parent="HeavyFullFront/torso/heavy_body_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 57.5)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_y88fx")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_d7qf6")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/torso/heavy_body_front/Polygon3"]
+color = Color(0.13333334, 0.14509805, 0.16470589, 1)
+polygon = PackedVector2Array(-14, -17.5, 14, -17.5, 6, 17.5, -6, 17.5)
+metadata/_edit_lock_ = true
+
+[node name="Polygon4" type="Node2D" parent="HeavyFullFront/torso/heavy_body_front" node_paths=PackedStringArray("polygon")]
+position = Vector2(64, 50)
+script = ExtResource("2_6jlxj")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_dwe3y")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_bgl3y")
+
+[node name="Fill" type="Polygon2D" parent="HeavyFullFront/torso/heavy_body_front/Polygon4"]
+color = Color(0.9764706, 0.53333336, 0.13333334, 1)
+polygon = PackedVector2Array(-6, -5, 6, -5, 2, 5, -2, 5)
+metadata/_edit_lock_ = true
+
+[node name="Skeleton2D" type="Skeleton2D" parent="."]
+scale = Vector2(3, 3)
+
+[node name="Bone2D" type="Bone2D" parent="Skeleton2D"]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+editor_settings/show_bone_gizmo = false
+
+[node name="pataD" type="Bone2D" parent="Skeleton2D/Bone2D"]
+position = Vector2(10, 5)
+rest = Transform2D(1, 0, 0, 1, 17, 2)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 90.0
+editor_settings/show_bone_gizmo = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Bone2D/pataD"]
+remote_path = NodePath("../../../../HeavyFullFront/pataRight")
+
+[node name="pataI" type="Bone2D" parent="Skeleton2D/Bone2D"]
+position = Vector2(-13, 6)
+rest = Transform2D(1, 0, 0, 1, -12, 8)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 90.0
+editor_settings/show_bone_gizmo = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Bone2D/pataI"]
+remote_path = NodePath("../../../../HeavyFullFront/pataLeft")
+
+[node name="torso" type="Bone2D" parent="Skeleton2D/Bone2D"]
+position = Vector2(1, -36)
+rest = Transform2D(1, 0, 0, 1, 1, -36)
+editor_settings/show_bone_gizmo = false
+
+[node name="brazoI" type="Bone2D" parent="Skeleton2D/Bone2D/torso"]
+position = Vector2(-51, -18)
+rest = Transform2D(1, 0, 0, 1, -78, -20)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 90.0
+editor_settings/show_bone_gizmo = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Bone2D/torso/brazoI"]
+remote_path = NodePath("../../../../../HeavyFullFront/brazoRight")
+
+[node name="brazoD" type="Bone2D" parent="Skeleton2D/Bone2D/torso"]
+position = Vector2(47, -18)
+rest = Transform2D(1, 0, 0, 1, 79, -20)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = 90.0
+editor_settings/show_bone_gizmo = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Bone2D/torso/brazoD"]
+remote_path = NodePath("../../../../../HeavyFullFront/brazoLeft")
+
+[node name="head" type="Bone2D" parent="Skeleton2D/Bone2D/torso"]
+position = Vector2(-1, -25.333334)
+rest = Transform2D(1, 0, 0, 1, 0, -22)
+auto_calculate_length_and_angle = false
+length = 16.0
+bone_angle = -90.0
+editor_settings/show_bone_gizmo = false
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Bone2D/torso/head"]
+remote_path = NodePath("../../../../../HeavyFullFront/cabeza")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Skeleton2D/Bone2D/torso"]
+remote_path = NodePath("../../../../HeavyFullFront/torso")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_roqi5")
+}

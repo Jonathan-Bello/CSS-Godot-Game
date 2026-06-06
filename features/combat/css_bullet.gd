@@ -282,7 +282,9 @@ func _process_hit_target(target: Node) -> void:
 			"damage": damage,
 			"rules": css_rules,
 			"properties": css_properties,
-			"css_text": css_text
+			"css_text": css_text,
+			"impact_position": global_position,
+			"travel_direction": direction.normalized()
 		}
 		receiver.call("apply_css_bullet_hit", bullet_profile)
 		_destroy_on_impact()

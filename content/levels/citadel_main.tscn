@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://fshw3fl0wsdj"]
+[gd_scene load_steps=30 format=4 uid="uid://fshw3fl0wsdj"]
 
 [ext_resource type="Script" uid="uid://k76toqhebuxm" path="res://features/world/level_bootstrap.gd" id="1_bootstrap"]
 [ext_resource type="AudioStream" uid="uid://cugqhxdj6are8" path="res://assets/music/Verdant Circuit.mp3" id="2_h6eov"]
@@ -22,6 +22,8 @@
 [ext_resource type="Script" uid="uid://ds4eyy7eyt7dn" path="res://features/world/combat_arena_lock.gd" id="18_arena_lock"]
 [ext_resource type="PackedScene" uid="uid://c4e1e1ik2l6gt" path="res://features/obstacles/css_toggle_platform.tscn" id="21_be6lk"]
 [ext_resource type="PackedScene" uid="uid://d1r7i8x8fvl3j" path="res://features/obstacles/css_destructible_block.tscn" id="22_8v5cs"]
+[ext_resource type="PackedScene" uid="uid://cjfn6oqpy6yce" path="res://features/collectibles/collectible_item.tscn" id="23_collectible"]
+[ext_resource type="PackedScene" uid="uid://dikcl3va1x5wi" path="res://features/bosses/final_boss.tscn" id="24_final_boss"]
 
 [sub_resource type="RectangleShape2D" id="Shape_respawn"]
 size = Vector2(6562, 284)
@@ -33,7 +35,7 @@ size = Vector2(25471, 6838)
 size = Vector2(120, 780)
 
 [sub_resource type="RectangleShape2D" id="Shape_boss_trigger"]
-size = Vector2(960, 620)
+size = Vector2(288, 391)
 
 [sub_resource type="RectangleShape2D" id="Shape_gate"]
 size = Vector2(170, 330)
@@ -61,16 +63,16 @@ metadata/_custom_type_script = "uid://daykf8t7ti8t0"
 [node name="Markers" type="Node2D" parent="."]
 
 [node name="PlayerStart" type="Marker2D" parent="Markers"]
-position = Vector2(316, 1358)
+position = Vector2(723, 280)
 
 [node name="HubSpawn" type="Marker2D" parent="Markers"]
-position = Vector2(8650, 430)
+position = Vector2(692, 1174)
 
 [node name="CitadelStartReturn" type="Marker2D" parent="Markers"]
 position = Vector2(165, 430)
 
 [node name="Player" parent="." instance=ExtResource("3_player")]
-position = Vector2(342.99997, 1166)
+position = Vector2(312.00003, 768)
 scale = Vector2(0.35, 0.35)
 collision_layer = 3
 collision_mask = 3
@@ -79,9 +81,10 @@ shoot_arm_aim_offset_degrees = -110.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(357, 19)
+zoom = Vector2(0.91, 0.91)
 limit_left = -220
 limit_top = -1945
-limit_right = 24415
+limit_right = 25160
 limit_bottom = 4235
 
 [node name="Control" type="Control" parent="Player/Camera2D"]
@@ -131,9 +134,9 @@ shape = SubResource("Shape_zone")
 [node name="Narrative" type="Node2D" parent="."]
 
 [node name="CitadelIntro" parent="Narrative" instance=ExtResource("10_hemis")]
-position = Vector2(367, 1617)
+position = Vector2(419, 1633)
 scale = Vector2(2.5, 2)
-dialog_lines = PackedStringArray("Distrito de combate: aqui se prueba lectura de enemigos y afinidades CSS.", "Los enemigos azules reaccionan mejor a balas azules. Los rojos reaccionan mejor a balas rojas.")
+dialog_lines = PackedStringArray("Mira, estamos en la ciudadela.", "Pero está más solitario de lo que recordaba.", "Avancemos con cuidado.")
 
 [node name="FlyingPairHint" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(1024, 1617)
@@ -141,14 +144,19 @@ scale = Vector2(1, 2.25)
 dialog_lines = PackedStringArray("Los drones vuelan hacia ti cuando entras en su rango.", "Mantente en movimiento y usa background-color: blue; con fill: blue; para eliminarlos mas rapido.")
 
 [node name="ChargerHint" parent="Narrative" instance=ExtResource("10_hemis")]
-position = Vector2(2281, 1064)
-scale = Vector2(1, 2.875)
+position = Vector2(2341, 1105)
+scale = Vector2(0.345, 2.06)
 dialog_lines = PackedStringArray("El enemigo rojo carga en linea recta despues de prepararse.", "Dale espacio, salta sobre su avance y castigalo con background-color: red; y fill: red;.")
 
 [node name="MixedArenaHint" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(6189, 424)
 scale = Vector2(0.26, 1.36)
-dialog_lines = PackedStringArray("Ahora combina prioridades: primero controla al que te encierra el espacio.", "La Ciudadela queda armada como una ruta de combate conectada hacia la arena del jefe.")
+dialog_lines = PackedStringArray("Pero qué raro, no detecto a ningún otro humano.", "¿A dónde habrán ido todos?")
+
+[node name="MixedArenaHint2" parent="Narrative" instance=ExtResource("10_hemis")]
+position = Vector2(14464, -640)
+scale = Vector2(0.26, 1.36)
+dialog_lines = PackedStringArray("Detecto una pared frágil.", "Usa el valor red y veamos qué hay dentro.")
 
 [node name="BossArenaHint" parent="Narrative" instance=ExtResource("10_hemis")]
 position = Vector2(22151, 1615)
@@ -217,7 +225,7 @@ position = Vector2(4480, 560)
 position = Vector2(7151, 1773)
 
 [node name="MixedCharger" parent="CombatRoute/MixedArena" instance=ExtResource("17_charger")]
-position = Vector2(4034, -1774)
+position = Vector2(4593, -2421)
 detection_range = 680.0
 
 [node name="MixedFlying" parent="CombatRoute/MixedArena" instance=ExtResource("16_flying")]
@@ -269,15 +277,25 @@ script = ExtResource("18_arena_lock")
 left_wall_path = NodePath("../BossArenaLeftWall")
 right_wall_path = NodePath("../BossArenaRightWall")
 left_closed_position = Vector2(10600, 250)
-right_closed_position = Vector2(11800, 250)
+right_closed_position = Vector2(12500, 250)
+boss_path = NodePath("../FinalBossPrototype")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CombatRoute/BossArenaPreview/BossArenaTrigger"]
+position = Vector2(-3, 118)
 shape = SubResource("Shape_boss_trigger")
 
-[node name="BossPlaceholder" type="Polygon2D" parent="CombatRoute/BossArenaPreview"]
-position = Vector2(11692, 444)
-color = Color(1, 0.76, 0.22, 0.32)
-polygon = PackedVector2Array(-90, -120, 90, -120, 135, 0, 70, 120, -70, 120, -135, 0)
+[node name="FinalBossLanding" type="Marker2D" parent="CombatRoute/BossArenaPreview"]
+position = Vector2(11421, 467)
+
+[node name="FinalBossPrototype" parent="CombatRoute/BossArenaPreview" instance=ExtResource("24_final_boss")]
+position = Vector2(11845, 418)
+scale = Vector2(1.553427, 1.553427)
+intro_dialog_duration_per_line = 3.35
+detection_range = 600.0
+landing_marker_path = NodePath("../FinalBossLanding")
+boss_music = ExtResource("15_music_boss")
+teaser_image_hold_time = 3.0
+warning_marker_radius_x = 200.0
 
 [node name="RouteGates" type="Node2D" parent="."]
 position = Vector2(11311, -3891)
@@ -355,8 +373,6 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("12_gate")
 target_scene = "res://content/levels/final_combat.tscn"
-target_music = ExtResource("15_music_boss")
-music_volume_db = -8.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RouteGates/HubCombatGate"]
 shape = SubResource("Shape_gate")
@@ -400,3 +416,9 @@ max_health = 1
 [node name="TutorialRedBlock5" parent="ToogleBlocks" instance=ExtResource("22_8v5cs")]
 position = Vector2(15275, -1388)
 max_health = 1
+
+[node name="CitadelDataShard" parent="ToogleBlocks" instance=ExtResource("23_collectible")]
+position = Vector2(15490, -1132)
+collectible_id = "citadel_data_shard_01"
+title = "Fragmento de memoria: Ciudadela"
+description = "Un modulo de datos protegido por los bloques rojos. Describe rutinas de defensa de la Ciudadela y deja una pista temprana sobre el nucleo que controla la arena final."

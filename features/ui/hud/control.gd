@@ -699,6 +699,8 @@ func _build_player_context_for_hemis(data: Dictionary, context: Dictionary) -> D
 	player_context["current_dialog_context"] = String(game_context.get("current_dialog_context", "")).strip_edges()
 	player_context["recent_event"] = String(game_context.get("recent_event", "")).strip_edges()
 	player_context["level_context_document"] = String(game_context.get("level_context_document", "")).strip_edges()
+	player_context["assistant_mode"] = String(game_context.get("assistant_mode", "gameplay_helper")).strip_edges()
+	player_context["helper_context"] = String(game_context.get("helper_context", "")).strip_edges()
 
 	var unlocked_css_raw: Variant = data.get("unlocked_css", context.get("unlocked_css", snapshot.get("detected_properties", [])))
 	player_context["unlocked_css"] = _to_packed_string_array(unlocked_css_raw)

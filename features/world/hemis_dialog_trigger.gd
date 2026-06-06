@@ -13,6 +13,7 @@ class_name HemisDialogTrigger
 @export_multiline var objective: String = ""
 @export_multiline var area_description: String = ""
 @export_multiline var recent_event: String = ""
+@export_multiline var helper_context: String = ""
 
 var _triggered := false
 var _player_inside := false
@@ -76,7 +77,9 @@ func _update_hemis_context() -> void:
 		"objective": objective,
 		"current_area_description": area_description,
 		"current_dialog_context": first_line,
-		"recent_event": recent_event if recent_event.strip_edges() != "" else "Hemis acaba de hablar con el jugador en %s." % name
+		"recent_event": recent_event if recent_event.strip_edges() != "" else "Hemis acaba de hablar con el jugador en %s." % name,
+		"assistant_mode": "gameplay_helper",
+		"helper_context": helper_context
 	})
 
 func _get_persistent_trigger_id() -> String:

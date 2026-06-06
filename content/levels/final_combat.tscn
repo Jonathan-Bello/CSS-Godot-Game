@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://d3lt2d881ny0x"]
+[gd_scene load_steps=27 format=4 uid="uid://d3lt2d881ny0x"]
 
 [ext_resource type="Texture2D" uid="uid://fulhv0a3r0x5" path="res://assets/art/tilesets/tileset_cueva.svg" id="1_86b2p"]
 [ext_resource type="Script" uid="uid://k76toqhebuxm" path="res://features/world/level_bootstrap.gd" id="1_bootstrap"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" uid="uid://rjxipc088xcd" path="res://features/world/footstep_audio_trigger.gd" id="10_surface"]
 [ext_resource type="Script" uid="uid://b1bortys85ulv" path="res://features/world/route_gate.gd" id="11_gate"]
 [ext_resource type="AudioStream" uid="uid://bbx12uhcrtkux" path="res://assets/music/space_boss_battle_bpm175.ogg" id="12_music_boss"]
+[ext_resource type="PackedScene" uid="uid://dikcl3va1x5wi" path="res://features/bosses/final_boss.tscn" id="13_final_boss"]
+[ext_resource type="AudioStream" uid="uid://cugqhxdj6are8" path="res://assets/music/Verdant Circuit.mp3" id="14_music_route"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b73tu"]
 texture = ExtResource("1_86b2p")
@@ -156,7 +158,7 @@ sources/1 = SubResource("TileSetAtlasSource_oum8j")
 size = Vector2(4800, 180)
 
 [sub_resource type="RectangleShape2D" id="Shape_boss_ground"]
-size = Vector2(2500, 180)
+size = Vector2(4700, 180)
 
 [sub_resource type="RectangleShape2D" id="Shape_wall"]
 size = Vector2(120, 760)
@@ -167,9 +169,6 @@ size = Vector2(8200, 170)
 [sub_resource type="RectangleShape2D" id="Shape_zone"]
 size = Vector2(7600, 1200)
 
-[sub_resource type="Resource" id="Resource_ej8d3"]
-metadata/__load_path__ = "res://assets/music/green_glass_towers_the_silent_grid.ogg"
-
 [sub_resource type="RectangleShape2D" id="Shape_gate"]
 size = Vector2(170, 330)
 
@@ -177,8 +176,10 @@ size = Vector2(170, 330)
 
 [node name="Bootstrap" type="Node" parent="."]
 script = ExtResource("1_bootstrap")
-start_music = ExtResource("12_music_boss")
-music_volume_db = -8.0
+start_music = ExtResource("14_music_route")
+music_volume_db = -9.0
+level_objective = "Avanzar hasta la arena final, consultar a Hemis sobre el patron del jefe y derrotar al Nucleo de la Ciudadela."
+hemis_context_document = "res://content/lore/final_boss_context.md"
 
 [node name="fondoCiudad" parent="." instance=ExtResource("2_parallax")]
 
@@ -202,6 +203,9 @@ position = Vector2(180, 430)
 [node name="BossArenaStart" type="Marker2D" parent="Markers"]
 position = Vector2(4250, 430)
 
+[node name="FinalBossLanding" type="Marker2D" parent="Markers"]
+position = Vector2(5650, 500)
+
 [node name="Player" parent="." instance=ExtResource("3_player")]
 position = Vector2(180, 430)
 scale = Vector2(0.35, 0.35)
@@ -214,7 +218,7 @@ shoot_arm_aim_offset_degrees = -110.0
 position = Vector2(357, 19)
 limit_left = -220
 limit_top = -850
-limit_right = 6900
+limit_right = 8400
 limit_bottom = 1040
 
 [node name="Control" type="Control" parent="Player/Camera2D"]
@@ -255,9 +259,9 @@ shape = SubResource("Shape_combat_ground")
 position = Vector2(5600, 620)
 
 [node name="Visual" type="ColorRect" parent="Geometry/BossGround"]
-offset_left = -1250.0
+offset_left = -2350.0
 offset_top = -90.0
-offset_right = 1250.0
+offset_right = 2350.0
 offset_bottom = 90.0
 color = Color(0.22, 0.08, 0.11, 1)
 
@@ -295,7 +299,14 @@ dialog_lines = PackedStringArray("Ruta de combate.", "Derrota los robots y avanz
 [node name="BossIntro" parent="Narrative" instance=ExtResource("9_hemis")]
 position = Vector2(4300, 470)
 scale = Vector2(2.5, 2)
-dialog_lines = PackedStringArray("Arena final.", "Este enemigo funciona como jefe base para probar la ruta final.")
+dialog_lines = PackedStringArray("Espera. Detecto una firma de defensa pesada delante de nosotros.", "Si el nucleo salta fuera de pantalla, mira la senal roja en el suelo: ahi va a caer.", "Solo sera vulnerable cuando quede aturdido. Si le disparas desde su derecha, usa azul; desde su izquierda, usa rojo.")
+zone_id = "arena_final_ciudadela"
+quest_id = "final_boss"
+quest_step = "pre_boss_warning"
+objective = "Prepararse para el jefe final. Hemis puede explicar sus saltos, la senal de caida, la ventana de aturdimiento y sus debilidades por lado."
+area_description = "Entrada a la arena final del Nucleo de la Ciudadela. El jefe intenta aplastar al jugador desde fuera de pantalla y solo queda vulnerable tras caer."
+recent_event = "Hemis acaba de advertir que el jefe final cae sobre una senal roja y que sus debilidades dependen del lado del impacto: azul desde la derecha y rojo desde la izquierda."
+helper_context = "Modo ayudante de juego: si el jugador pregunta por el jefe, responde con pistas tacticas. Recalca que debe esquivar la senal roja, disparar solo cuando el jefe este aturdido, usar azul si ataca desde la derecha del jefe y rojo si ataca desde la izquierda. En fase final debe priorizar esquivar tres caidas rapidas antes de atacar."
 
 [node name="PilarCombat" parent="." instance=ExtResource("6_pilar")]
 position = Vector2(520, 430)
@@ -309,7 +320,7 @@ collision_mask = 2
 script = ExtResource("11_gate")
 target_scene = "res://content/levels/citadel_main.tscn"
 target_spawn_marker = &"HubSpawn"
-target_music = SubResource("Resource_ej8d3")
+target_music = ExtResource("14_music_route")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RouteGates/ReturnToCitadelGate"]
 shape = SubResource("Shape_gate")
@@ -332,8 +343,6 @@ collision_layer = 0
 collision_mask = 2
 script = ExtResource("11_gate")
 target_path = NodePath("../../Markers/BossArenaStart")
-target_music = ExtResource("12_music_boss")
-music_volume_db = -7.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RouteGates/CombatToBossGate"]
 shape = SubResource("Shape_gate")
@@ -361,15 +370,10 @@ position = Vector2(2450, 500)
 speed = 120.0
 max_health = 12
 
-[node name="FinalBoss" parent="Enemies" instance=ExtResource("7_enemy")]
+[node name="FinalBoss" parent="Enemies" instance=ExtResource("13_final_boss")]
 position = Vector2(5650, 500)
-scale = Vector2(2, 2)
-speed = 55.0
-max_health = 36
-css_affinity = {
-"critical_bonus": 6,
-"properties": {
-"background-color": "blue"
-},
-"property_bonus": 2
-}
+max_health = 180.0
+use_manual_arena_limits = true
+manual_arena_left_x = 3600.0
+manual_arena_right_x = 7900.0
+landing_marker_path = NodePath("../../Markers/FinalBossLanding")

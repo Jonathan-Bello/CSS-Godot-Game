@@ -14,6 +14,8 @@ var _context: Dictionary = {
 	"current_dialog_context": "",
 	"recent_event": "",
 	"level_context_document": "",
+	"assistant_mode": "gameplay_helper",
+	"helper_context": "",
 	"runtime_environment": ""
 }
 

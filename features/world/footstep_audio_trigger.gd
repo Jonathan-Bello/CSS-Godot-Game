@@ -12,6 +12,11 @@ func _ready() -> void:
 	monitorable = false
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	call_deferred("_apply_to_overlapping_players")
+
+func _apply_to_overlapping_players() -> void:
+	for body in get_overlapping_bodies():
+		_on_body_entered(body)
 
 func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group(player_group):

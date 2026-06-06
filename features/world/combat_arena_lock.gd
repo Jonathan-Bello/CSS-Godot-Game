@@ -8,6 +8,8 @@ class_name CombatArenaLock
 @export var right_closed_position: Vector2
 @export var close_duration: float = 0.45
 @export var one_shot: bool = true
+@export var boss_path: NodePath
+@export var start_boss_on_lock: bool = true
 
 var _triggered := false
 
@@ -27,6 +29,8 @@ func _on_body_entered(body: Node) -> void:
 	_triggered = true
 	_close_wall(left_wall_path, left_closed_position)
 	_close_wall(right_wall_path, right_closed_position)
+	if start_boss_on_lock:
+		call_deferred("_start_boss")
 
 
 func _close_wall(path: NodePath, closed_position: Vector2) -> void:
@@ -40,3 +44,9 @@ func _close_wall(path: NodePath, closed_position: Vector2) -> void:
 		shape.set_deferred("disabled", false)
 	var tw := create_tween()
 	tw.tween_property(wall, "position", closed_position, close_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _start_boss() -> void:
+	var boss := get_node_or_null(boss_path)
+	if boss != null and boss.has_method("start_encounter"):
+		boss.call("start_encounter")

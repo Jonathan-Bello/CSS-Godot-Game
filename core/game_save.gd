@@ -33,6 +33,8 @@ func reset_new_game_state() -> void:
 		CssUnlocks.call("reset_unlocks")
 	if has_node("/root/MovementUnlocks") and MovementUnlocks.has_method("reset_unlocks"):
 		MovementUnlocks.call("reset_unlocks")
+	if has_node("/root/CollectibleInventory") and CollectibleInventory.has_method("reset_inventory"):
+		CollectibleInventory.call("reset_inventory")
 
 func save_current_game(player_override: Node2D = null) -> bool:
 	var scene := get_tree().current_scene
@@ -60,6 +62,7 @@ func save_current_game(player_override: Node2D = null) -> bool:
 		"equipped_bullet": _get_player_bullet_save_data(player),
 		"heard_dialog_triggers": _heard_dialog_triggers.duplicate(true),
 		"activated_solar_pillars": _activated_solar_pillars.duplicate(true),
+		"collected_items": _get_collected_items_save_data(),
 		"saved_at": Time.get_datetime_string_from_system(true, true)
 	}
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -79,6 +82,7 @@ func load_saved_game() -> bool:
 	var position := _position_from_save(data.get("player_position", {}))
 	_load_heard_dialog_triggers(data.get("heard_dialog_triggers", {}))
 	_load_activated_solar_pillars(data.get("activated_solar_pillars", {}))
+	_restore_collected_items(data.get("collected_items", {}))
 	_set_pending_player_position(position)
 	_set_pending_bullet_save_data(data.get("equipped_bullet", {}))
 	_loading_saved_game = true
@@ -217,6 +221,18 @@ func _get_player_bullet_save_data(player: Node2D) -> Dictionary:
 	if typeof(raw) != TYPE_DICTIONARY:
 		return {}
 	return raw
+
+func _get_collected_items_save_data() -> Dictionary:
+	if not has_node("/root/CollectibleInventory") or not CollectibleInventory.has_method("get_save_data"):
+		return {}
+	var raw: Variant = CollectibleInventory.call("get_save_data")
+	if typeof(raw) != TYPE_DICTIONARY:
+		return {}
+	return raw
+
+func _restore_collected_items(raw: Variant) -> void:
+	if has_node("/root/CollectibleInventory") and CollectibleInventory.has_method("restore_collected_items"):
+		CollectibleInventory.call("restore_collected_items", raw)
 
 func _remove_dir_recursive(path: String) -> void:
 	var dir := DirAccess.open(path)
