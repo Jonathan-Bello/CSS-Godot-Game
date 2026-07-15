@@ -99,6 +99,10 @@ func load_saved_game() -> bool:
 	_apply_saved_player_position(position)
 	_apply_saved_player_bullet()
 	_clear_pending_player_position()
+	# Limpiar también el estado de SceneTransition para que los portales usen marcadores
+	if has_node("/root/SceneTransition"):
+		SceneTransition.has_pending_spawn_position = false
+		SceneTransition.pending_spawn_position = Vector2.ZERO
 	_pending_bullet_save_data.clear()
 	_loading_saved_game = false
 	return true

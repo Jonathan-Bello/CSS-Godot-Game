@@ -225,7 +225,7 @@ position = Vector2(4480, 560)
 position = Vector2(7151, 1773)
 
 [node name="MixedCharger" parent="CombatRoute/MixedArena" instance=ExtResource("17_charger")]
-position = Vector2(4593, -2421)
+position = Vector2(3897, -1765)
 detection_range = 680.0
 
 [node name="MixedFlying" parent="CombatRoute/MixedArena" instance=ExtResource("16_flying")]

@@ -129,8 +129,10 @@ func _apply_pending_spawn() -> void:
 	var player := scene.get_tree().get_first_node_in_group("player") as Node2D
 	if player == null:
 		return
+	print("[SceneTransition] _apply_pending_spawn: pending_spawn_marker='%s', has_pending_spawn_position=%s, pending_spawn_position=%s" % [pending_spawn_marker, has_pending_spawn_position, pending_spawn_position])
 	if has_pending_spawn_position:
 		player.global_position = pending_spawn_position
+		print("[SceneTransition] Aplicando posición: %s" % pending_spawn_position)
 		if player.has_method("set_respawn_checkpoint"):
 			player.call("set_respawn_checkpoint", pending_spawn_position)
 		has_pending_spawn_position = false
@@ -142,8 +144,11 @@ func _apply_pending_spawn() -> void:
 	var marker := scene.find_child(pending_spawn_marker, true, false) as Node2D
 	if marker == null:
 		push_warning("[SceneTransition] No se pudo aplicar spawn '%s'." % pending_spawn_marker)
+		print("[SceneTransition] Player posición actual: %s" % player.global_position)
 		return
+	print("[SceneTransition] Encontrado marcador '%s' en posición: %s" % [pending_spawn_marker, marker.global_position])
 	player.global_position = marker.global_position
+	print("[SceneTransition] Jugador reposicionado a: %s" % marker.global_position)
 	if player.has_method("set_respawn_checkpoint"):
 		player.call("set_respawn_checkpoint", marker.global_position)
 	pending_spawn_marker = ""

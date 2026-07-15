@@ -27,6 +27,7 @@ func _on_body_entered(body: Node) -> void:
 		AudioManager.play_sfx_at(gate_sfx, global_position, -7.0)
 	if target_scene != "":
 		var resolved_target_scene := _normalize_scene_path(target_scene)
+		print("[RouteGate] Transitioning to scene: %s, spawn_marker: %s" % [resolved_target_scene, target_spawn_marker])
 		if has_node("/root/SceneTransition"):
 			await SceneTransition.transition_to_scene(resolved_target_scene, String(target_spawn_marker), scene_fade_time, target_music, music_volume_db, music_fade_time)
 		else:
